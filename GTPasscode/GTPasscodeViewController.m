@@ -1,9 +1,8 @@
 //
-//  KVPasscodeViewController.m
-//  Koolistov
+//  GTPasscodeViewController.m
 //
-//  Created by Johan Kool on 3/17/11.
-//  Copyright 2011 Koolistov. All rights reserved.
+//  Created by Gianluca Tranchedone on 17/12/11.
+//  Copyright 2011 SketchToCode. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without modification, are 
 //  permitted provided that the following conditions are met:
@@ -28,13 +27,13 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KVPasscodeViewController.h"
+#import "GTPasscodeViewController.h"
 #import "UIColor+ColorsAddition.h"
 
 NSString * const PasscodeUserDafaultsKey = @"PasscodeUserDefaultsKey";
 NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
-@interface KVPasscodeViewController ()
+@interface GTPasscodeViewController ()
 
 @property (nonatomic, strong) IBOutlet UIView *animationView;
 
@@ -59,24 +58,24 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 @end
 
-@implementation KVPasscodeViewController
+@implementation GTPasscodeViewController
 
-@synthesize delegate;
-@synthesize cancelButtonEnabled;
+@synthesize delegate = _delegate;
+@synthesize cancelButtonEnabled = _cancelButtonEnabled;
 
-@synthesize isSettingPasscode;
-@synthesize isChangingPasscode;
-@synthesize tempPasscode;
+@synthesize isSettingPasscode = _isSettingPasscode;
+@synthesize isChangingPasscode = _isChangingPasscode;
+@synthesize tempPasscode = _tempPasscode;
 
-@synthesize animationView;
+@synthesize animationView = _animationView;
 
-@synthesize titleLabel;
-@synthesize instructionLabel;
+@synthesize titleLabel = _titleLabel;
+@synthesize instructionLabel = _instructionLabel;
 
-@synthesize bulletField0;
-@synthesize bulletField1;
-@synthesize bulletField2;
-@synthesize bulletField3;
+@synthesize bulletField0 = _bulletField0;
+@synthesize bulletField1 = _bulletField1;
+@synthesize bulletField2 = _bulletField2;
+@synthesize bulletField3 = _bulletField3;
 
 #pragma mark - Class Methods
 
@@ -86,7 +85,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     
     if (shouldAskForPasscode)
     {
-        KVPasscodeViewController *passcodeViewController = [[KVPasscodeViewController alloc] 
+        GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                              initWithNibName:@"KVPasscodeViewController" bundle:nil];
         passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:18];
         passcodeViewController.cancelButtonEnabled = NO;
@@ -103,7 +102,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 + (void)showToSetNewPasscodeUsingNavigationController:(UINavigationController *)navigationController
 {
-    KVPasscodeViewController *passcodeViewController = [[KVPasscodeViewController alloc] 
+    GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                          initWithNibName:@"KVPasscodeViewController" bundle:nil];
     passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:18];
     passcodeViewController.cancelButtonEnabled = YES;
@@ -142,19 +141,6 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     return self;
 }
 
-- (void)dealloc 
-{
-    animationView = nil;
-    
-    titleLabel = nil;
-    instructionLabel = nil;
-    
-    bulletField0 = nil;
-    bulletField1 = nil;
-    bulletField2 = nil;
-    bulletField3 = nil;
-}
-
 - (void)didReceiveMemoryWarning 
 {
     // Releases the view if it doesn't have a superview.
@@ -179,7 +165,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     
     self.navigationItem.title = NSLocalizedString(@"Passcode", @"Passcode View Controller Title");
     
-    if (cancelButtonEnabled) 
+    if (self.cancelButtonEnabled) 
     {
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                 target:self action:@selector(dismissModalViewControllerAnimated:)];
@@ -220,11 +206,11 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 - (void)internalResetWithAnimation:(NSNumber *)animationStyleNumber 
 {    
-    KVPasscodeAnimationStyle animationStyle = [animationStyleNumber intValue];
+    GTPasscodeAnimationStyle animationStyle = [animationStyleNumber intValue];
     
     switch (animationStyle) 
     {
-        case KVPasscodeAnimationStyleInvalid:
+        case GTPasscodeAnimationStyleInvalid:
         {
             // Vibrate to indicate error
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
@@ -236,17 +222,17 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
             [animation setRepeatCount:8];
             [animation setAutoreverses:YES];
             [animation setFromValue:[NSValue valueWithCGPoint:
-                                     CGPointMake([animationView center].x - 14.0f, [animationView center].y)]];
+                                     CGPointMake([self.animationView center].x - 14.0f, [self.animationView center].y)]];
             [animation setToValue:[NSValue valueWithCGPoint:
-                                   CGPointMake([animationView center].x + 14.0f, [animationView center].y)]];
-            [[animationView layer] addAnimation:animation forKey:@"position"];
+                                   CGPointMake([self.animationView center].x + 14.0f, [self.animationView center].y)]];
+            [[self.animationView layer] addAnimation:animation forKey:@"position"];
             
             self.instructionLabel.text = NSLocalizedString(@"Wrong Passcode Inserted", @"Confirm Passcode Instruction");
             self.instructionLabel.textColor = [UIColor redColor];
         }
             break;
             
-        case KVPasscodeAnimationStyleConfirm:
+        case GTPasscodeAnimationStyleConfirm:
         {
             // This will cause the 'new' fields to appear without bullets already in them
             self.bulletField0.text = nil;
@@ -262,9 +248,9 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
             [transition setDuration:0.5f];
             [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]]; 
             [self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:1]; 
-            [[animationView layer] addAnimation:transition forKey:@"swipe"];
+            [[self.animationView layer] addAnimation:transition forKey:@"swipe"];
 
-            if (!isChangingPasscode) {
+            if (!self.isChangingPasscode) {
                 self.titleLabel.text = NSLocalizedString(@"Rewrite your new Passcode to confirm", @"Confirm Passcode Instruction");
             } else {
                 self.instructionLabel.text = @"";
@@ -272,7 +258,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
             }
         }
             break;
-        case KVPasscodeAnimationStyleNone:
+        case GTPasscodeAnimationStyleNone:
         default:
         {
             self.bulletField0.text = nil;
@@ -289,7 +275,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     }
 }
 
-- (void)resetWithAnimation:(KVPasscodeAnimationStyle)animationStyle 
+- (void)resetWithAnimation:(GTPasscodeAnimationStyle)animationStyle 
 {   
     // Do the animation a little later (for better animation) as it's likely this method is called in our delegate method
     [self performSelector:@selector(internalResetWithAnimation:) withObject:[NSNumber numberWithInt:animationStyle] afterDelay:0];
@@ -325,7 +311,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     else
     {
         success = NO;
-        [self resetWithAnimation:KVPasscodeAnimationStyleInvalid];
+        [self resetWithAnimation:GTPasscodeAnimationStyleInvalid];
         self.instructionLabel.text = NSLocalizedString(@"Wrong Passcode", nil);
         self.instructionLabel.textColor = [UIColor redColor];
     }
@@ -408,16 +394,16 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
         }
         else if ([currentPasscode isEqualToString:passcode])
         {
-            [self resetWithAnimation:KVPasscodeAnimationStyleConfirm];
+            [self resetWithAnimation:GTPasscodeAnimationStyleConfirm];
             self.titleLabel.text = NSLocalizedString(@"Set The New Passcode", @"Confirm Passcode Instruction");
         } else {
-            [self resetWithAnimation:KVPasscodeAnimationStyleInvalid];
+            [self resetWithAnimation:GTPasscodeAnimationStyleInvalid];
         }
     }
     else if ((currentPasscode == nil || currentPasscode != passcode) && !self.tempPasscode)
     {
         self.tempPasscode = passcode;
-        [self resetWithAnimation:KVPasscodeAnimationStyleConfirm];
+        [self resetWithAnimation:GTPasscodeAnimationStyleConfirm];
     }
     else
     {        
@@ -431,7 +417,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
         }
         else
         {
-            [self resetWithAnimation:KVPasscodeAnimationStyleInvalid];
+            [self resetWithAnimation:GTPasscodeAnimationStyleInvalid];
         }
     }
 }

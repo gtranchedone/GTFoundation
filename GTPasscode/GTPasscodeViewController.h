@@ -1,9 +1,8 @@
 //
-//  KVPasscodeViewController.h
-//  Koolistov
+//  GTPasscodeViewController.h
 //
-//  Created by Johan Kool on 3/17/11.
-//  Copyright 2011 Koolistov. All rights reserved.
+//  Created by Gianluca Tranchedone on 17/12/11.
+//  Copyright 2011 SketchToCode. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without modification, are 
 //  permitted provided that the following conditions are met:
@@ -32,29 +31,22 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioServices.h>
 
+@protocol GTPasscodeViewControllerDelegate;
+
 extern NSString * const PasscodeUserDafaultsKey;
 extern NSString * const AskPasswordUserDafaultsKey;
 
-@class KVPasscodeViewController;
-
-@protocol KVPasscodeViewControllerDelegate <NSObject>
-
-@optional
-- (void)passcodeController:(KVPasscodeViewController *)controller didEnterPasscode:(NSString *)passcode withSuccess:(BOOL)success;
-
-@end
-
 typedef enum {
-    KVPasscodeAnimationStyleNone,
-    KVPasscodeAnimationStyleInvalid,
-    KVPasscodeAnimationStyleConfirm
-} KVPasscodeAnimationStyle;
+    GTPasscodeAnimationStyleNone,
+    GTPasscodeAnimationStyleInvalid,
+    GTPasscodeAnimationStyleConfirm
+} GTPasscodeAnimationStyle;
 
-@interface KVPasscodeViewController : UIViewController <UITextFieldDelegate> {
+@interface GTPasscodeViewController : UIViewController <UITextFieldDelegate> {
     UITextField *fakeField;
 }
 
-@property (nonatomic, unsafe_unretained) id <KVPasscodeViewControllerDelegate> delegate; 
+@property (nonatomic, weak) id <GTPasscodeViewControllerDelegate> delegate; 
 @property (nonatomic, assign) BOOL cancelButtonEnabled;
 
 //+ (void)showToChangePasscode;
@@ -62,7 +54,16 @@ typedef enum {
 + (void)checkForPasscodeUsingNavigationController:(UINavigationController *)navigationController;
 + (void)showToSetNewPasscodeUsingNavigationController:(UINavigationController *)navigationController;
 
-- (void)resetWithAnimation:(KVPasscodeAnimationStyle)animationStyle;
+- (void)resetWithAnimation:(GTPasscodeAnimationStyle)animationStyle;
 - (void)dismissPasscodeViewController;
+
+@end
+
+//___________________________________
+
+@protocol GTPasscodeViewControllerDelegate <NSObject>
+
+@optional
+- (void)passcodeController:(GTPasscodeViewController *)controller didEnterPasscode:(NSString *)passcode withSuccess:(BOOL)success;
 
 @end

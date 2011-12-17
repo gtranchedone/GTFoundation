@@ -6,9 +6,27 @@
 //  Copyright (c) 2011 SketchToCode. All rights reserved.
 //
 
-#ifndef GTFrameworkDemo_GTFramework_h
-#define GTFrameworkDemo_GTFramework_h
+// Frameworks
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreData/CoreData.h>
+#import <QuartzCore/QuartzCore.h>
+#import <CoreLocation/CoreLocation.h>
+#import <AudioToolbox/AudioServices.h>
 
+// Classes
+#import "GTSlider.h"
+#import "GTTextViewCell.h"
+#import "GTMapViewController.h"
+#import "GTGuideViewController.h"
+#import "GTPasscodeViewController.h"
+#import "GTDetailEditingViewController.h"
 
-
-#endif
+// Categories
+#import "NSDate+Utilities.h"
+#import "UIImage+ScreenCapture.h"
+#import "UIColor+ColorsAddition.h"
+#import "NSManagedObject+FirstLetter.h"
+#import "NSDateFormatter+SharedFormatter.h"
+#import "NSNumberFormatter+SharedFormatter.h"
+#import "MFMailComposeViewController+FastInit.h"

@@ -11,6 +11,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TimeFormatters.h"
 
 #define D_MINUTE	60
 #define D_HOUR		3600
