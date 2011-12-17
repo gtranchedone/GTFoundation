@@ -390,7 +390,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
             self.tempPasscode = passcode;
             self.isChangingPasscode = NO; // To skip all steps 'till the last check and save.
             self.titleLabel.text = NSLocalizedString(@"Rewrite your new Passcode to confirm", @"Confirm Passcode Instruction");
-            [self resetWithAnimation:KVPasscodeAnimationStyleConfirm];
+            [self resetWithAnimation:GTPasscodeAnimationStyleConfirm];
         }
         else if ([currentPasscode isEqualToString:passcode])
         {
