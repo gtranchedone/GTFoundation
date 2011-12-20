@@ -21,9 +21,9 @@ static NSNumberFormatter *sharedCurrencyFormatter = nil;
         [sharedDecimalFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
         [sharedDecimalFormatter setMinimumFractionDigits:2];
         [sharedDecimalFormatter setMaximumFractionDigits:2];
-        [sharedDecimalFormatter setGroupingSeparator:@""];
-        [sharedDecimalFormatter setDecimalSeparator:@"."];
-        [sharedDecimalFormatter setZeroSymbol:@"0.00"];
+        [sharedDecimalFormatter setGroupingSeparator:@"."];
+        [sharedDecimalFormatter setDecimalSeparator:@","];
+        [sharedDecimalFormatter setZeroSymbol:@"0,00"];
     }
     
     return sharedDecimalFormatter;
