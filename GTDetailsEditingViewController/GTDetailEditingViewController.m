@@ -7,7 +7,9 @@
 //
 
 #import "GTDetailEditingViewController.h"
+
 #import "NSNumberFormatter+SharedFormatter.h"
+#import "NSDateFormatter+SharedFormatter.h"
 
 #define LongTextViewHeight 130
 #define UITableViewCellStandardHeight 30
@@ -292,13 +294,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             [self.view addSubview:self.datePicker];
         }
         
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        [dateFormatter setLocale:[NSLocale currentLocale]];
-        [dateFormatter setDoesRelativeDateFormatting:YES];
-        
-        cell.textLabel.text = [[dateFormatter stringFromDate:self.datePicker.date] uppercaseString];
+        cell.textLabel.text = [[[NSDateFormatter sharedFormatter] stringFromDate:self.datePicker.date] uppercaseString];
     }
     
     return cell;

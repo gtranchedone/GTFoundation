@@ -15,9 +15,10 @@ static NSDateFormatter *sharedInstance = nil;
 + (NSDateFormatter *)sharedFormatter
 {
     if (!sharedInstance)
-    {
+    {        
         sharedInstance =  [[NSDateFormatter alloc] init];
         [sharedInstance setDateStyle:NSDateFormatterMediumStyle];
+        [sharedInstance setTimeStyle:NSDateFormatterShortStyle];
         [sharedInstance setLocale:[NSLocale currentLocale]];
         [sharedInstance setDoesRelativeDateFormatting:YES];
     }
