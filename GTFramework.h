@@ -3,7 +3,7 @@
 //  GTFrameworkDemo
 //
 //  Created by Gianluca Tranchedone on 17/12/11.
-//  Copyright (c) 2011 SketchToCode. All rights reserved.
+//  Copyright (c) 2012 SketchToCode. All rights reserved.
 //
 
 // Frameworks
@@ -16,8 +16,10 @@
 
 // Classes
 #import "GTSlider.h"
+#import "GTPagingView.h"
 #import "GTTextViewCell.h"
 #import "GTMapViewController.h"
+#import "GTGraphViewController.h"
 #import "GTGuideViewController.h"
 #import "GTPasscodeViewController.h"
 #import "GTDetailEditingViewController.h"

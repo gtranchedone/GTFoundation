@@ -3,7 +3,7 @@
 //  GTSliderController
 //
 //  Created by Gianluca Tranchedone on 21/08/11.
-//  Copyright 2011 SketchToCode. All rights reserved.
+//  Copyright 2012 SketchToCode. All rights reserved.
 //
 
 #import "GTSlider.h"

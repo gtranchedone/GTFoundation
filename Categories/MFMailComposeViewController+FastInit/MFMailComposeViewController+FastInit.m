@@ -3,7 +3,7 @@
 //  JapaneseGrammarDictionary
 //
 //  Created by Gianluca Tranchedone on 30/05/11.
-//  Copyright 2011 Sketch to Code. All rights reserved.
+//  Copyright 2012 Sketch to Code. All rights reserved.
 //
 
 #import "MFMailComposeViewController+FastInit.h"

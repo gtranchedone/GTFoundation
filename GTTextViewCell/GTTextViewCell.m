@@ -2,7 +2,7 @@
 //  GTTextViewCell.m
 //
 //  Created by Gianluca Tranchedone on 27/05/11.
-//  Copyright 2011 Sketch to Code. All rights reserved.
+//  Copyright 2012 Sketch to Code. All rights reserved.
 //
 
 #import "GTTextViewCell.h"

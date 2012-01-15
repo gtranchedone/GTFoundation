@@ -2,7 +2,7 @@
 //  UIColor+ColorsAddition.h
 //
 //  Created by Gianluca Tranchedone on 20/08/11.
-//  Copyright 2011 Sketch to Code. All rights reserved.
+//  Copyright 2012 Sketch to Code. All rights reserved.
 //
 
 // This category is inspired by the post "Colorful Code" by Gallant Games 

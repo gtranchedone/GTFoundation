@@ -1,30 +1,38 @@
 //
 //  GTMapViewController.h
-//  MoneyFlow
+//  GTFramework
 //
 //  Created by Gianluca Tranchedone on 05/12/11.
-//  Copyright (c) 2011 Sketch to Code. All rights reserved.
+//  Copyright (c) 2012 Sketch to Code. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @protocol GTMapViewControllerDelegate;
 
-@interface GTMapViewController : UIViewController {
-    
-}
+@interface GTMapViewController : UIViewController
 
-@property (nonatomic, unsafe_unretained) id<GTMapViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<GTMapViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, readonly, strong) CLLocation *currentLocation;
+@property (nonatomic, readonly, strong) CLLocation *shownLocation;
+
+@property (nonatomic, strong) UILabel *searchDescriptionLabel;
+@property (nonatomic, strong) UITextField *searchField;
 
 - (void)showCurrentLocation;
-- (void)showLocationAtLongitude:(double)longitude latitude:(double)latitude;
+- (void)showLocation:(CLLocation *)location;
+- (void)dropPinAtLocation:(CLLocation *)location;
+- (CLLocation *)searchLocationWithName:(NSString *)locationName;
+
+- (UIImage *)takePictureOfRectInMapView:(CGRect)rect;
 
 @end
 
-//_____________________________________________
+// GTMapViewControllerDelegate
 
 @protocol GTMapViewControllerDelegate <NSObject>
 

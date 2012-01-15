@@ -3,7 +3,7 @@
 //  MyFinances
 //
 //  Created by Gianluca Tranchedone on 19/09/11.
-//  Copyright (c) 2011 SketchToCode. All rights reserved.
+//  Copyright (c) 2012 SketchToCode. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
