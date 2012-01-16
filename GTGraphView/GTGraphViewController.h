@@ -16,6 +16,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "GTGraphView.h"
 
 typedef enum
 {
@@ -25,24 +26,11 @@ typedef enum
     GTGraphTypeHorizontalBars // not implemented yet
 } GTGraphType;
 
-@protocol GTGraphViewDataSource;
-@protocol GTGraphViewDelegate;
+@interface GTGraphViewController : UIViewController <GTGraphViewDataSource, GTGraphViewDelegate>
 
-@interface GTGraphViewController : UIViewController
-
-@property (nonatomic, assign) id<GTGraphViewDataSource> dataSource;
-@property (nonatomic, assign) id<GTGraphViewDelegate> delegate;
-
+@property (nonatomic, strong, readonly) GTGraphView *graphView;
 @property (nonatomic, assign, readonly) GTGraphType graphType;
 
 - (id)initWithGraphType:(GTGraphType)graphType; // default initializer
-
-@end
-
-// GTGraphViewDataSource
-
-@protocol GTGraphViewDataSource <NSObject>
-
-- (NSUInteger)numberOfValuesToDrawInGraphView:(GTGraphViewController *)graphView;
 
 @end

@@ -106,7 +106,7 @@
 
 #pragma mark - Custom Setters And Getters
 
-- (void)setDataSource:(id<GTLineChartViewDataSource>)dataSource
+- (void)setDataSource:(id<GTGraphViewDataSource>)dataSource
 {
     _dataSource = dataSource;
     

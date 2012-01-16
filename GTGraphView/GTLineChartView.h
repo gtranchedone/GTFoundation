@@ -7,32 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol GTLineChartViewDataSource;
-@protocol GTLineChartViewDelegate;
+#import "GTGraphView.h"
 
 @class GTLineChartPoint;
 
-@interface GTLineChartView : UIView
-
-@property (nonatomic, assign) id<GTLineChartViewDataSource> dataSource;
-@property (nonatomic, assign) id<GTLineChartViewDelegate> delegate;
-
-@end
-
-// GTLineChartViewDataSource
-
-@protocol GTLineChartViewDataSource <NSObject>
-
-- (NSUInteger)numberOfPointsInChart:(GTLineChartView *)chart;
-
-@end
-
-// GTLineChartViewDelegate
-
-@protocol GTLineChartViewDelegate <NSObject>
-
-// TODO
+@interface GTLineChartView : GTGraphView
 
 @end
 

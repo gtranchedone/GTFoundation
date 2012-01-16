@@ -39,7 +39,6 @@
     return self;
 }
 
-#import "GTLineChartView.h"
 - (void)initialSetup
 {
     self.backgroundColor = [UIColor clearColor];
@@ -54,10 +53,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGSize size = CGSizeMake(self.bounds.size.width - self.origin.x - (OriginDistance / 2), 
-                             self.bounds.size.height - OriginDistance - OriginDistance);
-    self.scrollView.frame = (CGRect){self.origin.x, OriginDistance, size};
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
@@ -66,7 +61,7 @@
     self.endPoint = CGPointMake(endPoint.x, 0.0);
 
     CGContextMoveToPoint(context, endPoint.x, endPoint.y);
-    CGContextAddLineToPoint(context, self.origin.x, self.origin.y);
+    CGContextAddLineToPoint(context, self.origin.x - (LineWidth / 2), self.origin.y);
     
     // draw 'x' axis triangle
     float lenght = 5;
@@ -76,11 +71,11 @@
     CGContextAddLineToPoint(context, endPoint.x, endPoint.y - (lenght / 2));
     
     // draw 'y' axis
-    endPoint = CGPointMake(self.origin.x, OriginDistance);
+    endPoint = CGPointMake(self.origin.x, (OriginDistance / 2));
     self.endPoint = CGPointMake(self.endPoint.x, endPoint.y);
     
     CGContextMoveToPoint(context, endPoint.x, endPoint.y);
-    CGContextAddLineToPoint(context, self.origin.x, self.origin.y);
+    CGContextAddLineToPoint(context, self.origin.x, self.origin.y + (LineWidth / 2));
     
     // draw 'x' axis triangle
     CGContextMoveToPoint(context, endPoint.x - (lenght / 2), endPoint.y);
@@ -98,6 +93,11 @@
     CGContextRestoreGState(context);
 }
 
+- (void)layoutSubviews
+{
+    [self setNeedsDisplay];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 // TODO
@@ -113,9 +113,10 @@
 {
     if (!_scrollView) {
         CGSize size = CGSizeMake(self.bounds.size.width - self.origin.x - (OriginDistance / 2), 
-                                 self.bounds.size.height - OriginDistance - OriginDistance);
+                                 self.bounds.size.height - (OriginDistance * 2) - (LineWidth / 2));
         
-        _scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){self.origin.x, OriginDistance, size}];
+        _scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){self.origin.x + (LineWidth / 2), OriginDistance, size}];
+        _scrollView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
         _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;

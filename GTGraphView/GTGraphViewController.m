@@ -11,9 +11,12 @@
 #import "GTAxesView.h"
 #import "GTLineChartView.h"
 
-@interface GTGraphViewController () <GTLineChartViewDataSource, GTLineChartViewDelegate>
+@interface GTGraphViewController ()
 
+@property (nonatomic, strong, readwrite) GTGraphView *graphView;
 @property (nonatomic, assign, readwrite) GTGraphType graphType;
+
+@property (nonatomic, strong) GTAxesView *axesView;
 
 @end
 
@@ -21,10 +24,10 @@
 
 @implementation GTGraphViewController
 
-@synthesize dataSource = _dataSource;
-@synthesize delegate = _delegate;
-
+@synthesize graphView = _graphView;
 @synthesize graphType = _graphType;
+
+@synthesize axesView = _axesView;
 
 #pragma mark - Initialization
 
@@ -50,11 +53,11 @@
     // TODO: create and add the correct graph view on top of this one
     
     // Test
-    GTAxesView *axesView = [[GTAxesView alloc] initWithFrame:self.view.bounds];
-    GTLineChartView *lineChartView = [[GTLineChartView alloc] initWithFrame:axesView.scrollView.bounds];
-    [axesView.scrollView addSubview:lineChartView];
-    [self.view addSubview:axesView];
-    lineChartView.dataSource = self;
+    self.axesView = [[GTAxesView alloc] initWithFrame:self.view.bounds];
+    self.graphView = [[GTLineChartView alloc] initWithFrame:self.axesView.scrollView.bounds];
+    [self.axesView.scrollView addSubview:self.graphView];
+    [self.view addSubview:self.axesView];
+    self.graphView.dataSource = self;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -62,24 +65,25 @@
     return YES;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+#pragma mark - GTGraphViewDataSource
+
+- (NSUInteger)numberOfValuesToDrawInGraphView:(GTGraphView *)graphView
 {
-    for (UIView *view in self.view.subviews) {
-        [view setNeedsDisplay];
-        
-        if ([view isMemberOfClass:[GTAxesView class]]) {
-            for (UIView *subview in [(GTAxesView *)view scrollView].subviews) {
-                [subview setNeedsDisplay];
-            }
-        }
-    }
+    // TEST
+    return 5;
 }
 
-#pragma mark - GTLineChartViewDataSource
-
-- (NSUInteger)numberOfPointsInChart:(GTLineChartView *)chart
+- (NSArray *)graphObjectsForGraphView:(GTGraphView *)graphView
 {
-    return 5;
+    // TEST
+    return nil;
+}
+
+#pragma mark - GTGraphViewDelegate
+
+- (void)didSelectGraphObject:(id<GTGraphObjectProtocol>)object inGraphView:(GTGraphView *)graphView
+{
+    NSLog(@"Did select object:%@ in graphView:%@", object, graphView);
 }
 
 @end
