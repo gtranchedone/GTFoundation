@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GTGraphObjectProtocol.h"
+#import "GTGraphObject.h"
+
+extern NSString * const GTGraphViewObjectWasSelectedNotification;
 
 @protocol GTGraphViewDataSource;
 @protocol GTGraphViewDelegate;
@@ -24,8 +26,8 @@
 
 @protocol GTGraphViewDataSource <NSObject>
 
-- (NSUInteger)numberOfValuesToDrawInGraphView:(GTGraphView *)graphView;
-- (NSArray *)graphObjectsForGraphView:(GTGraphView *)graphView;
+- (NSUInteger)numberOfObjectsToDrawInGraphView:(GTGraphView *)graphView;
+- (GTGraphObject *)graphView:(GTGraphView *)graphView objectAtIndex:(NSUInteger)index;
 
 @end
 
@@ -34,6 +36,6 @@
 @protocol GTGraphViewDelegate <NSObject>
 
 @optional
-- (void)didSelectGraphObject:(id<GTGraphObjectProtocol>)object inGraphView:(GTGraphView *)graphView;
+- (void)graphView:(GTGraphView *)graphView didSelectGraphObject:(GTGraphObject *)object;
 
 @end

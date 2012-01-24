@@ -9,16 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "GTGraphView.h"
 
-@class GTLineChartPoint;
-
 @interface GTLineChartView : GTGraphView
-
-@end
-
-/*** GTLineChartPoint ***/
-
-@interface GTLineChartPoint : UIView
-
-@property (nonatomic, copy) NSString *title;
 
 @end

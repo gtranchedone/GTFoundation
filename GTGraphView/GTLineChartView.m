@@ -8,40 +8,16 @@
 
 #import "GTLineChartView.h"
 
-#define PointsSize 15
-#define LineWidth 4
+#define LineWidth 4.0
+#define PointsSize CGSizeMake(15.0, 15.0)
+#define LineChartXAxisMargin 50
+#define LineChartYAxisMargin 10
 
-#pragma mark - GTLineChartPoint Implementation
+#pragma mark - GTLineChartPoint Interface
 
-@implementation GTLineChartPoint
+@interface GTLineChartPoint : UIView
 
-@synthesize title = _title;
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor clearColor];
-        self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin |
-                                 UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-    }
-    return self;
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    CGColorRef color = [UIColor lightSeaGreenColor].CGColor;
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
-    CGContextSetStrokeColorWithColor(context, color);
-    CGContextSetFillColorWithColor(context, color);
-    
-    CGContextAddArc(context, self.bounds.size.width / 2, self.bounds.size.height / 2, (self.bounds.size.width / 2) - 2, 0.0, 2 * M_PI, 0);
-    CGContextDrawPath(context, kCGPathEOFillStroke);
-    
-    CGContextRestoreGState(context);
-}
+@property (nonatomic, strong) GTGraphObject *graphObject;
 
 @end
 
@@ -49,9 +25,9 @@
 
 @interface GTLineChartView ()
 
-@property (nonatomic, strong) NSArray *pointsArray;
+@property (nonatomic, strong) NSArray *graphObjects;
 
-- (void)initialSetup;
+- (void)loadGraphObjects;
 
 @end
 
@@ -62,40 +38,31 @@
 @synthesize dataSource = _dataSource;
 @synthesize delegate = _delegate;
 
-@synthesize pointsArray = _pointsArray;
-
-#pragma mark - Initialization
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
-        [self initialSetup];
-    }
-    return self;
-}
-
-- (void)initialSetup
-{
-    self.backgroundColor = [UIColor clearColor];
-}
+@synthesize graphObjects = _graphObjects;
 
 #pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
 {
-    if (self.pointsArray) {
+    if (self.graphObjects) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
         
         CGContextSetLineWidth(context, LineWidth);
         CGContextSetStrokeColorWithColor(context, [UIColor orangeColor].CGColor);
+        CGContextSetLineJoin(context, kCGLineJoinBevel);
         
-        CGContextMoveToPoint(context, 0.0, self.bounds.size.height);
+        BOOL begin = YES;
         
-        for (GTLineChartPoint *point in self.pointsArray) {
-            CGContextAddLineToPoint(context, point.center.x, point.center.y);
+        for (GTLineChartPoint *point in self.subviews) {
+            if ([point isMemberOfClass:[GTLineChartPoint class]]) {
+                if (begin) {
+                    begin = NO;
+                    CGContextMoveToPoint(context, 0.0, point.center.y);
+                } else {
+                    CGContextAddLineToPoint(context, point.center.x, point.center.y);
+                }
+            }
         }
         
         CGContextDrawPath(context, kCGPathStroke);
@@ -110,22 +77,69 @@
 {
     _dataSource = dataSource;
     
-    // Test
-    CGPoint point1 = CGPointMake(50, 100);
-    CGPoint point2 = CGPointMake(100, 200);
-    CGPoint point3 = CGPointMake(150, 150);
+    // get the number of items
+    [self loadGraphObjects];
+}
+
+- (void)loadGraphObjects
+{
+    NSUInteger numberOfObjects = [self.dataSource numberOfObjectsToDrawInGraphView:self];
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:numberOfObjects];
     
-    GTLineChartPoint *Point1 = [[GTLineChartPoint alloc] initWithFrame:(CGRect){point1, PointsSize, PointsSize}];
-    GTLineChartPoint *Point2 = [[GTLineChartPoint alloc] initWithFrame:(CGRect){point2, PointsSize, PointsSize}];
-    GTLineChartPoint *Point3 = [[GTLineChartPoint alloc] initWithFrame:(CGRect){point3, PointsSize, PointsSize}];
+    for (int i = 0; i < numberOfObjects; i++) {
+        // get the items and put them in an array
+        GTGraphObject *graphObject = [self.dataSource graphView:self objectAtIndex:i];
+        [mutableArray addObject:graphObject];
+        
+        // create lineChartPoints for each iteam and add them as subviews of the view
+        CGFloat yValue = (graphObject.value * self.bounds.size.height); // get the value a point on the screen (iOS cordinate system)
+        yValue = self.bounds.size.height - yValue; // get the value in the lineChart coordinate system.
+        
+        CGPoint graphPointOrigin = CGPointMake(LineChartXAxisMargin * i, yValue);
+        GTLineChartPoint *graphPoint = [[GTLineChartPoint alloc] initWithFrame:(CGRect){graphPointOrigin, PointsSize}];
+        [self addSubview:graphPoint];
+    }
     
-    self.pointsArray = [NSArray arrayWithObjects:Point1, Point2, Point3, nil];
+    self.graphObjects = [NSArray arrayWithArray:mutableArray];
+}
+
+@end
+
+#pragma mark - GTLineChartPoint Implementation
+
+@implementation GTLineChartPoint
+
+@synthesize graphObject = _graphObject;
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    UIColor *color = [UIColor lightSeaGreenColor];
     
-    [self setNeedsDisplay];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
     
-    [self addSubview:Point1];
-    [self addSubview:Point2];
-    [self addSubview:Point3];
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    
+    CGContextAddArc(context, self.bounds.size.width / 2, self.bounds.size.height / 2, (self.bounds.size.width / 2) - 1, 0.0, 2 * M_PI, 0);
+    CGContextDrawPath(context, kCGPathEOFillStroke);
+    
+    CGContextRestoreGState(context);
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:GTGraphViewObjectWasSelectedNotification object:self.graphObject];
 }
 
 @end

@@ -113,9 +113,9 @@
 {
     if (!_scrollView) {
         CGSize size = CGSizeMake(self.bounds.size.width - self.origin.x - (OriginDistance / 2), 
-                                 self.bounds.size.height - (OriginDistance * 2) - (LineWidth / 2));
+                                 self.bounds.size.height - (OriginDistance * 1.5) - (LineWidth / 2));
         
-        _scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){self.origin.x + (LineWidth / 2), OriginDistance, size}];
+        _scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){self.origin.x + (LineWidth / 2), (OriginDistance / 2), size}];
         _scrollView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
         _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.showsHorizontalScrollIndicator = NO;

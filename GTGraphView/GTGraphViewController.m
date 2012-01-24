@@ -17,6 +17,7 @@
 @property (nonatomic, assign, readwrite) GTGraphType graphType;
 
 @property (nonatomic, strong) GTAxesView *axesView;
+@property (nonatomic, assign) BOOL shouldDisplayAxes;
 
 @end
 
@@ -28,8 +29,14 @@
 @synthesize graphType = _graphType;
 
 @synthesize axesView = _axesView;
+@synthesize shouldDisplayAxes = _shouldDisplayAxes;
 
 #pragma mark - Initialization
+
+- (id)init
+{
+    return [self initWithGraphType:GTGraphTypeLineChart];
+}
 
 - (id)initWithGraphType:(GTGraphType)graphType
 {
@@ -49,15 +56,9 @@
     
     self.title = @"GTGraphView";
     
-    // TODO: get the source data and format it for the choosen graph type
-    // TODO: create and add the correct graph view on top of this one
-    
-    // Test
-    self.axesView = [[GTAxesView alloc] initWithFrame:self.view.bounds];
-    self.graphView = [[GTLineChartView alloc] initWithFrame:self.axesView.scrollView.bounds];
-    [self.axesView.scrollView addSubview:self.graphView];
-    [self.view addSubview:self.axesView];
-    self.graphView.dataSource = self;
+    if (self.graphType == GTGraphTypeLineChart || self.graphType == GTGraphTypeVerticalBars) {
+        self.shouldDisplayAxes = YES;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -65,25 +66,66 @@
     return YES;
 }
 
-#pragma mark - GTGraphViewDataSource
+#pragma mark - Custom Setters and Getters
 
-- (NSUInteger)numberOfValuesToDrawInGraphView:(GTGraphView *)graphView
+- (GTGraphView *)graphView
 {
-    // TEST
-    return 5;
+    if (!_graphView) {
+        switch (self.graphType) {
+            case GTGraphTypeLineChart:
+                _graphView = [[GTLineChartView alloc] initWithFrame:self.axesView.scrollView.bounds];
+                break;
+                
+            default:
+                _graphView = [[GTLineChartView alloc] initWithFrame:self.axesView.scrollView.bounds];
+                break;
+        }
+        
+        _graphView.dataSource = self;
+        _graphView.delegate = self;
+    }
+    
+    return _graphView;
 }
 
-- (NSArray *)graphObjectsForGraphView:(GTGraphView *)graphView
+- (GTAxesView *)axesView
 {
-    // TEST
+    if (!_axesView) {
+        _axesView = [[GTAxesView alloc] initWithFrame:self.view.bounds];
+    }
+    
+    return _axesView;
+}
+
+- (void)setShouldDisplayAxes:(BOOL)shouldDisplayAxes
+{
+    _shouldDisplayAxes = shouldDisplayAxes;
+    
+    if (_shouldDisplayAxes) {
+        [self.axesView.scrollView addSubview:self.graphView];
+        [self.view addSubview:self.axesView];
+    }
+}
+
+#pragma mark - GTGraphViewDataSource
+
+- (NSUInteger)numberOfObjectsToDrawInGraphView:(GTGraphView *)graphView
+{
+    // To be overridden in a subclass
+    return 0;
+}
+
+- (GTGraphObject *)graphView:(GTGraphView *)graphView objectAtIndex:(NSUInteger)index
+{
+    // To be overridden in a subclass
     return nil;
 }
 
 #pragma mark - GTGraphViewDelegate
 
-- (void)didSelectGraphObject:(id<GTGraphObjectProtocol>)object inGraphView:(GTGraphView *)graphView
+- (void)graphView:(GTGraphView *)graphView didSelectGraphObject:(GTGraphObject *)object
 {
-    NSLog(@"Did select object:%@ in graphView:%@", object, graphView);
+    // To be overridden in a subclass
 }
 
 @end
