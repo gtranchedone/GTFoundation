@@ -20,6 +20,7 @@ typedef enum {
     DetailEditingTypeChoice,
     DetailEditingTypeChoice2,
     DetailEditingTypeCashAmount,
+    DetailEditingTypeUntilDateSelection,
     DetailEditingTypeRepetingDateSelection
 } DetailEditingType;
 
@@ -31,7 +32,6 @@ NSString * const DetailEditingDelegateIndexKey;
 @interface GTDetailEditingViewController : UITableViewController
 
 @property (nonatomic, assign) id<GTDetailEditingDelegate> delegate;
-@property (nonatomic, assign) UIDatePickerMode datePickerMode;
 
 - (id)initWithEditingType:(DetailEditingType)type objects:(id)objects delegate:(id<GTDetailEditingDelegate>)delegate indexPath:(NSIndexPath *)indexPath;
 

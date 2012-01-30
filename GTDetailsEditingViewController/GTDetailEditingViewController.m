@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Sketch to Code. All rights reserved.
 //
 
+// TODO: typeDate -> add days of the week selection and "forever"
+
 #import "GTDetailEditingViewController.h"
 
 #import "NSNumberFormatter+SharedFormatter.h"
@@ -44,6 +46,7 @@ typedef enum
 @property (nonatomic, assign) BOOL negativeAmount;
 
 @property (nonatomic, assign) TimeSpanSelection currentTimeSpanSelection;
+@property (nonatomic, assign) UIDatePickerMode datePickerMode;
 
 - (void)sendDataBack;
 - (void)changeAmountSign:(UIButton *)sender;
@@ -86,13 +89,16 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         self.delegate = delegate;
         self.indexPath = indexPath;
         
+        if (type == DetailEditingTypeUntilDateSelection) {
+            self.type = DetailEditingTypeDate;
+            self.datePickerMode = UIDatePickerModeDate;
+        }
+        else if (type == DetailEditingTypeDate) {
+            self.datePickerMode = UIDatePickerModeDateAndTime;
+        }
+        
         if (self.objects == [NSNull null]) {
-            if (type == DetailEditingTypeDate) {
-                self.objects = [NSDate date];
-            }
-            else {
-                self.objects = nil;
-            }
+            self.objects = nil;
         }
         
         if (type == DetailEditingTypeChoice || type == DetailEditingTypeChoice2) {
@@ -124,6 +130,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     [super viewDidAppear:animated];
     
     if (self.type == DetailEditingTypeDate) {
+        if (!self.objects) self.objects = [NSDate date];
         [self.datePicker setDate:self.objects animated:YES];
         [self.tableView reloadData];
     } 
@@ -294,7 +301,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         if (!self.datePicker)
         {            
             self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, 325, 250)];
-            self.datePicker.datePickerMode = self.datePickerMode ? self.datePickerMode : UIDatePickerModeDateAndTime;
+            self.datePicker.datePickerMode = self.datePickerMode;
             self.datePicker.hidden = NO;
             self.datePicker.date = [NSDate date];
             [self.datePicker addTarget:self.tableView action:@selector(reloadData)forControlEvents:UIControlEventValueChanged];
