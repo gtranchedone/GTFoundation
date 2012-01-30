@@ -1,6 +1,6 @@
 //
 //  GTGraphObject.m
-//  GTFrameworkDemo
+//  GTFramework
 //
 //  Created by Gianluca Tranchedone on 17/01/12.
 //  Copyright (c) 2012 SketchToCode. All rights reserved.

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- * DetailsEditingType defines whether the return type is NSString, an NSDate or an
- * NSDictionary (containg the list of choices as a NSArray of NSStrings and the index of the chosen item as a NSNumber)
+ DetailsEditingType defines whether the return type is NSString, an NSDate or an
+ NSDictionary (containg the list of choices as a NSArray of NSStrings and the index of the chosen item as a NSNumber)
  */
 
 typedef enum {
@@ -19,7 +19,8 @@ typedef enum {
     DetailEditingTypeDate,
     DetailEditingTypeChoice,
     DetailEditingTypeChoice2,
-    DetailEditingTypeCashAmount
+    DetailEditingTypeCashAmount,
+    DetailEditingTypeRepetingDateSelection
 } DetailEditingType;
 
 NSString * const DetailEditingDelegateArrayKey;

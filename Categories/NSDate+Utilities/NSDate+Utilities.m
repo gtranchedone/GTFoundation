@@ -11,9 +11,9 @@
 */
 
 /**
- * This version of the file contains additions and changes made by
- * Gianluca Tranchedone ( http://sketchtocode.com ).
- * The author, Erica Sadun, is not responsible for those changes.
+ This version of the file contains additions and changes made by
+ Gianluca Tranchedone ( http://sketchtocode.com ).
+ The author, Erica Sadun, is not responsible for those changes.
  */
 
 #import "NSDate+Utilities.h"

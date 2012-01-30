@@ -11,10 +11,23 @@
 #import "NSNumberFormatter+SharedFormatter.h"
 #import "NSDateFormatter+SharedFormatter.h"
 
+#define TextViewTopMargin 10
+#define TextViewLeftMargin 20
 #define LongTextViewHeight 130
 #define UITableViewCellStandardHeight 30
-#define TextViewLeftMargin 20
-#define TextViewTopMargin 10
+#define MaximumNumberAllowed @"999999999999"
+
+#define DaysInWeek 7
+#define DaysInMonth 30
+#define DaysInYear 365
+
+typedef enum
+{
+    TimeSpanSelectionDays,
+    TimeSpanSelectionWeeks,
+    TimeSpanSelectionMonths,
+    TimeSpanSelectionYears
+} TimeSpanSelection;
 
 @interface GTDetailEditingViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -28,8 +41,9 @@
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIPickerView *generalPicker;
 @property (nonatomic, strong) UIButton *amountValueSwitcher;
-
 @property (nonatomic, assign) BOOL negativeAmount;
+
+@property (nonatomic, assign) TimeSpanSelection currentTimeSpanSelection;
 
 - (void)sendDataBack;
 - (void)changeAmountSign:(UIButton *)sender;
@@ -54,9 +68,11 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 @synthesize datePicker = datePicker_;
 @synthesize generalPicker = generalPicker_;
 @synthesize amountValueSwitcher = amountValueSwitcher_;
-
 @synthesize negativeAmount = negativeAmount_;
 
+@synthesize currentTimeSpanSelection = _currentTimeSpanSelection;
+
+#pragma mark - Initialization
 
 - (id)initWithEditingType:(DetailEditingType)type objects:(id)objects delegate:(id<GTDetailEditingDelegate>)delegate indexPath:(NSIndexPath *)indexPath
 {
@@ -69,6 +85,10 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         self.delegate = delegate;
         self.indexPath = indexPath;
         
+        if (self.objects == [NSNull null]) {
+            self.objects = nil;
+        }
+        
         if (type == DetailEditingTypeChoice || type == DetailEditingTypeChoice2) {
             self.choiceIndex = [[self.objects objectForKey:DetailEditingDelegateIndexKey] intValue];
             self.objects = [self.objects objectForKey:DetailEditingDelegateArrayKey];
@@ -76,14 +96,6 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -97,45 +109,21 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
                                                                         target:self action:@selector(sendDataBack)];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     if (self.type == DetailEditingTypeDate) {
         [self.datePicker setDate:self.objects animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:NO];
         [self.tableView reloadData];
     } 
     else if (self.type == DetailEditingTypeChoice2) {
         [self.generalPicker selectRow:self.choiceIndex inComponent:0 animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:NO];
         [self.tableView reloadData];
     }
     else if (self.type == DetailEditingTypeChoice) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.choiceIndex inSection:0] 
                               atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [self.navigationController setToolbarHidden:NO animated:YES];
-    }
-    else {
-        [self.navigationController setToolbarHidden:NO animated:YES];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    if (self.type == DetailEditingTypeDate || self.type == DetailEditingTypeChoice2) {
-        [self.navigationController setToolbarHidden:NO animated:YES];
-    } else {
-        [self.navigationController setToolbarHidden:YES animated:NO];
     }
 }
 
@@ -217,6 +205,20 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         }
         
         cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:0];
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+    }
+    else if (self.type == DetailEditingTypeRepetingDateSelection)
+    {
+        if (!self.generalPicker)
+        {
+            self.generalPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, self.view.bounds.size.width, 250)];
+            self.generalPicker.showsSelectionIndicator = YES;
+            self.generalPicker.delegate = self;
+            self.generalPicker.dataSource = self;
+            [self.view addSubview:self.generalPicker];
+        }
+        
+        cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:self.currentTimeSpanSelection];
         cell.textLabel.textAlignment = UITextAlignmentCenter;
     }
     else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
@@ -326,37 +328,32 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 {
     if (self.type == DetailEditingTypeCashAmount)
     {
-        // if deleting digits
-        if (range.length == 1 && range.location == [textField.text length] - 1)
+        NSString *newText = textField.text;
+        
+        NSDecimalNumberHandler *behaviour = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2
+                                                                                        raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                        raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+        
+        NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
+        
+        if (range.length == 1 && range.location == [textField.text length] - 1) // deleting digits
         {
-            NSDecimalNumberHandler *behaviour = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:2
-                                                                                            raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                            raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
             amount = [amount decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour];        
             textField.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
         } 
-        else // adding digits
-        {
-            // Get the current amount from the text field, add the new digit and multiply by 10. Then set the new text.
-            NSString *newText = textField.text;
-            
-            if (![string isEqualToString:@"0"]) {
+        else {
+            // since we multiply the value extracted from the textField by 10, if the new digit is 0 we don't need to do anything
+            if (![string isEqualToString:[[NSDecimalNumber zero] stringValue]]) {
                 newText = [textField.text stringByAppendingString:string];
             }
             
-            NSDecimalNumberHandler *behaviour = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:2
-                                                                                            raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                            raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:newText];
             amount = [amount decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour]; 
             newText = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
             
-            if ([amount compare:[NSDecimalNumber decimalNumberWithString:@"9999999999999"]] == NSOrderedDescending) {
-                return NO;
-            }
-            else { 
-                textField.text = newText;
+            // this is done to prevent the nsdecimalnumber's overflow exeption to trigger
+            if (![amount compare:[NSDecimalNumber decimalNumberWithString:MaximumNumberAllowed]] == NSOrderedDescending) {
+                self.textField.text = newText;
             }
         }
         
@@ -399,10 +396,13 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (pickerView == self.generalPicker) {
-        self.choiceIndex = row;
-        [self.tableView reloadData];
+    if (self.type == DetailEditingTypeRepetingDateSelection) {
+        self.currentTimeSpanSelection = component;
     }
+    
+    self.choiceIndex = row;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UIPickerDataSource
@@ -410,15 +410,53 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     if (pickerView == self.generalPicker) {
-        return [self.objects count];
-    } else {
+        if (self.type == DetailEditingTypeRepetingDateSelection) {
+            switch (component) {
+                case 0:
+                    if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
+                        return 30;
+                    } 
+                    else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+                        return 4;
+                    }
+                    else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+                        return 12;
+                    }
+                    else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+                        return 99;
+                    }
+                    else {
+                        return 0;
+                    }
+                    
+                    break;
+                    
+                case 1:
+                    return 4;
+                    break;
+                
+                default:
+                    return 0;
+                    break;
+            }
+        } 
+        else {
+            return [self.objects count];
+        }
+    } 
+    else {
         return 0;
     }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 1;
+    if (self.type == DetailEditingTypeRepetingDateSelection) {
+        return 2;
+    } 
+    else {
+        return 1;
+    }
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -430,7 +468,29 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = UITextAlignmentCenter;
         label.textColor = [UIColor blackColor];
-        label.text = [self.objects objectAtIndex:row];
+        
+        if (self.type == DetailEditingTypeRepetingDateSelection) {
+            if (component == 0) {
+                label.text = [NSString stringWithFormat:@"%d", row];
+            }
+            else {
+                if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
+                    label.text = NSLocalizedString(@"Days", nil);
+                } 
+                else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+                    label.text = NSLocalizedString(@"Weeks", nil);
+                }
+                else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+                    label.text = NSLocalizedString(@"Months", nil);
+                }
+                else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+                    label.text = NSLocalizedString(@"Years", nil);
+                }
+            }
+        } 
+        else {
+            label.text = [self.objects objectAtIndex:row];
+        }
         
         return label;
     }
@@ -488,6 +548,26 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     {
         if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData:indexPath:)]) {
             [self.delegate detailEditingViewDidFinishWithReturnData:self.datePicker.date indexPath:self.indexPath];
+        }
+    }
+    else if (self.type == DetailEditingTypeRepetingDateSelection)
+    {
+        NSInteger selectedDays = 1;
+        if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+            selectedDays = DaysInWeek;
+        }
+        else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+            selectedDays = DaysInMonth;
+        }
+        else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+            selectedDays = DaysInYear;
+        }
+        
+        
+        NSNumber *numberOfDays = [NSNumber numberWithInt:selectedDays];
+        
+        if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData:indexPath:)]) {
+            [self.delegate detailEditingViewDidFinishWithReturnData:numberOfDays indexPath:self.indexPath];
         }
     }
     

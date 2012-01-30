@@ -1,6 +1,6 @@
 //
 //  GTFramework.h
-//  GTFrameworkDemo
+//  GTFramework
 //
 //  Created by Gianluca Tranchedone on 17/12/11.
 //  Copyright (c) 2012 SketchToCode. All rights reserved.
@@ -21,6 +21,7 @@
 #import "GTMapViewController.h"
 #import "GTGraphViewController.h"
 #import "GTGuideViewController.h"
+#import "GTManagedObjectSelector.h"
 #import "GTPasscodeViewController.h"
 #import "GTDetailEditingViewController.h"
 

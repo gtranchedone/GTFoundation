@@ -55,7 +55,7 @@
 @end
 
 
-/*** GTTextViewDelegate Protocol ***/
+// GTTextViewDelegate
 
 @protocol GTTextViewCellDelegate
 
