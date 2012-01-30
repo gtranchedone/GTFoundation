@@ -103,10 +103,10 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.title = NSLocalizedString(@"Edit", nil);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                        target:self action:@selector(sendDataBack)];
+                                                                                           target:self action:@selector(sendDataBack)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -165,11 +165,11 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textAlignment = UITextAlignmentLeft;
-
+    
     if (self.type == DetailEditingTypeChoice) 
     {
         cell.textLabel.text = [self.objects objectAtIndex:indexPath.row];
-
+        
         // Accessory
         if ([UIImage imageNamed:@"CellAccessoryEmpty.png"]) { // If the app is using my set of images
             if (indexPath.row != self.choiceIndex) {
@@ -280,7 +280,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     else if (self.type == DetailEditingTypeDate)
     {
         cell.textLabel.textAlignment = UITextAlignmentCenter;
-
+        
         if (!self.datePicker)
         {            
             self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, 325, 250)];
@@ -395,7 +395,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (self.type == DetailEditingTypeRepetingDateSelection) {
-        if (component == 0) {
+        if (component == 1) {
             self.currentTimeSpanSelection = row;
         }
         else {
@@ -438,7 +438,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
                 case 1:
                     return 4;
                     break;
-                
+                    
                 default:
                     return 0;
                     break;
@@ -511,19 +511,35 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (self.type == DetailEditingTypeRepetingDateSelection) {
-        NSString *string = [NSString stringWithFormat:@"%d", row + 1];
+        NSString *string = [NSString stringWithFormat:@"%d ", row + 1];
         
-        if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
-            [string stringByAppendingString:NSLocalizedString(@"Day(s)", nil)];
-        } 
-        else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
-            [string stringByAppendingString:NSLocalizedString(@"Week(s)", nil)];
+        if (row > 1) {
+            if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Days", nil)];
+            } 
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Weeks", nil)];
+            }
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Months", nil)];
+            }
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Years", nil)];
+            }
         }
-        else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
-            [string stringByAppendingString:NSLocalizedString(@"Month(s)", nil)];
-        }
-        else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
-            [string stringByAppendingString:NSLocalizedString(@"Year(s)", nil)];
+        else {
+            if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Day", nil)];
+            } 
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Week", nil)];
+            }
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Month", nil)];
+            }
+            else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+                string = [string stringByAppendingString:NSLocalizedString(@"Year", nil)];
+            }
         }
         
         return string;
@@ -550,7 +566,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
     {
         [self.textField resignFirstResponder];
-
+        
         if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData: indexPath:)]) {
             if (self.negativeAmount) {
                 [self.delegate detailEditingViewDidFinishWithReturnData:[@"-" stringByAppendingString:self.textField.text] 
