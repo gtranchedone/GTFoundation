@@ -355,7 +355,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             newText = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
             
             // this is done to prevent the nsdecimalnumber's overflow exeption to trigger
-            if (![amount compare:[NSDecimalNumber decimalNumberWithString:MaximumNumberAllowed]] == NSOrderedDescending) {
+            if (!([amount compare:[NSDecimalNumber decimalNumberWithString:MaximumNumberAllowed]] == NSOrderedDescending)) {
                 self.textField.text = newText;
             }
         }
