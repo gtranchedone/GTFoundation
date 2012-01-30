@@ -145,11 +145,6 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 
 #pragma mark - TableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.type == DetailEditingTypeChoice) {
@@ -504,11 +499,26 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (pickerView == self.generalPicker) {
-        return [self.objects objectAtIndex:row];
-    }
+    if (self.type == DetailEditingTypeRepetingDateSelection) {
+        NSString *string = [NSString stringWithFormat:@"%d", row];
+        
+        if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
+            [string stringByAppendingString:NSLocalizedString(@"Day(s)", nil)];
+        } 
+        else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
+            [string stringByAppendingString:NSLocalizedString(@"Week(s)", nil)];
+        }
+        else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
+            [string stringByAppendingString:NSLocalizedString(@"Month(s)", nil)];
+        }
+        else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
+            [string stringByAppendingString:NSLocalizedString(@"Year(s)", nil)];
+        }
+        
+        return string;
+    } 
     else {
-        return nil;
+        return [self.objects objectAtIndex:row];
     }
 }
 
