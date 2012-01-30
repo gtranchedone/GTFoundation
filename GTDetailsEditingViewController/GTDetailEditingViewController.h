@@ -28,15 +28,17 @@ NSString * const DetailEditingDelegateIndexKey;
 
 @protocol GTDetailEditingDelegate;
 
-@interface GTDetailEditingViewController : UITableViewController {
-    
-}
+@interface GTDetailEditingViewController : UITableViewController
 
-@property (nonatomic, unsafe_unretained) id<GTDetailEditingDelegate> delegate;
+@property (nonatomic, assign) id<GTDetailEditingDelegate> delegate;
+@property (nonatomic, assign) UIDatePickerMode datePickerMode;
 
 - (id)initWithEditingType:(DetailEditingType)type objects:(id)objects delegate:(id<GTDetailEditingDelegate>)delegate indexPath:(NSIndexPath *)indexPath;
 
 @end
+
+
+// GTDetailEditingDelegate
 
 @protocol GTDetailEditingDelegate <NSObject>
 

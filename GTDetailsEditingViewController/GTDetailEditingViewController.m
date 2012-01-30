@@ -57,18 +57,19 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 
 @implementation GTDetailEditingViewController
 
-@synthesize delegate = delegate_;
-@synthesize indexPath = indexPath_;
-@synthesize type = type_;
-@synthesize objects = objects_;
+@synthesize delegate = _delegate;
+@synthesize indexPath = _indexPath;
+@synthesize type = _type;
+@synthesize objects = _objects;
+@synthesize datePickerMode = _datePickerMode;
 
-@synthesize choiceIndex = choiceIndex_;
-@synthesize textField = textField_;
-@synthesize textView = textView_;
-@synthesize datePicker = datePicker_;
-@synthesize generalPicker = generalPicker_;
-@synthesize amountValueSwitcher = amountValueSwitcher_;
-@synthesize negativeAmount = negativeAmount_;
+@synthesize choiceIndex = _choiceIndex;
+@synthesize textField = _textField;
+@synthesize textView = _textView;
+@synthesize datePicker = _datePicker;
+@synthesize generalPicker = _generalPicker;
+@synthesize amountValueSwitcher = _amountValueSwitcher;
+@synthesize negativeAmount = _negativeAmount;
 
 @synthesize currentTimeSpanSelection = _currentTimeSpanSelection;
 
@@ -86,12 +87,21 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         self.indexPath = indexPath;
         
         if (self.objects == [NSNull null]) {
-            self.objects = nil;
+            if (type == DetailEditingTypeDate) {
+                self.objects = [NSDate date];
+            }
+            else {
+                self.objects = nil;
+            }
         }
         
         if (type == DetailEditingTypeChoice || type == DetailEditingTypeChoice2) {
             self.choiceIndex = [[self.objects objectForKey:DetailEditingDelegateIndexKey] intValue];
             self.objects = [self.objects objectForKey:DetailEditingDelegateArrayKey];
+        }
+        
+        if (type != DetailEditingTypeChoice) {
+            self.tableView.scrollEnabled = NO;
         }
     }
     
@@ -284,7 +294,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         if (!self.datePicker)
         {            
             self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, 325, 250)];
-            self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+            self.datePicker.datePickerMode = self.datePickerMode ? self.datePickerMode : UIDatePickerModeDateAndTime;
             self.datePicker.hidden = NO;
             self.datePicker.date = [NSDate date];
             [self.datePicker addTarget:self.tableView action:@selector(reloadData)forControlEvents:UIControlEventValueChanged];
@@ -513,7 +523,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     if (self.type == DetailEditingTypeRepetingDateSelection) {
         NSString *string = [NSString stringWithFormat:@"%d ", row + 1];
         
-        if (row > 1) {
+        if (self.choiceIndex > 1) {
             if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
                 string = [string stringByAppendingString:NSLocalizedString(@"Days", nil)];
             } 
