@@ -334,11 +334,11 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
                                                                                         raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                         raiseOnUnderflow:NO raiseOnDivideByZero:NO];
         
-        NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
-        
         if (range.length == 1 && range.location == [textField.text length] - 1) // deleting digits
         {
+            NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
+            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
+            
             amount = [amount decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour];        
             textField.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
         } 
@@ -347,6 +347,9 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             if (![string isEqualToString:[[NSDecimalNumber zero] stringValue]]) {
                 newText = [textField.text stringByAppendingString:string];
             }
+            
+            NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
+            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
             
             amount = [amount decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour]; 
             newText = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
