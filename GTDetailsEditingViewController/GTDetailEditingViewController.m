@@ -395,10 +395,16 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (self.type == DetailEditingTypeRepetingDateSelection) {
-        self.currentTimeSpanSelection = component;
+        if (component == 0) {
+            self.currentTimeSpanSelection = row;
+        }
+        else {
+            self.choiceIndex = row;
+        }
     }
-    
-    self.choiceIndex = row;
+    else {
+        self.choiceIndex = row;
+    }
     
     [self.tableView reloadData];
 }
@@ -469,20 +475,25 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         
         if (self.type == DetailEditingTypeRepetingDateSelection) {
             if (component == 0) {
-                label.text = [NSString stringWithFormat:@"%d", row];
+                label.text = [NSString stringWithFormat:@"%d", row + 1];
             }
             else {
-                if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
-                    label.text = NSLocalizedString(@"Days", nil);
-                } 
-                else if (self.currentTimeSpanSelection == TimeSpanSelectionWeeks) {
-                    label.text = NSLocalizedString(@"Weeks", nil);
-                }
-                else if (self.currentTimeSpanSelection == TimeSpanSelectionMonths) {
-                    label.text = NSLocalizedString(@"Months", nil);
-                }
-                else if (self.currentTimeSpanSelection == TimeSpanSelectionYears) {
-                    label.text = NSLocalizedString(@"Years", nil);
+                switch (row) {
+                    case TimeSpanSelectionDays:
+                        label.text = NSLocalizedString(@"Days", nil);
+                        break;
+                        
+                    case TimeSpanSelectionWeeks:
+                        label.text = NSLocalizedString(@"Weeks", nil);
+                        break;
+                        
+                    case TimeSpanSelectionMonths:
+                        label.text = NSLocalizedString(@"Months", nil);
+                        break;
+                        
+                    case TimeSpanSelectionYears:
+                        label.text = NSLocalizedString(@"Years", nil);
+                        break;
                 }
             }
         } 
@@ -500,7 +511,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (self.type == DetailEditingTypeRepetingDateSelection) {
-        NSString *string = [NSString stringWithFormat:@"%d", row];
+        NSString *string = [NSString stringWithFormat:@"%d", row + 1];
         
         if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
             [string stringByAppendingString:NSLocalizedString(@"Day(s)", nil)];
