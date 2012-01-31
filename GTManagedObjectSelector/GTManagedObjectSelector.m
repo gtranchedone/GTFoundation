@@ -90,7 +90,7 @@
     if ((self.allowNewObjectsCreation && self.selectedManagedObject && self.seaching)  && (section == 0)) {
         return 2;
     }
-    else if ((self.allowNewObjectsCreation || self.selectedManagedObject) && (section == 0)) {
+    else if (((self.allowNewObjectsCreation && self.seaching) || self.selectedManagedObject) && (section == 0)) {
         return 1;
     }
     else {
