@@ -225,7 +225,7 @@
 - (UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] initWithFrame:(CGRect){0, 0, self.view.bounds.size.width, self.view.bounds.size.height}];
+        _searchBar = [[UISearchBar alloc] initWithFrame:(CGRect){0, 0, self.view.bounds.size.width, 50}];
         _searchBar.delegate = self;
     }
     
