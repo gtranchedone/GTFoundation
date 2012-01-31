@@ -126,8 +126,13 @@
         [self searchBar:self.searchBar textDidChange:self.searchBar.text];
     }
     else {
-        NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        self.selectedManagedObject = [self.fetchedResultsController objectAtIndexPath:objectIndexPath];
+        if (self.seaching) {
+            self.selectedManagedObject = [self.searchResults objectAtIndex:indexPath.row];
+        }
+        else {
+            NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+            self.selectedManagedObject = [self.fetchedResultsController objectAtIndexPath:objectIndexPath];
+        }
     }
     
     [self.tableView reloadData];
