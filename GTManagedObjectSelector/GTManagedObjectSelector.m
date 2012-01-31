@@ -157,6 +157,7 @@
 {
     self.seaching = YES;
     [searchBar setShowsCancelButton:YES animated:YES];
+    [self.tableView reloadData];
     
     return YES;
 }
