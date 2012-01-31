@@ -121,21 +121,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.allowNewObjectsCreation && (indexPath.section == 0)) {
+    if (self.seaching && (indexPath.section == 0)) {
         self.selectedManagedObject = [self creteNewEntity];
-        
-        if (self.seaching) {
-            [self searchBar:self.searchBar textDidChange:self.searchBar.text];
-        }
+        [self searchBar:self.searchBar textDidChange:self.searchBar.text];
     }
     else {
-        if (self.seaching) {
-            self.selectedManagedObject = [self.searchResults objectAtIndex:indexPath.row];
-        }
-        else {
-            NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-            self.selectedManagedObject = [self.fetchedResultsController objectAtIndexPath:objectIndexPath];
-        }
+        NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+        self.selectedManagedObject = [self.fetchedResultsController objectAtIndexPath:objectIndexPath];
     }
     
     [self.tableView reloadData];
