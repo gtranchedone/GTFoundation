@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong, readwrite) NSArray *searchResults;
 @property (nonatomic, readwrite, getter = isSearching) BOOL seaching;
-@property (nonatomic, strong, readwrite) NSManagedObject *selectedManagedObject;
 
 - (void)doneButtonPressed;
 
@@ -26,8 +25,8 @@
 
 @synthesize searchBar = _searchBar;
 @synthesize searchResults = _searchResults;
-@synthesize allowNewObjectsCreation = _allowNewObjectsCreation;
 @synthesize selectedManagedObject = _selectedManagedObject;
+@synthesize allowNewObjectsCreation = _allowNewObjectsCreation;
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -78,7 +77,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.allowNewObjectsCreation) {
+    if ((self.allowNewObjectsCreation && self.seaching) || self.selectedManagedObject) {
         return 2;
     }
     else {
@@ -88,7 +87,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.allowNewObjectsCreation && (section == 0)) { // add a row for object creation
+    if ((self.allowNewObjectsCreation && self.selectedManagedObject)  && (section == 0)) { // add a row for object creation
+        return 2;
+    }
+    else if ((self.allowNewObjectsCreation || self.selectedManagedObject) && (section == 0)) { // add a row for object creation
         return 1;
     }
     else {
