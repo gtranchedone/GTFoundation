@@ -19,7 +19,6 @@
 
 @property (nonatomic, assign) id<GTManagedObjectSelectorDelegate> delegate;
 
-@property (nonatomic, assign) BOOL showSearchBar; // Default is YES.
 @property (nonatomic, assign) BOOL allowNewObjectsCreation; // Default is YES.
 @property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
 @property (nonatomic, strong, readonly) NSManagedObject *selectedManagedObject;

@@ -13,6 +13,8 @@
 @property (nonatomic, strong, readwrite) NSArray *searchResults;
 @property (nonatomic, strong, readwrite) NSManagedObject *selectedManagedObject;
 
+@property (nonatomic, assign, getter = isSearching) BOOL seaching;
+
 - (void)doneButtonPressed;
 
 @end
@@ -23,13 +25,14 @@
 
 @synthesize delegate = _delegate;
 
-@synthesize showSearchBar = _showSearchBar;
 @synthesize searchResults = _searchResults;
 @synthesize allowNewObjectsCreation = _allowNewObjectsCreation;
 @synthesize selectedManagedObject = _selectedManagedObject;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize fetchedResultsController = _fetchedResultsController;
+
+@synthesize seaching = _seaching;
 
 #pragma mark - View lifecycle
 
@@ -43,8 +46,12 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     
     // Options
-    self.showSearchBar = YES;
     self.allowNewObjectsCreation = YES;
+    
+    self.tableView.tableHeaderView = self.searchDisplayController.searchBar;
+    self.searchDisplayController.searchResultsDataSource = self;
+    self.searchDisplayController.delegate = self;
+    self.searchDisplayController.active = YES;
     
     // Perform Fetch
     self.fetchedResultsController.delegate = self;
@@ -54,12 +61,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return UIInterfaceOrientationIsPortrait(interfaceOrientation);
-}
-
-- (NSManagedObject *)selectedManagedObject
-{
-    // to be implemented in a subclass
-    return nil;
 }
 
 #pragma mark - Actions
@@ -205,20 +206,6 @@
 }
 
 #pragma mark - Custom Setters and Getters
-
-- (void)setShowSearchBar:(BOOL)showSearchBar
-{
-    _showSearchBar = showSearchBar;
-    
-    if (showSearchBar) {
-        self.tableView.tableHeaderView = self.searchDisplayController.searchBar;
-        self.searchDisplayController.searchResultsDataSource = self;
-        self.searchDisplayController.delegate = self;
-    }
-    else {
-        self.tableView.tableHeaderView = nil;
-    }
-}
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
