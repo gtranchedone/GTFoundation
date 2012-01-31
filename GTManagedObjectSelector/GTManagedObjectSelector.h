@@ -25,6 +25,7 @@
 @property (nonatomic, strong, readonly) UISearchBar *searchBar;
 @property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
 @property (nonatomic, readonly, getter = isSearching) BOOL seaching;
+@property (nonatomic, readonly) NSPredicate *searchPredicate;
 
 // Properties to set to use this class.
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;

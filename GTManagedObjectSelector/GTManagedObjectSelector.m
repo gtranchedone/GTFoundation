@@ -139,12 +139,8 @@
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    self.seaching = YES;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY contains[cd] %@", searchText];
-    self.searchResults = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
-    
+{    
+    self.searchResults = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate];
     [self.tableView reloadData];
 }
 
@@ -157,9 +153,20 @@
     self.seaching = NO;
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    self.seaching = YES;
     [searchBar setShowsCancelButton:YES animated:YES];
+    
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    self.searchResults = nil;
+    self.seaching = NO;
+    
+    return YES;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
