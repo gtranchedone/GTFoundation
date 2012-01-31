@@ -146,6 +146,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
+    searchBar.text = nil;
     [searchBar setShowsCancelButton:NO animated:YES];
     [searchBar resignFirstResponder];
     
@@ -237,6 +238,11 @@
     }
     
     return _searchBar;
+}
+
+- (NSPredicate *)searchPredicate
+{
+    return nil;
 }
 
 @end
