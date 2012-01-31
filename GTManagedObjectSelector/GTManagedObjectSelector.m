@@ -11,9 +11,8 @@
 @interface GTManagedObjectSelector ()
 
 @property (nonatomic, strong, readwrite) NSArray *searchResults;
+@property (nonatomic, readwrite, getter = isSearching) BOOL seaching;
 @property (nonatomic, strong, readwrite) NSManagedObject *selectedManagedObject;
-
-@property (nonatomic, assign, getter = isSearching) BOOL seaching;
 
 - (void)doneButtonPressed;
 
