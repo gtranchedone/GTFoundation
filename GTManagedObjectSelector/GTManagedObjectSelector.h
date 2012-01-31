@@ -12,12 +12,17 @@
 @protocol GTManagedObjectSelectorDelegate;
 
 @interface GTManagedObjectSelector : UITableViewController <NSFetchedResultsControllerDelegate>
+{
+    @protected
+    NSFetchedResultsController *_fetchedResultsController;
+}
 
 @property (nonatomic, assign) id<GTManagedObjectSelectorDelegate> delegate;
 
 @property (nonatomic, assign) BOOL showSearchBar; // Default is YES.
 @property (nonatomic, assign) BOOL allowNewObjectsCreation; // Default is YES.
-@property (nonatomic, readonly) NSManagedObject *selectedManagedObject; // subclasses must provide this!
+@property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
+@property (nonatomic, strong, readonly) NSManagedObject *selectedManagedObject; // subclasses must provide this!
 
 // Properties to set to use this class.
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
