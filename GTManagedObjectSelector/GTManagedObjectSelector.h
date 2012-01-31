@@ -22,7 +22,7 @@
 @property (nonatomic, assign) BOOL showSearchBar; // Default is YES.
 @property (nonatomic, assign) BOOL allowNewObjectsCreation; // Default is YES.
 @property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
-@property (nonatomic, strong, readonly) NSManagedObject *selectedManagedObject; // subclasses must provide this!
+@property (nonatomic, strong) NSManagedObject *selectedManagedObject; // subclasses must provide this! TableView is reloaded when set.
 
 // Properties to set to use this class.
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -35,6 +35,6 @@
 
 @protocol GTManagedObjectSelectorDelegate <NSObject>
 
-- (void)didFinishWithManagedObject:(NSManagedObject *)managedObject;
+- (void)managedObjectSelector:(GTManagedObjectSelector *)managedObjectSelector didFinishWithManagedObject:(NSManagedObject *)object;
 
 @end

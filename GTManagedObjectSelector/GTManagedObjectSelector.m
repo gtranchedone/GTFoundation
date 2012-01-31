@@ -65,8 +65,8 @@
 
 - (void)doneButtonPressed
 {
-    if ([self.delegate respondsToSelector:@selector(didFinishWithManagedObject:)]) {
-        [self.delegate didFinishWithManagedObject:self.selectedManagedObject];
+    if ([self.delegate respondsToSelector:@selector(managedObjectSelector:didFinishWithManagedObject:)]) {
+        [self.delegate managedObjectSelector:self didFinishWithManagedObject:self.selectedManagedObject];
     }
 }
 
@@ -205,6 +205,13 @@
     else {
         self.tableView.tableHeaderView = nil;
     }
+}
+
+- (void)setSelectedManagedObject:(NSManagedObject *)selectedManagedObject
+{
+    _selectedManagedObject = selectedManagedObject;
+    
+    [self.tableView reloadData];
 }
 
 - (NSFetchedResultsController *)fetchedResultsController
