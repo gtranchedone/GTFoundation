@@ -121,6 +121,10 @@
 {
     if (self.allowNewObjectsCreation && (indexPath.section == 0)) {
         self.selectedManagedObject = [self creteNewEntity];
+        
+        if (self.seaching) {
+            [self searchBar:self.searchBar textDidChange:self.searchBar.text];
+        }
     }
     else {
         if (self.seaching) {
