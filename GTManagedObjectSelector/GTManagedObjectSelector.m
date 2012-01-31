@@ -11,6 +11,7 @@
 @interface GTManagedObjectSelector () <UISearchDisplayDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong, readwrite) NSArray *searchResults;
+@property (nonatomic, strong, readwrite) NSManagedObject *selectedManagedObject;
 
 - (void)doneButtonPressed;
 
@@ -70,6 +71,11 @@
     }
 }
 
+- (NSManagedObject *)creteNewEntity
+{
+    return nil;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -115,13 +121,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (self.allowNewObjectsCreation && (indexPath.section == 0)) {
+        self.selectedManagedObject = [self creteNewEntity];
+    }
+    else {
+        if (self.searchResults) {
+            self.selectedManagedObject = [self.searchResults objectAtIndex:indexPath.row];
+        }
+        else {
+            NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+            self.selectedManagedObject = [self.fetchedResultsController objectAtIndexPath:objectIndexPath];
+        }
+    }
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UISearchDisplayDelegate
@@ -205,13 +218,6 @@
     else {
         self.tableView.tableHeaderView = nil;
     }
-}
-
-- (void)setSelectedManagedObject:(NSManagedObject *)selectedManagedObject
-{
-    _selectedManagedObject = selectedManagedObject;
-    
-    [self.tableView reloadData];
 }
 
 - (NSFetchedResultsController *)fetchedResultsController

@@ -22,11 +22,13 @@
 @property (nonatomic, assign) BOOL showSearchBar; // Default is YES.
 @property (nonatomic, assign) BOOL allowNewObjectsCreation; // Default is YES.
 @property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
-@property (nonatomic, strong) NSManagedObject *selectedManagedObject; // subclasses must provide this! TableView is reloaded when set.
+@property (nonatomic, strong, readonly) NSManagedObject *selectedManagedObject;
 
 // Properties to set to use this class.
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
+- (NSManagedObject *)creteNewEntity; // default implementation returns nil. To be overridden by subclasses.
 
 @end
 
