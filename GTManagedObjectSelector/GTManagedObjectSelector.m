@@ -151,6 +151,8 @@
     
     self.searchResults = nil;
     self.seaching = NO;
+    
+    [self.tableView reloadData];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
@@ -163,9 +165,7 @@
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    self.searchResults = nil;
-    self.seaching = NO;
-    
+    [self searchBarCancelButtonClicked:searchBar];
     return YES;
 }
 
