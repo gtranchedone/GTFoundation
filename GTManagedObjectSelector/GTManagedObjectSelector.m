@@ -51,7 +51,6 @@
     self.tableView.tableHeaderView = self.searchBar;
     
     // Perform Fetch
-    self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
 }
 
