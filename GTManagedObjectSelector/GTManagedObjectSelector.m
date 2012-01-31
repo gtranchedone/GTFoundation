@@ -87,10 +87,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ((self.allowNewObjectsCreation && self.selectedManagedObject)  && (section == 0)) { // add a row for object creation
+    if ((self.allowNewObjectsCreation && self.selectedManagedObject && self.seaching)  && (section == 0)) {
         return 2;
     }
-    else if ((self.allowNewObjectsCreation || self.selectedManagedObject) && (section == 0)) { // add a row for object creation
+    else if ((self.allowNewObjectsCreation || self.selectedManagedObject) && (section == 0)) {
         return 1;
     }
     else {
