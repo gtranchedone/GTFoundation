@@ -11,7 +11,7 @@
 
 @protocol GTManagedObjectSelectorDelegate;
 
-@interface GTManagedObjectSelector : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface GTManagedObjectSelector : UITableViewController <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
 {
     @protected
     NSFetchedResultsController *_fetchedResultsController;
@@ -20,11 +20,11 @@
 @property (nonatomic, assign) id<GTManagedObjectSelectorDelegate> delegate;
 
 @property (nonatomic, assign) BOOL allowNewObjectsCreation; // Default is YES.
+@property (nonatomic, strong, readonly) UISearchBar *searchBar;
 @property (nonatomic, strong, readonly) NSArray *searchResults; // nil when not searching.
 @property (nonatomic, strong, readonly) NSManagedObject *selectedManagedObject;
 
 // Properties to set to use this class.
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 - (NSManagedObject *)creteNewEntity; // default implementation returns nil. To be overridden by subclasses.

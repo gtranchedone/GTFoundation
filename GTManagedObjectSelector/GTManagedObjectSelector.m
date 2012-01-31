@@ -8,7 +8,7 @@
 
 #import "GTManagedObjectSelector.h"
 
-@interface GTManagedObjectSelector () <UISearchDisplayDelegate, NSFetchedResultsControllerDelegate>
+@interface GTManagedObjectSelector ()
 
 @property (nonatomic, strong, readwrite) NSArray *searchResults;
 @property (nonatomic, strong, readwrite) NSManagedObject *selectedManagedObject;
@@ -25,11 +25,11 @@
 
 @synthesize delegate = _delegate;
 
+@synthesize searchBar = _searchBar;
 @synthesize searchResults = _searchResults;
 @synthesize allowNewObjectsCreation = _allowNewObjectsCreation;
 @synthesize selectedManagedObject = _selectedManagedObject;
 
-@synthesize managedObjectContext = _managedObjectContext;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 @synthesize seaching = _seaching;
@@ -48,10 +48,8 @@
     // Options
     self.allowNewObjectsCreation = YES;
     
-    self.tableView.tableHeaderView = self.searchDisplayController.searchBar;
-    self.searchDisplayController.searchResultsDataSource = self;
-    self.searchDisplayController.delegate = self;
-    self.searchDisplayController.active = YES;
+    // Search Bar
+    self.tableView.tableHeaderView = self.searchBar;
     
     // Perform Fetch
     self.fetchedResultsController.delegate = self;
@@ -74,6 +72,7 @@
 
 - (NSManagedObject *)creteNewEntity
 {
+    // to override in subclasses.
     return nil;
 }
 
@@ -95,7 +94,7 @@
         return 1;
     }
     else {
-        if (self.searchResults) {
+        if (self.seaching) {
             return self.searchResults.count;
         }
         else {
@@ -126,7 +125,7 @@
         self.selectedManagedObject = [self creteNewEntity];
     }
     else {
-        if (self.searchResults) {
+        if (self.seaching) {
             self.selectedManagedObject = [self.searchResults objectAtIndex:indexPath.row];
         }
         else {
@@ -138,19 +137,30 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - UISearchDisplayDelegate
+#pragma mark - UISearchBarDelegate
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY contains[cd] %@", searchString];
+    self.seaching = YES;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY contains[cd] %@", searchText];
     self.searchResults = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
     
-    return YES;
+    [self.tableView reloadData];
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    
     self.searchResults = nil;
+    self.seaching = NO;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -211,6 +221,16 @@
 {
     // to be overridden by subclasses
     return _fetchedResultsController;
+}
+
+- (UISearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc] initWithFrame:(CGRect){0, 0, self.view.bounds.size.width, self.view.bounds.size.height}];
+        _searchBar.delegate = self;
+    }
+    
+    return _searchBar;
 }
 
 @end

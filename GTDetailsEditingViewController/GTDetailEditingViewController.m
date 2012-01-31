@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Sketch to Code. All rights reserved.
 //
 
-// TODO: typeDate -> add days of the week selection and "forever"
+// TODO: typeDate -> add days of the week selection, "never", "soon" and "forever"
 
 #import "GTDetailEditingViewController.h"
 
