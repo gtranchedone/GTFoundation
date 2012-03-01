@@ -11,7 +11,10 @@
 
 @interface UIImage (ScreenCapture)
 
++ (UIImage *)imageByCropping:(UIImage *)imageToCrop toRect:(CGRect)rect;
 + (UIImage *)captureRect:(CGRect)rect inView:(UIView *)view;
 + (UIImage *)captureView:(UIView *)view;
+
+- (UIImage *)imageByScalingAndCroppingForSize:(CGSize)targetSize;
 
 @end
