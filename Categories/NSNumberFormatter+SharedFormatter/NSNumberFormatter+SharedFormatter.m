@@ -21,9 +21,6 @@ static NSNumberFormatter *sharedCurrencyFormatter = nil;
         [sharedDecimalFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
         [sharedDecimalFormatter setMinimumFractionDigits:2];
         [sharedDecimalFormatter setMaximumFractionDigits:2];
-        [sharedDecimalFormatter setGroupingSeparator:@"."];
-        [sharedDecimalFormatter setDecimalSeparator:@","];
-        [sharedDecimalFormatter setZeroSymbol:@"0,00"];
     }
     
     return sharedDecimalFormatter;
@@ -34,14 +31,10 @@ static NSNumberFormatter *sharedCurrencyFormatter = nil;
     if (!sharedCurrencyFormatter) 
     {
         sharedCurrencyFormatter = [[NSNumberFormatter alloc] init];
+        [sharedCurrencyFormatter setLocale:[NSLocale currentLocale]];
         [sharedCurrencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [sharedCurrencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-        [sharedCurrencyFormatter setMaximumFractionDigits:2];
-        [sharedCurrencyFormatter setMinimumFractionDigits:2];
-        [sharedCurrencyFormatter setNegativeFormat:@"#,##0¤"];
-        [sharedCurrencyFormatter setPositiveFormat:@"#,##0¤"];
-        [sharedCurrencyFormatter setCurrencyGroupingSeparator:@"."];
-        [sharedCurrencyFormatter setCurrencyDecimalSeparator:@","];
+        [sharedCurrencyFormatter setNegativeFormat:@"-#,##0.00¤"];
+        [sharedCurrencyFormatter setPositiveFormat:@"#,##0.00¤"];
     }
     
     return sharedCurrencyFormatter;
