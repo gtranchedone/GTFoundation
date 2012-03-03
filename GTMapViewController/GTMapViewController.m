@@ -22,6 +22,8 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
+- (void)informDelegate;
+
 @end
 
 #pragma mark - Implementation
@@ -47,9 +49,9 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     
     self.title = @"GTMapViewController";
     self.view.backgroundColor = [UIColor dimGrayColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                                            target:self 
-                                                                                           action:@selector(showCurrentLocation)];
+                                                                                           action:@selector(informDelegate)];
     // Setup the search field
     [self.view addSubview:self.searchDescriptionLabel];
     [self.view addSubview:self.searchField];
@@ -73,6 +75,13 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 
 #pragma mark - Actions
 
+- (void)informDelegate
+{
+    if ([self.delegate respondsToSelector:@selector(mapViewController:didFinishWithLocation:)]) {
+        [self.delegate mapViewController:self didFinishWithLocation:self.currentLocation];
+    }
+}
+
 - (void)showCurrentLocation
 {
     // Add the spinner
@@ -86,6 +95,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     }
 }
 
+// TODO: not working?
 - (void)showLocation:(CLLocation *)location
 {
     self.shownLocation = location;
