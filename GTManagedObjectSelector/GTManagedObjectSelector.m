@@ -122,8 +122,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.seaching && (indexPath.section == 0)) {
-        self.selectedManagedObject = [self creteNewEntity];
-        [self searchBar:self.searchBar textDidChange:self.searchBar.text];
+        id newEntity = [self creteNewEntity];
+        
+        if (newEntity) {
+            self.selectedManagedObject = newEntity;
+            [self searchBar:self.searchBar textDidChange:self.searchBar.text]; // reload search results
+        }
+        else {
+            if ([self isSearching] && [self.searchBar.text isEqualToString:@""]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"You cannot create an object with no name!", nil) 
+                                                                message:NSLocalizedString(@"Write a name in the search bar and try again.", nil) 
+                                                               delegate:nil 
+                                                      cancelButtonTitle:NSLocalizedString(@"Continue", nil) 
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"You cannot create an object with this name", nil) 
+                                                                message:NSLocalizedString(@"There's already an object with the same name: choose a diffent one and try again.", nil) 
+                                                               delegate:nil 
+                                                      cancelButtonTitle:NSLocalizedString(@"Continue", nil) 
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        }
     }
     else {
         if (self.seaching) {
