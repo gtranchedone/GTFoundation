@@ -20,12 +20,12 @@
         self.textView = [[UITextView alloc] initWithFrame:CGRectZero];
         self.detailTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         
-        self.textView.font = [UIFont boldSystemFontOfSize:18];
+        self.textView.font = [UIFont boldSystemFontOfSize:17];
         self.textView.scrollEnabled = NO;
         self.textView.editable = NO;
         self.textView.backgroundColor = [UIColor clearColor];
         
-        self.detailTextView.font = [UIFont systemFontOfSize:14];
+        self.detailTextView.font = [UIFont systemFontOfSize:13];
         self.detailTextView.scrollEnabled = NO;
         self.detailTextView.editable = NO;
         self.detailTextView.backgroundColor = [UIColor clearColor];

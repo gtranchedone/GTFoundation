@@ -91,7 +91,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
         // Title Label        
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LabelsLeftMargin, (LabelsTopMargin * 2), 
                                                 self.view.bounds.size.width - (LabelsLeftMargin * 2), TitleLabelHeight)]; 
-        self.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        self.titleLabel.font = [UIFont boldSystemFontOfSize:19];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textAlignment = UITextAlignmentCenter;
         self.titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
@@ -118,7 +118,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
         self.tempTextLabel.numberOfLines = 0;
         
         self.tempTitleLabel = [[UILabel alloc] initWithFrame:self.titleLabel.frame]; 
-        self.tempTitleLabel.font = [UIFont boldSystemFontOfSize:20];
+        self.tempTitleLabel.font = [UIFont boldSystemFontOfSize:19];
         self.tempTitleLabel.backgroundColor = [UIColor clearColor];
         self.tempTitleLabel.textAlignment = UITextAlignmentCenter;
         self.tempTitleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
@@ -167,7 +167,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
         
         CGSize size = CGSizeMake(self.view.bounds.size.width - (LabelsLeftMargin * 2), 
                                  self.view.bounds.size.height - ImageViewTopMargin - ImageViewHeight - LabelsTopMargin);
-        CGSize textSize = [self.tempTextLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:20] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+        CGSize textSize = [self.tempTextLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
         self.textLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
                                           self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
         self.tempTextLabel.frame = self.textLabel.frame;
@@ -311,7 +311,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
             self.tempTitleLabel.text = [[self pageAtIndex:page+1] objectForKey:GTGuideViewTitleKey];
             
             NSString *text = [[self pageAtIndex:page+1] objectForKey:GTGuideViewTextKey];
-            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:20] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
             self.tempTextLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
                                                   self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
             self.tempTextLabel.text = text;
@@ -321,7 +321,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
             self.titleLabel.text = [[self pageAtIndex:page] objectForKey:GTGuideViewTitleKey];
             
             NSString *text = [[self pageAtIndex:page] objectForKey:GTGuideViewTextKey];
-            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:20] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
             self.textLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
                                                   self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
             self.textLabel.text = text;

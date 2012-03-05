@@ -87,7 +87,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     {
         GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                              initWithNibName:@"KVPasscodeViewController" bundle:nil];
-        passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:18];
+        passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
         passcodeViewController.cancelButtonEnabled = NO;
         passcodeViewController.isSettingPasscode = NO;
         passcodeViewController.isChangingPasscode = NO;
@@ -104,7 +104,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 {
     GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                          initWithNibName:@"KVPasscodeViewController" bundle:nil];
-    passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:18];
+    passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
     passcodeViewController.cancelButtonEnabled = YES;
     passcodeViewController.isSettingPasscode = YES;
     

@@ -285,7 +285,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
                 cell.frame.origin.y + TextViewTopMargin, cell.bounds.size.width - (TextViewLeftMargin * 2), height}];
             self.textView.delegate = self;
             self.textView.text = self.objects;
-            self.textView.font = [UIFont systemFontOfSize:14];
+            self.textView.font = [UIFont systemFontOfSize:15];
             self.textView.backgroundColor = [UIColor clearColor];
             self.textView.spellCheckingType = UITextSpellCheckingTypeYes;
             self.textView.autocorrectionType = UITextAutocorrectionTypeYes;
@@ -485,7 +485,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     if (pickerView == self.generalPicker)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width - 25, 30.0)];
-        label.font = [UIFont boldSystemFontOfSize:18];
+        label.font = [UIFont boldSystemFontOfSize:17];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = UITextAlignmentCenter;
         label.textColor = [UIColor blackColor];

@@ -232,7 +232,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
         CGRect frame = (CGRect){TextMargin, TextMargin, self.view.bounds.size.width - (TextMargin * 2), LabelsHeight};
         
         _searchDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
-        _searchDescriptionLabel.font = [UIFont boldSystemFontOfSize:18];
+        _searchDescriptionLabel.font = [UIFont boldSystemFontOfSize:17];
         _searchDescriptionLabel.backgroundColor = [UIColor clearColor];
         _searchDescriptionLabel.textColor = [UIColor whiteColor];
         
