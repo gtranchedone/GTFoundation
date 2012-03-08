@@ -108,7 +108,6 @@
 + (UIColor *)limeGreenColor;
 + (UIColor *)linenColor;
 
-+ (UIColor *)magentaColor;
 + (UIColor *)maroonColor;
 + (UIColor *)mediumAcquamarineColor;
 + (UIColor *)mediumBlueColor;

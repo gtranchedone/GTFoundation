@@ -410,11 +410,6 @@
     return [UIColor colorWithRed:0.980 green:0.941 blue:0.902 alpha:1.000];
 }
 
-+ (UIColor *)magentaColor
-{
-    return [UIColor colorWithRed:1.000 green:0.000 blue:1.000 alpha:1.000];
-}
-
 + (UIColor *)maroonColor
 {
     return [UIColor colorWithRed:0.502 green:0.000 blue:0.000 alpha:1.000];
