@@ -58,6 +58,8 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 @end
 
+static BOOL shouldCheckForPasscode = NO;
+
 @implementation GTPasscodeViewController
 
 @synthesize delegate = _delegate;
@@ -79,14 +81,20 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 #pragma mark - Class Methods
 
++ (void)setShouldCheckForPasscode:(BOOL)checkEnabled {
+    shouldCheckForPasscode = checkEnabled;
+}
+
 + (void)checkForPasscodeUsingNavigationController:(UINavigationController *)navigationController
 {
     BOOL shouldAskForPasscode = [[NSUserDefaults standardUserDefaults] boolForKey:AskPasswordUserDafaultsKey];
     
-    if (shouldAskForPasscode)
+    if (shouldAskForPasscode && shouldCheckForPasscode)
     {
+        shouldCheckForPasscode = NO;
+        
         GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
-                                                             initWithNibName:@"KVPasscodeViewController" bundle:nil];
+                                                             initWithNibName:@"GTPasscodeViewController" bundle:nil];
         passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
         passcodeViewController.cancelButtonEnabled = NO;
         passcodeViewController.isSettingPasscode = NO;
@@ -103,7 +111,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 + (void)showToSetNewPasscodeUsingNavigationController:(UINavigationController *)navigationController
 {
     GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
-                                                         initWithNibName:@"KVPasscodeViewController" bundle:nil];
+                                                         initWithNibName:@"GTPasscodeViewController" bundle:nil];
     passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
     passcodeViewController.cancelButtonEnabled = YES;
     passcodeViewController.isSettingPasscode = YES;
