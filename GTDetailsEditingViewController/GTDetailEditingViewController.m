@@ -101,6 +101,9 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         else if (type == DetailEditingTypeDate) {
             self.datePickerMode = UIDatePickerModeDateAndTime;
         }
+        else if (type == DetailEditingTypeRepetingDateSelection) {
+            self.choiceIndex = [objects intValue];
+        }
         
         if (self.objects == [NSNull null]) {
             self.objects = nil;
@@ -156,15 +159,32 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         [self.datePicker setDate:self.objects animated:YES];
         [self.tableView reloadData];
     } 
-    else if (self.type == DetailEditingTypeChoice2 || self.type == DetailEditingTypeRepetingDateSelection) {
+    else if (self.type == DetailEditingTypeChoice2) {
         [self.generalPicker selectRow:self.choiceIndex inComponent:0 animated:YES];
-        days = self.choiceIndex + 1;
-        [self.tableView reloadData];
-        [self.generalPicker reloadAllComponents];
     }
     else if (self.type == DetailEditingTypeChoice) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.choiceIndex inSection:0] 
                               atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }
+    else if (self.type == DetailEditingTypeRepetingDateSelection) {
+        NSInteger compomentOneRow = 1;
+        if (self.choiceIndex >= DaysInYear) {
+            compomentOneRow = 4;
+            self.choiceIndex = floor((double)(self.choiceIndex / DaysInYear));
+        }
+        else if (self.choiceIndex >= DaysInMonth) {
+            compomentOneRow = 3;
+            self.choiceIndex = floor((double)(self.choiceIndex / DaysInMonth));
+        }
+        else if (self.choiceIndex >= DaysInWeek) {
+            compomentOneRow = 2;
+            self.choiceIndex = floor((double)(self.choiceIndex / DaysInWeek));
+        }
+        
+        [self.generalPicker selectRow:compomentOneRow - 1 inComponent:1 animated:YES];
+        [self.generalPicker selectRow:self.choiceIndex - 1 inComponent:0 animated:YES];
+        [self pickerView:self.generalPicker didSelectRow:compomentOneRow - 1 inComponent:1];
+        [self pickerView:self.generalPicker didSelectRow:self.choiceIndex - 1 inComponent:0];
     }
 }
 
@@ -685,7 +705,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         }
         
         
-        NSNumber *numberOfDays = [NSNumber numberWithInt:selectedDays];
+        NSNumber *numberOfDays = [NSNumber numberWithInt:selectedDays * days];
         if (self.neverRepeat) {
             numberOfDays = [NSNumber numberWithInt:0];
         }
