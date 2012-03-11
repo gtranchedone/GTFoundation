@@ -23,6 +23,8 @@
 #define DaysInMonth 30
 #define DaysInYear 365
 
+static NSUInteger days = 0;
+
 typedef enum
 {
     TimeSpanSelectionDays,
@@ -47,8 +49,10 @@ typedef enum
 
 @property (nonatomic, assign) TimeSpanSelection currentTimeSpanSelection;
 @property (nonatomic, assign) UIDatePickerMode datePickerMode;
+@property (nonatomic, assign) BOOL neverRepeat;
 
 - (void)sendDataBack;
+- (void)setRepetitionToNever;
 - (void)changeAmountSign:(UIButton *)sender;
 
 @end
@@ -75,6 +79,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 @synthesize negativeAmount = _negativeAmount;
 
 @synthesize currentTimeSpanSelection = _currentTimeSpanSelection;
+@synthesize neverRepeat = _neverRepeat;
 
 #pragma mark - Initialization
 
@@ -123,6 +128,23 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     self.title = NSLocalizedString(@"Edit", nil);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                                            target:self action:@selector(sendDataBack)];
+    
+    if (self.type == DetailEditingTypeRepetingDateSelection) {
+        UIView *footerView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, self.view.bounds.size.width, 55}];
+        footerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        
+        NSString *buttonTitle = NSLocalizedString(@"Never Repeat", nil);
+        CGSize titleSize = [buttonTitle sizeWithFont:[UIFont boldSystemFontOfSize:17]];
+        CGRect buttonFrame = (CGRect){(self.view.bounds.size.width - titleSize.width - 10) / 2, 5.0, titleSize.width + 10, 45};
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self action:@selector(setRepetitionToNever) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:buttonTitle forState:UIControlStateNormal];
+        button.frame = buttonFrame;
+        [footerView addSubview:button];
+        
+        self.tableView.tableFooterView = footerView;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -134,9 +156,11 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         [self.datePicker setDate:self.objects animated:YES];
         [self.tableView reloadData];
     } 
-    else if (self.type == DetailEditingTypeChoice2) {
+    else if (self.type == DetailEditingTypeChoice2 || self.type == DetailEditingTypeRepetingDateSelection) {
         [self.generalPicker selectRow:self.choiceIndex inComponent:0 animated:YES];
+        days = self.choiceIndex + 1;
         [self.tableView reloadData];
+        [self.generalPicker reloadAllComponents];
     }
     else if (self.type == DetailEditingTypeChoice) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.choiceIndex inSection:0] 
@@ -230,7 +254,13 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             [self.view addSubview:self.generalPicker];
         }
         
-        cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:self.currentTimeSpanSelection];
+        if (self.neverRepeat) {
+            cell.textLabel.text = NSLocalizedString(@"Never Repeat", nil);
+        }
+        else {
+            cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:self.currentTimeSpanSelection];
+        }
+        
         cell.textLabel.textAlignment = UITextAlignmentCenter;
     }
     else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
@@ -332,6 +362,14 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         self.choiceIndex = indexPath.row;
         [self.tableView reloadData];
     }
+    else if (self.type == DetailEditingTypeRepetingDateSelection) {
+        self.neverRepeat = NO;
+        [self.tableView reloadData];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            self.generalPicker.frame = (CGRect){0.0, self.view.bounds.size.height - self.generalPicker.bounds.size.height, self.generalPicker.bounds.size};
+        }];
+    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -417,12 +455,14 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         }
         else {
             self.choiceIndex = row;
+            days = row + 1;
         }
     }
     else {
         self.choiceIndex = row;
     }
     
+    [pickerView reloadAllComponents];
     [self.tableView reloadData];
 }
 
@@ -497,19 +537,43 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             else {
                 switch (row) {
                     case TimeSpanSelectionDays:
-                        label.text = NSLocalizedString(@"Days", nil);
+                        if (days == 1) {
+                            label.text = NSLocalizedString(@"Day", nil);
+                        }
+                        else {
+                            label.text = NSLocalizedString(@"Days", nil);
+                        }
+                        
                         break;
                         
                     case TimeSpanSelectionWeeks:
-                        label.text = NSLocalizedString(@"Weeks", nil);
+                        if (days == 1) {
+                            label.text = NSLocalizedString(@"Week", nil);
+                        }
+                        else {
+                            label.text = NSLocalizedString(@"Weeks", nil);
+                        }
+                        
                         break;
                         
                     case TimeSpanSelectionMonths:
-                        label.text = NSLocalizedString(@"Months", nil);
+                        if (days == 1) {
+                            label.text = NSLocalizedString(@"Month", nil);
+                        }
+                        else {
+                            label.text = NSLocalizedString(@"Months", nil);
+                        }
+                        
                         break;
                         
                     case TimeSpanSelectionYears:
-                        label.text = NSLocalizedString(@"Years", nil);
+                        if (days == 1) {
+                            label.text = NSLocalizedString(@"Year", nil);
+                        }
+                        else {
+                            label.text = NSLocalizedString(@"Years", nil);
+                        }
+                        
                         break;
                 }
             }
@@ -530,7 +594,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     if (self.type == DetailEditingTypeRepetingDateSelection) {
         NSString *string = [NSString stringWithFormat:@"%d ", row + 1];
         
-        if (self.choiceIndex > 1) {
+        if (days != 1) {
             if (self.currentTimeSpanSelection == TimeSpanSelectionDays) {
                 string = [string stringByAppendingString:NSLocalizedString(@"Days", nil)];
             } 
@@ -622,6 +686,9 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         
         
         NSNumber *numberOfDays = [NSNumber numberWithInt:selectedDays];
+        if (self.neverRepeat) {
+            numberOfDays = [NSNumber numberWithInt:0];
+        }
         
         if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData:indexPath:)]) {
             [self.delegate detailEditingViewDidFinishWithReturnData:numberOfDays indexPath:self.indexPath];
@@ -629,6 +696,15 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setRepetitionToNever {
+    self.neverRepeat = YES;
+    [self.tableView reloadData];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.generalPicker.frame = (CGRect){0.0, self.view.window.bounds.size.height, self.generalPicker.bounds.size};
+    }];
 }
 
 @end
