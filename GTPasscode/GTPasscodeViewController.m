@@ -59,7 +59,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 @end
 
-static BOOL shouldCheckForPasscode = NO;
+#pragma mark - Implementation
 
 @implementation GTPasscodeViewController
 
@@ -82,27 +82,22 @@ static BOOL shouldCheckForPasscode = NO;
 
 #pragma mark - Class Methods
 
-+ (void)setShouldCheckForPasscode:(BOOL)checkEnabled {
-    shouldCheckForPasscode = checkEnabled;
-}
-
 + (void)checkForPasscodeUsingNavigationController:(UINavigationController *)navigationController
 {
     BOOL shouldAskForPasscode = [[NSUserDefaults standardUserDefaults] boolForKey:AskPasswordUserDafaultsKey];
     
-    if (shouldAskForPasscode && shouldCheckForPasscode)
+    if (shouldAskForPasscode)
     {
-        shouldCheckForPasscode = NO;
-        
         GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
-                                                             initWithNibName:@"GTPasscodeViewController" bundle:nil];
+                                                            initWithNibName:@"GTPasscodeViewController" bundle:nil];
         passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
+        passcodeViewController.view.backgroundColor = navigationController.topViewController.view.backgroundColor;
         passcodeViewController.cancelButtonEnabled = NO;
         passcodeViewController.isSettingPasscode = NO;
         passcodeViewController.isChangingPasscode = NO;
         
         UINavigationController *fromNavigationController = [[UINavigationController alloc] 
-                                                             initWithRootViewController:passcodeViewController];
+                                                            initWithRootViewController:passcodeViewController];
         fromNavigationController.navigationBar.tintColor = navigationController.navigationBar.tintColor;
         fromNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [navigationController presentModalViewController:fromNavigationController animated:NO];

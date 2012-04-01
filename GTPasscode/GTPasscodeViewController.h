@@ -51,7 +51,6 @@ typedef enum {
 
 //+ (void)showToChangePasscode;
 + (void)disablePasscodeCheck;
-+ (void)setShouldCheckForPasscode:(BOOL)shouldCheckForPasscode;
 + (void)checkForPasscodeUsingNavigationController:(UINavigationController *)navigationController;
 + (void)showToSetNewPasscodeUsingNavigationController:(UINavigationController *)navigationController;
 
