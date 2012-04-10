@@ -16,6 +16,7 @@
 
 // Classes
 #import "GTSlider.h"
+#import "GTAlertView.h"
 #import "GTPagingView.h"
 #import "GTTextViewCell.h"
 #import "GTMapViewController.h"
