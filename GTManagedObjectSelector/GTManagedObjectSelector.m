@@ -62,8 +62,14 @@
 
 - (void)doneButtonPressed
 {
-    if ([self.delegate respondsToSelector:@selector(managedObjectSelector:didFinishWithManagedObject:)]) {
-        [self.delegate managedObjectSelector:self didFinishWithManagedObject:self.selectedManagedObject];
+    if (self.selectedManagedObject) {
+        if ([self.delegate respondsToSelector:@selector(managedObjectSelector:didFinishWithManagedObject:)]) {
+            [self.delegate managedObjectSelector:self didFinishWithManagedObject:self.selectedManagedObject];
+        }
+    }
+    else {
+        GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"No choice was made!", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) cancelBlock:^{}];
+        [alertView show];
     }
 }
 

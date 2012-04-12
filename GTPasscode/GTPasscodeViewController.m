@@ -109,6 +109,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                          initWithNibName:@"GTPasscodeViewController" bundle:nil];
     passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
+    passcodeViewController.view.backgroundColor = navigationController.topViewController.view.backgroundColor;
     passcodeViewController.cancelButtonEnabled = YES;
     passcodeViewController.isSettingPasscode = YES;
     
