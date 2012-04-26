@@ -176,10 +176,6 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
                                                                 target:self action:@selector(dismissModalViewControllerAnimated:)];
         self.navigationItem.leftBarButtonItem = cancelButton;
     }
-    
-    // TODO: remove me from here
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:TopBarBackgroundImageName] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar addShadowWithOffset:CGSizeMake(0.0, 1.0)];
 }
 
 - (void)viewDidUnload 
