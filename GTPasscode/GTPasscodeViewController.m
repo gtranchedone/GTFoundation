@@ -204,7 +204,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
 {
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - View Animations

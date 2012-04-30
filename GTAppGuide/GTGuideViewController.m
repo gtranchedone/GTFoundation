@@ -198,7 +198,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Private Methods
