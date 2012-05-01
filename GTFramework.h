@@ -18,6 +18,7 @@
 #import "GTSlider.h"
 #import "GTAlertView.h"
 #import "GTPagingView.h"
+#import "GTActionSheet.h"
 #import "GTTextViewCell.h"
 #import "GTMapViewController.h"
 #import "GTGraphViewController.h"
