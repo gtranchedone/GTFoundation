@@ -94,6 +94,10 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         self.delegate = delegate;
         self.indexPath = indexPath;
         
+        if (self.objects == [NSNull null]) {
+            self.objects = nil;
+        }
+        
         if (type == DetailEditingTypeUntilDateSelection) {
             self.type = DetailEditingTypeDate;
             self.datePickerMode = UIDatePickerModeDate;
@@ -102,11 +106,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             self.datePickerMode = UIDatePickerModeDateAndTime;
         }
         else if (type == DetailEditingTypeRepetingDateSelection) {
-            self.choiceIndex = [objects intValue];
-        }
-        
-        if (self.objects == [NSNull null]) {
-            self.objects = nil;
+            self.choiceIndex = [self.objects intValue];
         }
         
         if (type == DetailEditingTypeChoice || type == DetailEditingTypeChoice2) {
@@ -134,7 +134,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     
     if (self.type == DetailEditingTypeRepetingDateSelection) {
         UIView *footerView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, self.view.bounds.size.width, 55}];
-        footerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        footerView.backgroundColor = [UIColor clearColor];
         
         NSString *buttonTitle = NSLocalizedString(@"Never Repeat", nil);
         CGSize titleSize = [buttonTitle sizeWithFont:[UIFont boldSystemFontOfSize:17]];
