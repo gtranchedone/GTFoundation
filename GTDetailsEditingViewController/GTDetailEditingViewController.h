@@ -33,6 +33,8 @@ NSString * const DetailEditingDelegateIndexKey;
 
 @property (nonatomic, assign) id<GTDetailEditingDelegate> delegate;
 
+@property (nonatomic, strong) UIDatePicker *datePicker;
+
 - (id)initWithEditingType:(DetailEditingType)type objects:(id)objects delegate:(id<GTDetailEditingDelegate>)delegate indexPath:(NSIndexPath *)indexPath;
 
 @end

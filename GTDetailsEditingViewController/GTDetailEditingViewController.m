@@ -42,7 +42,6 @@ typedef enum
 @property (nonatomic, assign) NSUInteger choiceIndex;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UITextView *textView;
-@property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIPickerView *generalPicker;
 @property (nonatomic, strong) UIButton *amountValueSwitcher;
 @property (nonatomic, assign) BOOL negativeAmount;
