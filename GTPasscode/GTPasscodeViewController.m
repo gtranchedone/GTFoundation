@@ -109,7 +109,6 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     GTPasscodeViewController *passcodeViewController = [[GTPasscodeViewController alloc] 
                                                          initWithNibName:@"GTPasscodeViewController" bundle:nil];
     passcodeViewController.instructionLabel.font = [UIFont boldSystemFontOfSize:17];
-    passcodeViewController.view.backgroundColor = navigationController.topViewController.view.backgroundColor;
     passcodeViewController.cancelButtonEnabled = YES;
     passcodeViewController.isSettingPasscode = YES;
     
@@ -118,6 +117,8 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
         passcodeViewController.isChangingPasscode = YES;
         passcodeViewController.titleLabel.text = NSLocalizedString(@"Insert the current Passcode", @"Change Passcode Instruction");
     }
+    
+    passcodeViewController.view.backgroundColor = navigationController.topViewController.view.backgroundColor;
     
     UINavigationController *navigationController2 = [[UINavigationController alloc] 
                                                       initWithRootViewController:passcodeViewController];

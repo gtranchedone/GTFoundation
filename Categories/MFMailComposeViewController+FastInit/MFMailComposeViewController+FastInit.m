@@ -10,7 +10,7 @@
 
 @implementation MFMailComposeViewController (FastInit)
 
-+ (void)presentMailComposeViewFromViewController:(UIViewController<MFMailComposeViewControllerDelegate> *)viewController WithSubject:(NSString *)subject body:(NSString *)body andRecipients:(NSArray *)recipients
++ (void)presentMailComposeViewFromViewController:(UIViewController<MFMailComposeViewControllerDelegate> *)viewController withSubject:(NSString *)subject body:(NSString *)body andRecipients:(NSArray *)recipients
 {
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     picker.mailComposeDelegate = viewController;
