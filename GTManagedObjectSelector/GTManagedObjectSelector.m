@@ -68,7 +68,7 @@
         }
     }
     else {
-        GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"No choice was made!", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) cancelBlock:void_completion_block];
+        GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"No choice was made!", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) cancelBlock:empty_completion_block];
         [alertView show];
     }
 }
