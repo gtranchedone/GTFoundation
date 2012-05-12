@@ -67,6 +67,12 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
                 NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
                 isLatestVersion = [appVersion isEqualToString:appLatestVersion];
             }
+            else {
+                error = [NSError errorWithDomain:@"VersionChecker Error: App not found on the App Store!" code:404 userInfo:nil];
+            }
+        }
+        else {
+            error = [NSError errorWithDomain:@"VersionChecker Error: No data could be retreived from the App Store!" code:404 userInfo:nil];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
