@@ -39,7 +39,7 @@
         self.cancelButtonBlock = cancelButtonBlock;
         
         if (self.destructiveButtonIndex >= 0) {
-            [self.blocksArray insertObject:destructiveButtonSelectionBlock atIndex:self.destructiveButtonIndex];
+            [self.blocksArray insertObject:[destructiveButtonSelectionBlock copy] atIndex:self.destructiveButtonIndex];
         }
     }
     
@@ -50,10 +50,10 @@
 {
     NSInteger buttonIndex = [super addButtonWithTitle:title];
     if (buttonIndex < [self.blocksArray count]) {
-        [self.blocksArray insertObject:block atIndex:buttonIndex];
+        [self.blocksArray insertObject:[block copy] atIndex:buttonIndex];
     }
     else {
-        [self.blocksArray addObject:block];
+        [self.blocksArray addObject:[block copy]];
     }
     return buttonIndex;
 }

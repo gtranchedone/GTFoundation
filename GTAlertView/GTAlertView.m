@@ -25,7 +25,7 @@
     self = [super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButton otherButtonTitles:nil];
     if (self) {
         self.blocksArray = [NSMutableArray array];
-        [self.blocksArray addObject:cancelBlock];
+        [self.blocksArray addObject:[cancelBlock copy]];
     }
     return self;
 }
@@ -33,13 +33,15 @@
 - (void)addButtonWithTitle:(NSString *)title selectionBlock:(void (^)(void))selectionBlock
 {
     [super addButtonWithTitle:title];
-    [self.blocksArray addObject:selectionBlock];
+    [self.blocksArray addObject:[selectionBlock copy]];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     void(^block)(void) = [self.blocksArray objectAtIndex:buttonIndex];
-    block();
+    if (block) {
+        block();
+    }
 }
 
 @end
