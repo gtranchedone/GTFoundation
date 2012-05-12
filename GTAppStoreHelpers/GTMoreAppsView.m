@@ -221,8 +221,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
         }
         
         NSDictionary *cache = [NSDictionary dictionaryWithObject:cacheArray forKey:kResultsArrayKey];
-        BOOL didWriteToCache = [cache writeToFile:[self cacheFilePath] atomically:YES];
-        NSAssert(didWriteToCache, @"Error while writing 'MoreAppsCache' to file");
+        [cache writeToFile:[self cacheFilePath] atomically:YES];
     }
     
     return parsedArray;
