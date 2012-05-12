@@ -12,12 +12,9 @@ NSString * const GTGuideViewTitleKey = @"GTGuideViewTitleKey";
 NSString * const GTGuideViewImageKey = @"GTGuideViewImageKey";
 NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
 
-#define ImageViewLeftMargin 30
-#define ImageViewTopMargin 100
-#define ImageViewHeight 150
-#define LabelsLeftMargin 20
-#define LabelsTopMargin 20
-#define TitleLabelHeight 30
+static CGRect const kTitleLabelFrame = (CGRect){10.0f, 30.0f, 300.0f, 50.0f};
+static CGRect const kTextLabelFrame = (CGRect){10.0f, 250.0f, 300.0f, 100.0f};
+static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 100.0f};
 
 @interface GTGuideViewController () <UIScrollViewDelegate>
 {
@@ -34,10 +31,9 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
 @property (nonatomic, strong) UILabel *tempTitleLabel;
 
 - (void)changePage:(id)sender;
+- (void)removeGuide:(id)sender;
 - (NSDictionary *)pageAtIndex:(NSInteger)index;
 - (void)didMoveFromPage:(NSUInteger)fromPage toPage:(NSUInteger)toPage scrollingLeft:(BOOL)scrollingLeft;
-
-- (void)removeGuide:(id)sender;
 
 @end
 
@@ -55,15 +51,6 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
 @synthesize tempTextLabel = tempTextLabel_;
 @synthesize tempTitleLabel = tempTitleLabel_;
 
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -71,13 +58,11 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
     [super viewDidLoad];
     
     // Navigation Bar
-    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [UIColor blackColor], UITextAttributeTextColor,
-                                    [UIColor whiteColor], UITextAttributeTextShadowColor,
-                                    CGSizeMake(0.0, -1.0), UITextAttributeTextShadowOffset, nil];
-    UIBarButtonItem *nextPageButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changePage:)];
+    UIBarButtonItem *nextPageButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) 
+                                                                       style:UIBarButtonItemStyleBordered 
+                                                                      target:self 
+                                                                      action:@selector(changePage:)];
     nextPageButton.tintColor = [UIColor colorWithWhite:1.0 alpha:1.0];
-    [nextPageButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = nextPageButton;
     self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     
@@ -88,56 +73,14 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
     [self.view.layer addSublayer:backgroundLayer];
     
     if (self.delegate) {
-        // Title Label        
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LabelsLeftMargin, (LabelsTopMargin * 2), 
-                                                self.view.bounds.size.width - (LabelsLeftMargin * 2), TitleLabelHeight)]; 
-        self.titleLabel.font = [UIFont boldSystemFontOfSize:19];
-        self.titleLabel.backgroundColor = [UIColor clearColor];
-        self.titleLabel.textAlignment = UITextAlignmentCenter;
-        self.titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        self.titleLabel.shadowColor = [UIColor whiteColor];
+        [self.view addSubview:self.scrollView];
         [self.view addSubview:self.titleLabel];
-        
-        // Text Label
-        self.textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-        self.textLabel.backgroundColor = [UIColor clearColor];
-        self.textLabel.textAlignment = UITextAlignmentCenter;
-        self.textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        self.textLabel.shadowColor = [UIColor whiteColor];
-        self.textLabel.numberOfLines = 0;
         [self.view addSubview:self.textLabel];
-        
-        // Temp Labels
-        self.tempTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.tempTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-        self.tempTextLabel.backgroundColor = [UIColor clearColor];
-        self.tempTextLabel.textAlignment = UITextAlignmentCenter;
-        self.tempTextLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        self.tempTextLabel.shadowColor = [UIColor whiteColor];
-        self.tempTextLabel.numberOfLines = 0;
-        
-        self.tempTitleLabel = [[UILabel alloc] initWithFrame:self.titleLabel.frame]; 
-        self.tempTitleLabel.font = [UIFont boldSystemFontOfSize:19];
-        self.tempTitleLabel.backgroundColor = [UIColor clearColor];
-        self.tempTitleLabel.textAlignment = UITextAlignmentCenter;
-        self.tempTitleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        self.tempTitleLabel.shadowColor = [UIColor whiteColor];
-        
-        self.tempTextLabel.alpha = 0;
-        self.tempTitleLabel.alpha = 0;
-        
         [self.view addSubview:self.tempTextLabel];
         [self.view addSubview:self.tempTitleLabel];
         
-        // ScrollView
-        self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-        self.scrollView.backgroundColor = [UIColor clearColor];
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        self.scrollView.showsVerticalScrollIndicator = NO;
-        self.scrollView.pagingEnabled = YES;
-        self.scrollView.delegate = self;
-        [self.view addSubview:self.scrollView];
+        self.tempTextLabel.alpha = 0;
+        self.tempTitleLabel.alpha = 0;
         
         // Page Control
         NSUInteger numberOfPages = [self.delegate numberOfPagesInGuide:self];
@@ -158,42 +101,21 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
         self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width * self.pageControl.numberOfPages, 
                                                  self.view.bounds.size.height);
         
-        // First Two Pages Setup
+        // First Two Pages Setup and all Images
         self.titleLabel.text = [[self pageAtIndex:0] objectForKey:GTGuideViewTitleKey];
         self.textLabel.text = [[self pageAtIndex:0] objectForKey:GTGuideViewTextKey];
         
         self.tempTitleLabel.text = [[self pageAtIndex:1] objectForKey:GTGuideViewTitleKey];
         self.tempTextLabel.text = [[self pageAtIndex:1] objectForKey:GTGuideViewTextKey];
         
-        CGSize size = CGSizeMake(self.view.bounds.size.width - (LabelsLeftMargin * 2), 
-                                 self.view.bounds.size.height - ImageViewTopMargin - ImageViewHeight - LabelsTopMargin);
-        CGSize textSize = [self.tempTextLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-        self.textLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
-                                          self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
-        self.tempTextLabel.frame = self.textLabel.frame;
-        
-        // TODO: change this
-        int index = 1;
-        while (index <= 5 && index <= self.pageControl.numberOfPages) {
-            
-            UIImage *image = [[self pageAtIndex:index] objectForKey:GTGuideViewImageKey];
+        for (int i = 0; i < self.pageControl.numberOfPages; i++) {
+            UIImage *image = [[self pageAtIndex:(i + 1)] objectForKey:GTGuideViewImageKey];
             UIImageView *view = [[UIImageView alloc] initWithImage:image];
-            view.frame = (CGRect){self.view.bounds.size.width * (index - 1), ImageViewTopMargin, view.bounds.size};
-            view.center = CGPointMake(self.view.center.x + (self.view.bounds.size.width * (index - 1)), view.center.y);
             view.layer.contentsGravity = kCAGravityResizeAspect;
-            
+            view.frame = (CGRect){kImageViewFrame.origin.x + (self.view.bounds.size.width * i), kImageViewFrame.origin.y, kImageViewFrame.size};
             [self.scrollView addSubview:view];
-            
-            index++;
         }
     }
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -300,32 +222,17 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
         // set the next/previous page text
         NSInteger page = self.scrollView.contentOffset.x / self.view.bounds.size.width;
         
-        CGSize size = CGSizeMake(self.view.bounds.size.width - (LabelsLeftMargin * 2), 
-                                 self.view.bounds.size.height - ImageViewTopMargin - ImageViewHeight - LabelsTopMargin);
-        
         if (scrollDirectionLeft) { // next page
             if ((page + 1) > (self.pageControl.numberOfPages - 1)) {
                 page--;
             }
             
             self.tempTitleLabel.text = [[self pageAtIndex:page+1] objectForKey:GTGuideViewTitleKey];
-            
-            NSString *text = [[self pageAtIndex:page+1] objectForKey:GTGuideViewTextKey];
-            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            self.tempTextLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
-                                                  self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
-            self.tempTextLabel.text = text;
-            self.textLabel.frame = self.tempTextLabel.frame;
+            self.tempTextLabel.text = [[self pageAtIndex:page+1] objectForKey:GTGuideViewTextKey];
         } 
         else { // previous page
             self.titleLabel.text = [[self pageAtIndex:page] objectForKey:GTGuideViewTitleKey];
-            
-            NSString *text = [[self pageAtIndex:page] objectForKey:GTGuideViewTextKey];
-            CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:19] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            self.textLabel.frame = CGRectMake(LabelsLeftMargin, ImageViewTopMargin + ImageViewHeight, 
-                                                  self.view.bounds.size.width - (LabelsLeftMargin * 2), textSize.height);
-            self.textLabel.text = text;
-            self.tempTextLabel.frame = self.textLabel.frame;
+            self.textLabel.text = [[self pageAtIndex:page] objectForKey:GTGuideViewTextKey];
         }
         
         scrolling = YES;
@@ -363,6 +270,94 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
     }
     
     [self didScroll:scrollDirectionLeft];
+}
+
+#pragma mark - Setters and Getters
+
+- (UILabel *)titleLabel
+{
+    if (!titleLabel_) {
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:kTitleLabelFrame];
+        titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        titleLabel.font = [UIFont boldSystemFontOfSize:19];
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.textAlignment = UITextAlignmentCenter;
+        titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        titleLabel.shadowColor = [UIColor whiteColor];
+        titleLabel.numberOfLines = 2;
+        
+        self.titleLabel = titleLabel;
+    }
+    
+    return titleLabel_;
+}
+
+- (UILabel *)textLabel
+{
+    if (!textLabel_) {
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:kTextLabelFrame];
+        textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        textLabel.shadowColor = [UIColor whiteColor];
+        textLabel.numberOfLines = 0;
+        
+        self.textLabel = textLabel;
+    }
+    
+    return textLabel_;
+}
+
+- (UILabel *)tempTitleLabel
+{
+    if (!tempTitleLabel_) {
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:kTitleLabelFrame];
+        titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        titleLabel.font = [UIFont boldSystemFontOfSize:19];
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.textAlignment = UITextAlignmentCenter;
+        titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        titleLabel.shadowColor = [UIColor whiteColor];
+        titleLabel.numberOfLines = 2;
+        
+        self.tempTitleLabel = titleLabel;
+    }
+    
+    return tempTitleLabel_;
+}
+
+- (UILabel *)tempTextLabel
+{
+    if (!tempTextLabel_) {
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:kTextLabelFrame];
+        textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        textLabel.shadowColor = [UIColor whiteColor];
+        textLabel.numberOfLines = 0;
+        
+        self.tempTextLabel = textLabel;
+    }
+    
+    return tempTextLabel_;
+}
+
+- (UIScrollView *)scrollView
+{
+    if (!scrollView_) {
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        scrollView.backgroundColor = [UIColor clearColor];
+        scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.pagingEnabled = YES;
+        scrollView.delegate = self;
+        
+        self.scrollView = scrollView;
+    }
+    
+    return scrollView_;
 }
 
 @end
