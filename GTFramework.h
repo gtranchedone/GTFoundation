@@ -20,6 +20,8 @@
 #import "GTPagingView.h"
 #import "GTActionSheet.h"
 #import "GTTextViewCell.h"
+#import "GTMoreAppsView.h"
+#import "GTAppVersionChecker.h"
 #import "GTMapViewController.h"
 #import "GTGraphViewController.h"
 #import "GTGuideViewController.h"
