@@ -159,12 +159,8 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     [self.activityIndicator removeFromSuperview];
     
     NSLog(@"%@", error);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"An error occurred while loading location", nil) 
-                                                    message:[NSString stringWithFormat:@"%@", error] 
-                                                   delegate:self 
-                                          cancelButtonTitle:NSLocalizedString(@"Continue", nil) 
-                                          otherButtonTitles:nil];
-    [alert show];
+    ShowAlertViewWithTitleAndMessage(NSLocalizedString(@"Location Services Disabled", nil), 
+                                     NSLocalizedString(@"The location services for this application are disabled. To reanable them, go to the Settings app of your device and reanable them from the 'Location Services' menu.", nil));
     
     if ([self.delegate respondsToSelector:@selector(mapViewControllerDidFinishUpdating:success:)]) {
         [self.delegate mapViewControllerDidFinishUpdating:self success:NO];
