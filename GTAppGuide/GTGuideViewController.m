@@ -14,7 +14,7 @@ NSString * const GTGuideViewTextKey = @"GTGuideViewTextKey";
 
 static CGRect const kTitleLabelFrame = (CGRect){10.0f, 30.0f, 300.0f, 50.0f};
 static CGRect const kTextLabelFrame = (CGRect){10.0f, 250.0f, 300.0f, 100.0f};
-static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 100.0f};
+static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 
 @interface GTGuideViewController () <UIScrollViewDelegate>
 {
@@ -109,7 +109,7 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 100.0f};
         self.tempTextLabel.text = [[self pageAtIndex:1] objectForKey:GTGuideViewTextKey];
         
         for (int i = 0; i < self.pageControl.numberOfPages; i++) {
-            UIImage *image = [[self pageAtIndex:(i + 1)] objectForKey:GTGuideViewImageKey];
+            UIImage *image = [[self pageAtIndex:i] objectForKey:GTGuideViewImageKey];
             UIImageView *view = [[UIImageView alloc] initWithImage:image];
             view.layer.contentsGravity = kCAGravityResizeAspect;
             view.frame = (CGRect){kImageViewFrame.origin.x + (self.view.bounds.size.width * i), kImageViewFrame.origin.y, kImageViewFrame.size};
