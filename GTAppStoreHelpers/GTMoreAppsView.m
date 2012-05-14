@@ -7,6 +7,7 @@
 //
 
 #import "GTMoreAppsView.h"
+#import "GTAlertView.h"
 
 static CGFloat kViewMargin = 10.0f;
 static CGFloat kItemsMargin = 20.0f;
@@ -235,9 +236,17 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
 
 - (void)openApp:(UIButton *)sender
 {
-#warning ask the user first!
-    GTApp *app = [self.apps objectAtIndex:sender.tag];
-    [app open];
+    GTAlertView *alert = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"Do you want to open this app?", nil)
+                                                    message:nil
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                cancelBlock:empty_completion_block];
+    
+    [alert addButtonWithTitle:NSLocalizedString(@"Open", nil) selectionBlock:^{
+        GTApp *app = [self.apps objectAtIndex:sender.tag];
+        [app open];
+    }];
+    
+    [alert show];
 }
 
 - (NSString *)cacheFilePath
