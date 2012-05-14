@@ -12,6 +12,7 @@
 
 #import "NSNumberFormatter+SharedFormatter.h"
 #import "NSDateFormatter+SharedFormatter.h"
+#import "GTAmountField.h"
 
 #define TextViewTopMargin 10
 #define TextViewLeftMargin 20
@@ -33,7 +34,8 @@ typedef enum
     TimeSpanSelectionYears
 } TimeSpanSelection;
 
-@interface GTDetailEditingViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface GTDetailEditingViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, 
+                                                GTAmountFieldDelegate>
 
 @property (nonatomic, strong) NSIndexPath *indexPath; // Used to edit calling cell's attributes
 @property (nonatomic, assign) DetailEditingType type;
@@ -42,6 +44,7 @@ typedef enum
 @property (nonatomic, assign) NSUInteger choiceIndex;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) GTAmountField *amountField;
 @property (nonatomic, strong) UIPickerView *generalPicker;
 @property (nonatomic, strong) UIButton *amountValueSwitcher;
 @property (nonatomic, assign) BOOL negativeAmount;
@@ -73,6 +76,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 @synthesize textField = _textField;
 @synthesize textView = _textView;
 @synthesize datePicker = _datePicker;
+@synthesize amountField = _amountField;
 @synthesize generalPicker = _generalPicker;
 @synthesize amountValueSwitcher = _amountValueSwitcher;
 @synthesize negativeAmount = _negativeAmount;
@@ -284,41 +288,13 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
     {
-        if (!self.textField && (!self.objects || [self.objects isKindOfClass:[NSString class]]))
-        {
-            self.textField = [[UITextField alloc] initWithFrame:(CGRect){cell.frame.origin.x + TextViewLeftMargin, 
-                cell.frame.origin.y + TextViewTopMargin, cell.bounds.size.width - (TextViewLeftMargin * 2), UITableViewCellStandardHeight}];
-            self.textField.delegate = self;
-            self.textField.text = self.objects;
-            self.textField.returnKeyType = UIReturnKeyDone;
-            self.textField.clearButtonMode = UITextFieldViewModeAlways;
-            self.textField.spellCheckingType = UITextSpellCheckingTypeYes;
-            self.textField.autocorrectionType = UITextAutocorrectionTypeYes;
-            self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            
-            if (self.type == DetailEditingTypeCashAmount) {
-                self.textField.keyboardType = UIKeyboardTypeNumberPad;
-                self.textField.textAlignment = UITextAlignmentRight;
-                
-                self.amountValueSwitcher = [UIButton buttonWithType:UIButtonTypeCustom];
-                self.amountValueSwitcher.frame = (CGRect){20.0, 20.0, 30.0, 30.0};
-                [self.amountValueSwitcher addTarget:self action:@selector(changeAmountSign:) forControlEvents:UIControlEventTouchUpInside];
-                
-                self.negativeAmount = ([[[NSNumberFormatter decimalFormatter] numberFromString:self.objects] doubleValue] < 0);
-                
-                if (self.negativeAmount) {
-                    [self.amountValueSwitcher setBackgroundImage:[UIImage imageNamed:@"NegativeButton.png"] forState:UIControlStateNormal];
-                    self.textField.text = [self.textField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
-                } else {
-                    [self.amountValueSwitcher setBackgroundImage:[UIImage imageNamed:@"PositiveButton.png"] forState:UIControlStateNormal];
-                }
-                
-                [self.view addSubview:self.amountValueSwitcher];
-            }
-            
-            [cell addSubview:self.textField];
-            [self.textField becomeFirstResponder];
+        if (!self.objects || [self.objects isKindOfClass:[NSString class]]) {
+            NSNumber *amount = [[NSNumberFormatter decimalFormatter] numberFromString:self.objects];
+            self.amountField.amount = [NSDecimalNumber decimalNumberWithString:[amount stringValue]];
         }
+        
+        [cell addSubview:self.amountField];
+        [self.amountField becomeFirstResponder];
     }
     else if (self.type == DetailEditingTypeLongText)
     {
@@ -724,6 +700,31 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     [UIView animateWithDuration:0.5 animations:^{
         self.generalPicker.frame = (CGRect){0.0, self.view.window.bounds.size.height, self.generalPicker.bounds.size};
     }];
+}
+
+#pragma mark - GTAmountFieldDelegate
+
+- (void)amountFieldDidPressEnterKey:(GTAmountField *)amountField
+{
+    [self sendDataBack];
+}
+
+#pragma mark - Setters and Getters
+
+- (GTAmountField *)amountField
+{
+    static CGRect const kCellFieldsFrame = (CGRect){20.0f, 0.0f, 280.0f, 50.0f};
+    
+    if (!_amountField) {
+        GTAmountField *amountField = [[GTAmountField alloc] initWithFrame:kCellFieldsFrame];
+        amountField.font = [UIFont boldSystemFontOfSize:23];
+        amountField.minimumFontSize = 19;
+        amountField.delegate = self;
+        
+        self.amountField = amountField;
+    }
+    
+    return _amountField;
 }
 
 @end
