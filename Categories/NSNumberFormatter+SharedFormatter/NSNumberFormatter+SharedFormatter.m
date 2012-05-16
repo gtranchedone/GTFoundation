@@ -40,4 +40,18 @@ static NSNumberFormatter *sharedCurrencyFormatter = nil;
     return sharedCurrencyFormatter;
 }
 
++ (NSNumberFormatter *)currencyFormatterForCurrency:(NSString *)currencyCode
+{
+    NSAssert1([[NSLocale commonISOCurrencyCodes] containsObject:currencyCode], @"NSNumberFormatter: currencyCode not valid %@", currencyCode);
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [numberFormatter setLocale:[NSLocale currentLocale]];
+    [numberFormatter setNegativeFormat:@"-#,##0.00¤"];
+    [numberFormatter setPositiveFormat:@"#,##0.00¤"];
+    [numberFormatter setCurrencyCode:currencyCode];
+    
+    return numberFormatter;
+}
+
 @end

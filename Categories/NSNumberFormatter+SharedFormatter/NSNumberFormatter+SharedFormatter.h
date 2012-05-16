@@ -12,5 +12,6 @@
 
 + (NSNumberFormatter *)decimalFormatter;
 + (NSNumberFormatter *)currencyFormatter;
++ (NSNumberFormatter *)currencyFormatterForCurrency:(NSString *)currencyCode;
 
 @end

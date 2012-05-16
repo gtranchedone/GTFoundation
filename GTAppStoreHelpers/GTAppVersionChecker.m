@@ -39,10 +39,22 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
     return self;
 }
 
-- (void)openAppWithAppleID:(NSString *)appleAppID
+- (void)giftApp
+{
+    NSString *GiftAppURL = [NSString stringWithFormat:@"itms-appss://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/giftSongsWizard?gift=1&salableAdamId=%d&productType=C&pricingParameter=STDQ&mt=8&ign-mscache=1", self.appleAppID];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:GiftAppURL]];
+}
+
+- (void)reviewApp
+{
+    NSLog(@"not there yet");
+}
+
+- (void)seeAppOnAppStore
 {
     static NSString * const iTunesAppStoreURLFormat = @"http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@&mt=8";
-    NSURL *appURL = [NSURL URLWithString:[NSString stringWithFormat:iTunesAppStoreURLFormat, appleAppID]];
+    NSURL *appURL = [NSURL URLWithString:[NSString stringWithFormat:iTunesAppStoreURLFormat, self.appleAppID]];
     [[UIApplication sharedApplication] openURL:appURL];
 }
 
@@ -64,7 +76,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
             if ([resultsArray count]) {
                 NSDictionary *appDictionary = [resultsArray objectAtIndex:0];
                 NSString *appLatestVersion = [appDictionary objectForKey:iTunesLookupApplicationVersionKey];
-                NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
+                NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
                 isLatestVersion = [appVersion isEqualToString:appLatestVersion];
             }
             else {

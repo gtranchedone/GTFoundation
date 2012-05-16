@@ -23,7 +23,9 @@
 
 - (id)initWithAppleAppID:(NSString *)appleAppID; /** @param appleAppID is the Apple's app identifier */
 
-- (void)openAppWithAppleID:(NSString *)appleAppID; /** @param appleAppID is the Apple's app identifier */
+- (void)giftApp;
+- (void)reviewApp;
+- (void)seeAppOnAppStore;
 - (void)checkLatestApplicationVersionWithCompletionBlock:(void(^)(BOOL isLatestVersion, NSError *error))completionBlock;
 
 @end
