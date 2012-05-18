@@ -189,6 +189,9 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         [self pickerView:self.generalPicker didSelectRow:compomentOneRow - 1 inComponent:1];
         [self pickerView:self.generalPicker didSelectRow:self.choiceIndex - 1 inComponent:0];
     }
+    else if (self.type == DetailEditingTypeCashAmount) {
+        [self.amountField becomeFirstResponder];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -286,7 +289,11 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         
         cell.textLabel.textAlignment = UITextAlignmentCenter;
     }
-    else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
+    else if (self.type == DetailEditingTypeText) {
+        [cell addSubview:self.textField];
+        [self.textField becomeFirstResponder];
+    }
+    else if (self.type == DetailEditingTypeCashAmount)
     {
         if (!self.objects || [self.objects isKindOfClass:[NSString class]]) {
             NSNumber *amount = [[NSNumberFormatter decimalFormatter] numberFromString:self.objects];
@@ -368,59 +375,6 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 }
 
 #pragma mark - UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (self.type == DetailEditingTypeCashAmount)
-    {
-        NSString *newText = textField.text;
-        
-        NSDecimalNumberHandler *behaviour = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2
-                                                                                        raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                        raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-        
-        if (range.length == 1 && range.location == [textField.text length] - 1) // deleting digits
-        {
-            NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
-            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
-            
-            amount = [amount decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour];        
-            textField.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
-        } 
-        else {
-            // since we multiply the value extracted from the textField by 10, if the new digit is 0 we don't need to do anything
-            if (![string isEqualToString:[[NSDecimalNumber zero] stringValue]]) {
-                newText = [textField.text stringByAppendingString:string];
-            }
-            
-            NSString *unformattedAmount = [[[NSNumberFormatter decimalFormatter] numberFromString:newText] stringValue];
-            NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:unformattedAmount];
-            
-            amount = [amount decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"10"] withBehavior:behaviour]; 
-            newText = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
-            
-            // this is done to prevent the nsdecimalnumber's overflow exeption to trigger
-            if (!([amount compare:[NSDecimalNumber decimalNumberWithString:MaximumNumberAllowed]] == NSOrderedDescending)) {
-                self.textField.text = newText;
-            }
-        }
-        
-        return NO;
-    } 
-    else {
-        return YES;
-    }
-}
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    if (self.type == DetailEditingTypeCashAmount) {
-        textField.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:[NSNumber numberWithDouble:0.0]];
-        return NO;
-    } else {
-        return YES;
-    }
-}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -639,17 +593,17 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             [self.delegate detailEditingViewDidFinishWithReturnData:dictionary indexPath:self.indexPath];
         }
     }
-    else if (self.type == DetailEditingTypeText || self.type == DetailEditingTypeCashAmount)
+    else if (self.type == DetailEditingTypeCashAmount) {
+        if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData:indexPath:)]) {
+            [self.delegate detailEditingViewDidFinishWithReturnData:self.amountField.amount indexPath:self.indexPath];
+        }
+    }
+    else if (self.type == DetailEditingTypeText)
     {
         [self.textField resignFirstResponder];
         
-        if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData: indexPath:)]) {
-            if (self.negativeAmount) {
-                [self.delegate detailEditingViewDidFinishWithReturnData:[@"-" stringByAppendingString:self.textField.text] 
-                                                              indexPath:self.indexPath];
-            } else {
-                [self.delegate detailEditingViewDidFinishWithReturnData:self.textField.text indexPath:self.indexPath];
-            }
+        if ([self.delegate respondsToSelector:@selector(detailEditingViewDidFinishWithReturnData:indexPath:)]) {
+            [self.delegate detailEditingViewDidFinishWithReturnData:self.textField.text indexPath:self.indexPath];
         }
     }
     else if (self.type == DetailEditingTypeLongText)
@@ -711,10 +665,10 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 
 #pragma mark - Setters and Getters
 
+static CGRect const kCellFieldsFrame = (CGRect){20.0f, 0.0f, 280.0f, 50.0f};
+
 - (GTAmountField *)amountField
 {
-    static CGRect const kCellFieldsFrame = (CGRect){20.0f, 0.0f, 280.0f, 50.0f};
-    
     if (!_amountField) {
         GTAmountField *amountField = [[GTAmountField alloc] initWithFrame:kCellFieldsFrame];
         amountField.font = [UIFont boldSystemFontOfSize:23];
@@ -725,6 +679,24 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     
     return _amountField;
+}
+
+- (UITextField *)textField
+{
+    if (!_textField) {
+        UITextField *textField = [[UITextField alloc] initWithFrame:kCellFieldsFrame];
+        textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        textField.autocorrectionType = UITextAutocorrectionTypeYes;
+        textField.spellCheckingType = UITextSpellCheckingTypeYes;
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.returnKeyType = UIReturnKeyDone;
+        textField.text = self.objects;
+        textField.delegate = self;
+        
+        self.textField = textField;
+    }
+    
+    return _textField;
 }
 
 @end
