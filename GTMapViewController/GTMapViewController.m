@@ -7,6 +7,7 @@
 //
 
 #import "GTMapViewController.h"
+#import "MapAnnotation.h"
 
 NSString * const MapsAddressSearchURL = @"http://maps.google.com/maps/geo?q=%@&output=csv&key=%@";
 NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2IrRcvdRtMaoKJ1mfhS_wJEB5hJiElfEBcZ4CEB-E4nnZQ";
@@ -77,8 +78,13 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 
 - (void)informDelegate
 {
+    CLLocation *location = self.currentLocation;
+    if (![location isEqual:self.shownLocation]) {
+        location = self.shownLocation;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(mapViewController:didFinishWithLocation:)]) {
-        [self.delegate mapViewController:self didFinishWithLocation:self.currentLocation];
+        [self.delegate mapViewController:self didFinishWithLocation:location];
     }
 }
 
@@ -95,16 +101,19 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     }
 }
 
-// TODO: not working?
 - (void)showLocation:(CLLocation *)location
 {
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
     self.shownLocation = location;
+    [self dropPinAtLocation:location];
     [self.mapView setRegion:MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.01, 0.01))];
 }
 
 - (void)dropPinAtLocation:(CLLocation *)location
 {
-    // TODO
+    MapAnnotation *annotation = [[MapAnnotation alloc] initWithTitle:nil subtitle:nil coordinate:location.coordinate];
+    [self.mapView addAnnotation:annotation];
 }
 
 - (CLLocation *)searchLocationWithName:(NSString *)locationName
@@ -169,6 +178,33 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 
 #pragma mark - MKMapViewDelegate
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    // if it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    else if ([annotation isKindOfClass:[MapAnnotation class]]) {
+        // try to dequeue an existing pin view first
+        static NSString *AnnotationIdentifier = @"AnnotationIdentifier";
+        MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+        if (!pinAnnotation) {
+            pinAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+        }
+        
+        //UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        //pinAnnotation.rightCalloutAccessoryView = infoButton;
+        
+        pinAnnotation.pinColor = MKPinAnnotationColorRed;
+        pinAnnotation.canShowCallout = YES;
+        pinAnnotation.animatesDrop = YES;
+        
+        return pinAnnotation;
+    }
+    
+    return nil;
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -201,7 +237,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 - (MKMapView *)mapView 
 {
     if (!_mapView) {
-        CGFloat originY = self.view.bounds.size.height / 4;
+        CGFloat originY = self.view.bounds.size.height / 5;
         CGRect frame = CGRectMake(0.0, originY, self.view.bounds.size.width, self.view.bounds.size.height - originY);
         _mapView = [[MKMapView alloc] initWithFrame:frame];
         _mapView.showsUserLocation = YES;
@@ -232,7 +268,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
         _searchDescriptionLabel.backgroundColor = [UIColor clearColor];
         _searchDescriptionLabel.textColor = [UIColor whiteColor];
         
-        _searchDescriptionLabel.text = NSLocalizedString(@"Type and address to search", nil);
+        _searchDescriptionLabel.text = NSLocalizedString(@"Location", nil);
     }
     return _searchDescriptionLabel;
 }
