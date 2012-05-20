@@ -330,13 +330,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     {
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         
-        if (!self.datePicker)
-        {            
-            self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, 325, 250)];
-            self.datePicker.datePickerMode = self.datePickerMode;
-            self.datePicker.hidden = NO;
-            self.datePicker.date = [NSDate date];
-            [self.datePicker addTarget:self.tableView action:@selector(reloadData)forControlEvents:UIControlEventValueChanged];
+        if (![self.datePicker isDescendantOfView:self.view]) {
             [self.view addSubview:self.datePicker];
         }
         
@@ -697,6 +691,19 @@ static CGRect const kCellFieldsFrame = (CGRect){20.0f, 0.0f, 280.0f, 50.0f};
     }
     
     return _textField;
+}
+
+- (UIDatePicker *)datePicker
+{
+    if (!_datePicker) {
+        self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, 325, 250)];
+        self.datePicker.datePickerMode = self.datePickerMode;
+        self.datePicker.hidden = NO;
+        self.datePicker.date = [NSDate date];
+        [self.datePicker addTarget:self.tableView action:@selector(reloadData)forControlEvents:UIControlEventValueChanged];
+    }
+    
+    return _datePicker;
 }
 
 @end
