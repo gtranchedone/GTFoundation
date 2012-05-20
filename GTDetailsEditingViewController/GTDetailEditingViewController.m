@@ -194,6 +194,15 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([self.amountField isFirstResponder]) {
+        [self.amountField resignFirstResponder];
+    }
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
