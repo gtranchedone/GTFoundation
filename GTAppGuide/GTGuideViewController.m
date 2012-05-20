@@ -30,8 +30,8 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 @property (nonatomic, strong) UILabel *tempTextLabel;
 @property (nonatomic, strong) UILabel *tempTitleLabel;
 
-- (void)changePage:(id)sender;
-- (void)removeGuide:(id)sender;
+- (void)changePage:(UIBarButtonItem *)sender;
+- (void)removeGuide:(UIBarButtonItem *)sender;
 - (NSDictionary *)pageAtIndex:(NSInteger)index;
 - (void)didMoveFromPage:(NSUInteger)fromPage toPage:(NSUInteger)toPage scrollingLeft:(BOOL)scrollingLeft;
 
@@ -125,8 +125,11 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 
 #pragma mark - Private Methods
 
-- (void)changePage:(id)sender
+- (void)changePage:(UIBarButtonItem *)sender
 {
+    // Fix for UI interaction
+    sender.enabled = NO;
+    
     // If this method is called from the navigationButton change the value of the current page
     if ([sender isKindOfClass:[UIBarButtonItem class]]) {
         self.pageControl.currentPage++;
@@ -139,6 +142,19 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
     
     if ([self.delegate respondsToSelector:@selector(guide:didMoveToPageAtIndex:)]) {
         [self.delegate guide:self didMoveToPageAtIndex:self.pageControl.currentPage];
+    }
+}
+
+- (void)removeGuide:(UIBarButtonItem *)sender
+{
+    // If the current page is the last one, dismiss the guide, otherwhise move to the next page by calling the 'changePage:' method
+    if (self.pageControl.currentPage == (self.pageControl.numberOfPages - 1)) {
+        [self.presentingViewController dismissModalViewControllerAnimated:YES];
+        sender.enabled = NO;
+    } 
+    else {
+        // the 'changePage:' method will handle the change of the button's action and move to the next page
+        [self changePage:sender];
     }
 }
 
@@ -187,22 +203,12 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
     
 }
 
-- (void)removeGuide:(id)sender
-{
-    // If the current page is the last one, dismiss the guide, otherwhise move to the next page by calling the 'changePage:' method
-    if (self.pageControl.currentPage == (self.pageControl.numberOfPages - 1)) {
-        [self.presentingViewController dismissModalViewControllerAnimated:YES];
-    } 
-    else {
-        // the 'changePage:' method will handle the change of the button's action and move to the next page
-        [self changePage:sender];
-    }
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    
     NSUInteger page = scrollView.contentOffset.x / self.view.bounds.size.width;
     BOOL scrollingLeft = (page > self.pageControl.currentPage);
     
