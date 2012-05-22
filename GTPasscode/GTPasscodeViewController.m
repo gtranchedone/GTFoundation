@@ -100,7 +100,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
                                                             initWithRootViewController:passcodeViewController];
         fromNavigationController.navigationBar.tintColor = navigationController.navigationBar.tintColor;
         fromNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [navigationController presentModalViewController:fromNavigationController animated:NO];
+        [[navigationController visibleViewController] presentModalViewController:fromNavigationController animated:NO];
     }
 }
 
