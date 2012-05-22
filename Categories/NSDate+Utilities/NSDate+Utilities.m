@@ -189,6 +189,55 @@
 
 #pragma mark Adjusting Dates
 
+- (NSDate *)dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit
+{
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setSecond:self.seconds];
+    [components setMinute:self.minute];
+    [components setHour:self.hour];
+    [components setDay:self.day];
+    [components setWeek:self.week];
+    [components setMonth:self.month];
+    [components setYear:self.year];
+    
+    switch (calendarUnit) {
+        case NSSecondCalendarUnit:
+            [components setSecond:(self.seconds + 1)];
+            break;
+            
+        case NSMinuteCalendarUnit:
+            [components setMinute:(self.minute + 1)];
+            break;
+            
+        case NSHourCalendarUnit:
+            [components setHour:(self.hour + 1)];
+            break;
+            
+        case NSDayCalendarUnit:
+            [components setDay:(self.day + 1)];
+            break;
+            
+        case NSWeekCalendarUnit:
+            [components setWeek:(self.week + 1)];
+            break;
+            
+        case NSMonthCalendarUnit:
+            [components setMonth:(self.month + 1)];
+            break;
+            
+        case NSYearCalendarUnit:
+            [components setYear:(self.year + 1)];
+            break;
+            
+        default:
+            NSLog(@"Calendar Unit Not Supported Yet.");
+            break;
+    }
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    return [gregorian dateFromComponents:components];
+}
+
 - (NSDate *) dateByAddingDays: (NSInteger) dDays
 {
 	NSTimeInterval aTimeInterval = [self timeIntervalSinceReferenceDate] + D_DAY * dDays;

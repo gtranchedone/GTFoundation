@@ -50,6 +50,7 @@
 - (BOOL) isLaterThanDate: (NSDate *) aDate;
 
 // Adjusting dates
+- (NSDate *) dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit; // Adds enough time to cover the time expressed by the calendar unit.
 - (NSDate *) dateByAddingDays: (NSInteger) dDays;
 - (NSDate *) dateBySubtractingDays: (NSInteger) dDays;
 - (NSDate *) dateByAddingHours: (NSInteger) dHours;
