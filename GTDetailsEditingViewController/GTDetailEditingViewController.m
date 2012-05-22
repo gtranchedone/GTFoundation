@@ -198,8 +198,10 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
 {
     [super viewWillDisappear:animated];
     
-    if ([self.amountField isFirstResponder]) {
-        [self.amountField resignFirstResponder];
+    if (self.type == DetailEditingTypeCashAmount) {
+        if ([self.amountField isFirstResponder]) {
+            [self.amountField resignFirstResponder];
+        }
     }
 }
 
