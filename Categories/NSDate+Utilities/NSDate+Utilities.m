@@ -192,41 +192,34 @@
 - (NSDate *)dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit
 {
     NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setSecond:self.seconds];
-    [components setMinute:self.minute];
-    [components setHour:self.hour];
-    [components setDay:self.day];
-    [components setWeek:self.week];
-    [components setMonth:self.month];
-    [components setYear:self.year];
     
     switch (calendarUnit) {
         case NSSecondCalendarUnit:
-            [components setSecond:(self.seconds + 1)];
+            [components setSecond:1];
             break;
             
         case NSMinuteCalendarUnit:
-            [components setMinute:(self.minute + 1)];
+            [components setMinute:1];
             break;
             
         case NSHourCalendarUnit:
-            [components setHour:(self.hour + 1)];
+            [components setHour:1];
             break;
             
         case NSDayCalendarUnit:
-            [components setDay:(self.day + 1)];
+            [components setDay:1];
             break;
             
         case NSWeekCalendarUnit:
-            [components setWeek:(self.week + 1)];
+            [components setWeekOfYear:1];
             break;
             
         case NSMonthCalendarUnit:
-            [components setMonth:(self.month + 1)];
+            [components setMonth:1];
             break;
             
         case NSYearCalendarUnit:
-            [components setYear:(self.year + 1)];
+            [components setYear:1];
             break;
             
         default:
@@ -235,7 +228,9 @@
     }
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    return [gregorian dateFromComponents:components];
+    NSDate *newDate = [gregorian dateByAddingComponents:components toDate:self options:0];
+    
+    return newDate;
 }
 
 - (NSDate *) dateByAddingDays: (NSInteger) dDays
