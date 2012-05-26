@@ -62,6 +62,19 @@
 	return [NSDate dateWithDaysBeforeNow:1];
 }
 
++ (NSDate *)dateAtBeginningOfYear
+{
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.year = [[NSDate date] year];
+    dateComponents.month = 1;
+    dateComponents.day = 1;
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDate = [gregorian dateFromComponents:dateComponents];
+    
+    return newDate;
+}
+
 + (NSDate *) dateWithHoursFromNow: (NSInteger) dHours
 {
 	NSTimeInterval aTimeInterval = [[NSDate date] timeIntervalSinceReferenceDate] + D_HOUR * dHours;
@@ -220,6 +233,50 @@
             
         case NSYearCalendarUnit:
             [components setYear:1];
+            break;
+            
+        default:
+            NSLog(@"Calendar Unit Not Supported Yet.");
+            break;
+    }
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDate = [gregorian dateByAddingComponents:components toDate:self options:0];
+    
+    return newDate;
+}
+
+- (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit
+{
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    
+    switch (calendarUnit) {
+        case NSSecondCalendarUnit:
+            [components setSecond:-1];
+            break;
+            
+        case NSMinuteCalendarUnit:
+            [components setMinute:-1];
+            break;
+            
+        case NSHourCalendarUnit:
+            [components setHour:-1];
+            break;
+            
+        case NSDayCalendarUnit:
+            [components setDay:-1];
+            break;
+            
+        case NSWeekCalendarUnit:
+            [components setWeekOfYear:-1];
+            break;
+            
+        case NSMonthCalendarUnit:
+            [components setMonth:-1];
+            break;
+            
+        case NSYearCalendarUnit:
+            [components setYear:-1];
             break;
             
         default:
