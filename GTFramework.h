@@ -23,7 +23,6 @@
 #import "GTMoreAppsView.h"
 #import "GTAppStoreHelper.h"
 #import "GTMapViewController.h"
-#import "GTGraphViewController.h"
 #import "GTGuideViewController.h"
 #import "GTManagedObjectSelector.h"
 #import "GTPasscodeViewController.h"
