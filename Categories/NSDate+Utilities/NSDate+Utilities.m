@@ -161,6 +161,13 @@
 	return [self isSameYearAsDate:newDate];
 }
 
+- (BOOL)isSameMonthAsDate:(NSDate *)aDate
+{
+    NSDateComponents *components1 = [CURRENT_CALENDAR components:NSYearCalendarUnit fromDate:self];
+	NSDateComponents *components2 = [CURRENT_CALENDAR components:NSYearCalendarUnit fromDate:aDate];
+	return ([components1 month] == [components2 month]);
+}
+
 - (BOOL) isSameYearAsDate: (NSDate *) aDate
 {
 	NSDateComponents *components1 = [CURRENT_CALENDAR components:NSYearCalendarUnit fromDate:self];
