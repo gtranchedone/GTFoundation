@@ -20,6 +20,11 @@
 
 @synthesize blocksArray = _blocksArray;
 
+- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton
+{
+    return [self initWithTitle:title message:message cancelButtonTitle:cancelButton cancelBlock:^{}];
+}
+
 - (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton cancelBlock:(void (^)(void))cancelBlock
 {
     self = [super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButton otherButtonTitles:nil];

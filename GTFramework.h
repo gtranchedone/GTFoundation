@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 SketchToCode. All rights reserved.
 //
 
+typedef void(^gt_empty_completion_block)(void);
+
 // Frameworks
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
