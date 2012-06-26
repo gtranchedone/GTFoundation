@@ -7,6 +7,7 @@
 //
 
 #import "GTLineChartView.h"
+#import "UIColor+ColorsAddition.h"
 
 #define LineWidth 4.0
 #define PointsSize CGSizeMake(15.0, 15.0)

@@ -242,7 +242,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.textAlignment = UITextAlignmentLeft;
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
     
     if (self.type == DetailEditingTypeChoice) 
     {
@@ -278,7 +278,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         }
         
         cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:0];
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     else if (self.type == DetailEditingTypeRepetingDateSelection)
     {
@@ -298,7 +298,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
             cell.textLabel.text = [self pickerView:self.generalPicker titleForRow:self.choiceIndex forComponent:self.currentTimeSpanSelection];
         }
         
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     else if (self.type == DetailEditingTypeText) {
         [cell addSubview:self.textField];
@@ -339,7 +339,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
     }
     else if (self.type == DetailEditingTypeDate)
     {
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         
         if (![self.datePicker isDescendantOfView:self.view]) {
             [self.view addSubview:self.datePicker];
@@ -481,7 +481,7 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width - 25, 30.0)];
         label.font = [UIFont boldSystemFontOfSize:17];
         label.backgroundColor = [UIColor clearColor];
-        label.textAlignment = UITextAlignmentCenter;
+        label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor blackColor];
         
         if (self.type == DetailEditingTypeRepetingDateSelection) {
@@ -676,8 +676,8 @@ static CGRect const kCellFieldsFrame = (CGRect){20.0f, 0.0f, 280.0f, 50.0f};
 {
     if (!_amountField) {
         GTAmountField *amountField = [[GTAmountField alloc] initWithFrame:kCellFieldsFrame];
-        amountField.font = [UIFont boldSystemFontOfSize:23];
-        amountField.minimumFontSize = 19;
+        amountField.font = [UIFont boldSystemFontOfSize:24];
+        amountField.minimumFontScale = 18;
         amountField.delegate = self;
         
         self.amountField = amountField;

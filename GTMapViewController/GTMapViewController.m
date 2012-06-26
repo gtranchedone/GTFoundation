@@ -7,7 +7,11 @@
 //
 
 #import "GTMapViewController.h"
-#import "MapAnnotation.h"
+
+#import "GTMapAnnotation.h"
+#import "GTUtilityFunctions.h"
+#import "UIImage+ScreenCapture.h"
+#import "UIColor+ColorsAddition.h"
 
 NSString * const MapsAddressSearchURL = @"http://maps.google.com/maps/geo?q=%@&output=csv&key=%@";
 NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2IrRcvdRtMaoKJ1mfhS_wJEB5hJiElfEBcZ4CEB-E4nnZQ";
@@ -112,7 +116,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 
 - (void)dropPinAtLocation:(CLLocation *)location
 {
-    MapAnnotation *annotation = [[MapAnnotation alloc] initWithTitle:nil subtitle:nil coordinate:location.coordinate];
+    GTMapAnnotation *annotation = [[GTMapAnnotation alloc] initWithTitle:nil subtitle:nil coordinate:location.coordinate];
     [self.mapView addAnnotation:annotation];
 }
 
@@ -184,7 +188,7 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
-    else if ([annotation isKindOfClass:[MapAnnotation class]]) {
+    else if ([annotation isKindOfClass:[GTMapAnnotation class]]) {
         // try to dequeue an existing pin view first
         static NSString *AnnotationIdentifier = @"AnnotationIdentifier";
         MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
@@ -227,7 +231,6 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
         _locationManager.distanceFilter = kCLDistanceFilterNone;
-        _locationManager.purpose = @"Get Device Location";
         _locationManager.delegate = self;
     }
     

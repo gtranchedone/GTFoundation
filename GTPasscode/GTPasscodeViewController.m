@@ -29,7 +29,6 @@
 
 #import "GTPasscodeViewController.h"
 #import "UIColor+ColorsAddition.h"
-#import "UIView+GTExtentions.h"
 
 NSString * const PasscodeUserDafaultsKey = @"PasscodeUserDefaultsKey";
 NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
@@ -100,7 +99,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
                                                             initWithRootViewController:passcodeViewController];
         fromNavigationController.navigationBar.tintColor = navigationController.navigationBar.tintColor;
         fromNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [[navigationController visibleViewController] presentModalViewController:fromNavigationController animated:NO];
+        [[navigationController visibleViewController] presentViewController:fromNavigationController animated:YES completion:^{}];
     }
 }
 
@@ -125,7 +124,7 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     navigationController2.navigationBar.tintColor = navigationController.navigationBar.tintColor;
     navigationController2.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
-    [navigationController presentModalViewController:navigationController2 animated:NO];
+    [navigationController presentViewController:navigationController2 animated:YES completion:^{}];
 }
 
 + (void)disablePasscodeCheck

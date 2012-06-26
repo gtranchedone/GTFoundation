@@ -41,7 +41,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
 
 - (void)giftApp
 {
-    NSString *GiftAppURL = [NSString stringWithFormat:@"itms-appss://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/giftSongsWizard?gift=1&salableAdamId=%d&productType=C&pricingParameter=STDQ&mt=8&ign-mscache=1", self.appleAppID];
+    NSString *GiftAppURL = [NSString stringWithFormat:@"itms-appss://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/giftSongsWizard?gift=1&salableAdamId=%@&productType=C&pricingParameter=STDQ&mt=8&ign-mscache=1", self.appleAppID];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:GiftAppURL]];
 }

@@ -51,8 +51,8 @@
 - (void)initialize
 {
     self.valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 200.0, 40.0)];
-    self.valueLabel.textAlignment = UITextAlignmentCenter;
     self.valueLabel.backgroundColor = [UIColor darkGrayColor];
+    self.valueLabel.textAlignment = NSTextAlignmentCenter;
     self.valueLabel.textColor = [UIColor whiteColor];
     
     self.sliderValueController = [[UIViewController alloc] init];
