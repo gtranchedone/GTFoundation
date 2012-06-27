@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "UIColor+ColorsAddition.h"
 
-#define GT_INCOME_TEXT_COLOR [UIColor colorFromRGBWithRed:143 green:194 blue:72 andAlpha:1]
-#define GT_EXPENSES_TEXT_COLOR [UIColor lightCoralColor]
-
 @protocol GTAmountFieldDelegate;
 
 @interface GTAmountField : UIView

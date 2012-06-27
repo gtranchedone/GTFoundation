@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 SketchToCode. All rights reserved.
 //
 
-typedef void(^gt_empty_completion_block)(void);
+#define gt_empty_block ^{}
 
 // Frameworks
 #import <UIKit/UIKit.h>
