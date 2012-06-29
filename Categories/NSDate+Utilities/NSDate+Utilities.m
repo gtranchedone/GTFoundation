@@ -247,10 +247,7 @@
             break;
     }
     
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *newDate = [gregorian dateByAddingComponents:components toDate:self options:0];
-    
-    return newDate;
+    return [CURRENT_CALENDAR dateByAddingComponents:components toDate:self options:0];
 }
 
 - (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit
@@ -291,10 +288,7 @@
             break;
     }
     
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *newDate = [gregorian dateByAddingComponents:components toDate:self options:0];
-    
-    return newDate;
+    return [CURRENT_CALENDAR dateByAddingComponents:components toDate:self options:0];
 }
 
 - (NSDate *) dateByAddingDays: (NSInteger) dDays
