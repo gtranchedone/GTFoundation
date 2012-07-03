@@ -26,9 +26,14 @@
 @synthesize cancelButtonTitle = _cancelButtonTitle;
 @synthesize cancelButtonBlock = _cancelButtonBlock;
 
-- (id)initWithTitle:(NSString *)title 
+- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)buttonTitle destructiveBlock:(void(^)(void))destructiveBlock
+{
+    return [self initWithTitle:title cancelButtonTitle:cancelButtonTitle cancelButtonSelectionBlock:^{} destructiveButtonTitle:buttonTitle destructiveButtonSelectionBlock:destructiveBlock];
+}
+
+- (id)initWithTitle:(NSString *)title
         cancelButtonTitle:(NSString *)cancelButtonTitle 
-        cancelButtonSelectionBlock:(void (^)(void))cancelButtonBlock 
+        cancelButtonSelectionBlock:(void (^)(void))cancelButtonBlock
         destructiveButtonTitle:(NSString *)destructiveButtonTitle 
         destructiveButtonSelectionBlock:(void (^)(void))destructiveButtonSelectionBlock
 {
