@@ -13,7 +13,7 @@
  NSDictionary (containg the list of choices as a NSArray of NSStrings and the index of the chosen item as a NSNumber)
  */
 
-typedef enum {
+typedef enum DetailEditingType : NSUInteger {
     DetailEditingTypeText,
     DetailEditingTypeLongText, // creates a bigger text input field
     DetailEditingTypeDate,

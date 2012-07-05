@@ -18,8 +18,7 @@
 #import <UIKit/UIKit.h>
 #import "GTGraphView.h"
 
-typedef enum
-{
+typedef enum GTGraphType : NSUInteger {
     GTGraphTypePieChart,
     GTGraphTypeLineChart, // default
     GTGraphTypeVerticalBars,

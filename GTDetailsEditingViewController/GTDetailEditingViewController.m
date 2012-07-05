@@ -26,8 +26,7 @@
 
 static NSUInteger days = 0;
 
-typedef enum
-{
+typedef enum TimeSpanSelection : NSUInteger {
     TimeSpanSelectionDays,
     TimeSpanSelectionWeeks,
     TimeSpanSelectionMonths,
