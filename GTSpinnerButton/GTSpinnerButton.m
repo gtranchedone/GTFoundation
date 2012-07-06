@@ -28,6 +28,8 @@
     [self.spinner removeFromSuperview];
 }
 
+#pragma mark - Setters and Getters
+
 - (UIActivityIndicatorView *)spinner
 {
     if (!_spinner) {

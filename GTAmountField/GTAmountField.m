@@ -95,7 +95,9 @@ static NSString * const MaximumNumberAllowed = @"999999999999";
 - (void)willMoveToWindow:(UIWindow *)newWindow
 {
     [super willMoveToWindow:newWindow];
-    [self resignFirstResponder];
+    if (!newWindow) {
+        [self resignFirstResponder];
+    }
 }
 
 #pragma mark - GTAmountKeyboardDelegate
@@ -199,6 +201,7 @@ static NSString * const MaximumNumberAllowed = @"999999999999";
 {
     if (!_textLabel) {
         UILabel *textLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        textLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         textLabel.backgroundColor = [UIColor clearColor];
         textLabel.textAlignment = NSTextAlignmentRight;
         textLabel.shadowOffset = CGSizeMake(0.0, 0.5);
