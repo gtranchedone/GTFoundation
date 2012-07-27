@@ -13,6 +13,7 @@
     NSMutableArray *_blocksArray;
 }
 
+- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle;
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)buttonTitle destructiveBlock:(void(^)(void))destructiveBlock;
 
 - (id)initWithTitle:(NSString *)title 
