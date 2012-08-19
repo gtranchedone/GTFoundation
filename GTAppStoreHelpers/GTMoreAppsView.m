@@ -160,10 +160,10 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
 - (UILabel *)createAppNameLabel
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
     label.font = [UIFont boldSystemFontOfSize:9];
     label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = UITextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentCenter;
     label.shadowOffset = (CGSize){0.0f, 0.5f};
     label.shadowColor = [UIColor whiteColor];
     label.numberOfLines = 2;
@@ -238,8 +238,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
 {
     GTAlertView *alert = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"Do you want to open this app?", nil)
                                                     message:nil
-                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                cancelBlock:^{}];
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)];
     
     [alert addButtonWithTitle:NSLocalizedString(@"Open", nil) selectionBlock:^{
         GTApp *app = [self.apps objectAtIndex:sender.tag];

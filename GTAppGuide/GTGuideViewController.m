@@ -149,7 +149,7 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 {
     // If the current page is the last one, dismiss the guide, otherwhise move to the next page by calling the 'changePage:' method
     if (self.pageControl.currentPage == (self.pageControl.numberOfPages - 1)) {
-        [self.presentingViewController dismissModalViewControllerAnimated:YES];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
         sender.enabled = NO;
     } 
     else {
@@ -284,10 +284,10 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 {
     if (!titleLabel_) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:kTitleLabelFrame];
-        titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.font = [UIFont boldSystemFontOfSize:19];
         titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.textAlignment = UITextAlignmentCenter;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
         titleLabel.shadowColor = [UIColor whiteColor];
         titleLabel.numberOfLines = 2;
@@ -302,9 +302,9 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 {
     if (!textLabel_) {
         UILabel *textLabel = [[UILabel alloc] initWithFrame:kTextLabelFrame];
-        textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         textLabel.backgroundColor = [UIColor clearColor];
-        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
         textLabel.shadowColor = [UIColor whiteColor];
         textLabel.numberOfLines = 0;
@@ -319,10 +319,10 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 {
     if (!tempTitleLabel_) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:kTitleLabelFrame];
-        titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.font = [UIFont boldSystemFontOfSize:19];
         titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.textAlignment = UITextAlignmentCenter;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
         titleLabel.shadowColor = [UIColor whiteColor];
         titleLabel.numberOfLines = 2;
@@ -337,9 +337,9 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
 {
     if (!tempTextLabel_) {
         UILabel *textLabel = [[UILabel alloc] initWithFrame:kTextLabelFrame];
-        textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         textLabel.backgroundColor = [UIColor clearColor];
-        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
         textLabel.shadowColor = [UIColor whiteColor];
         textLabel.numberOfLines = 0;

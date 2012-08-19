@@ -25,7 +25,7 @@
     [picker setMessageBody:body isHTML:NO];
     
     // Present the eMailViewController
-    [viewController presentModalViewController:picker animated:YES];
+    [viewController presentViewController:picker animated:YES completion:^{}];
     
     // Status Bar Style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];

@@ -69,7 +69,13 @@
         }
     }
     else {
+<<<<<<< HEAD
         GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"No choice was made!", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Cancel", nil) cancelBlock:^{}];
+=======
+        GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"No choice was made!", nil)
+                                                            message:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)];
+>>>>>>> 093d45605ac1f0a4afadc9357347a4287ee8c79d
         [alertView show];
     }
 }

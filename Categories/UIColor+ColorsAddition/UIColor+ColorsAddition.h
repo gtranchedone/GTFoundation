@@ -11,6 +11,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#define GT_INCOME_TEXT_COLOR [UIColor colorFromRGBWithRed:143 green:194 blue:72 andAlpha:1]
+#define GT_EXPENSES_TEXT_COLOR [UIColor lightCoralColor]
+
 @interface UIColor (ColorsAddition)
 
 // Useful Methods
