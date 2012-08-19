@@ -239,7 +239,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
     GTAlertView *alert = [[GTAlertView alloc] initWithTitle:NSLocalizedString(@"Do you want to open this app?", nil)
                                                     message:nil
                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                cancelBlock:empty_completion_block];
+                                                cancelBlock:^{}];
     
     [alert addButtonWithTitle:NSLocalizedString(@"Open", nil) selectionBlock:^{
         GTApp *app = [self.apps objectAtIndex:sender.tag];
