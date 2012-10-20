@@ -54,11 +54,6 @@
     [self.fetchedResultsController performFetch:nil];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Actions
 
 - (void)doneButtonPressed

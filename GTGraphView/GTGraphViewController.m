@@ -61,11 +61,6 @@
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
 #pragma mark - Custom Setters and Getters
 
 - (GTGraphView *)graphView

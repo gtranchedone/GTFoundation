@@ -66,18 +66,6 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
     [self showCurrentLocation];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Actions
 
 - (void)informDelegate
@@ -154,13 +142,15 @@ NSString * const GoogleMapsAPIKey = @"ABQIAAAAQzOGnmoWEb53mcdg1ffYQxQDS2F2zJ4o2I
 
 #pragma mark - CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self.activityIndicator removeFromSuperview];
     
+    CLLocation *currentLocation = [locations lastObject];
+    
     [manager stopUpdatingLocation];
-    [self showLocation:newLocation];
-    self.currentLocation = newLocation;
+    [self showLocation:currentLocation];
+    [self setCurrentLocation:currentLocation];
     
     if ([self.delegate respondsToSelector:@selector(mapViewControllerDidFinishUpdating:success:)]) {
         [self.delegate mapViewControllerDidFinishUpdating:self success:YES];

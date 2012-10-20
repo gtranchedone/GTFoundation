@@ -118,11 +118,6 @@ static CGRect const kImageViewFrame = (CGRect){10.0f, 100.0f, 300.0f, 130.0f};
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Private Methods
 
 - (void)changePage:(UIBarButtonItem *)sender

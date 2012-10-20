@@ -8,41 +8,37 @@
 
 #define gt_empty_block ^{}
 
+#ifdef USE_LOCATION_SERVICES
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "GTMapAnnotation.h"
+#import "GTMapViewController.h"
+#endif
+
 // Frameworks
 #import <UIKit/UIKit.h>
-//#import <MapKit/MapKit.h>
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
-//#import <CoreLocation/CoreLocation.h>
-//#import <AudioToolbox/AudioServices.h>
+#import <AudioToolbox/AudioServices.h>
 
 // Helpers
 #import "GTUtilityFunctions.h"
 
 // Classes
-//#import "GTSlider.h"
+#import "GTSlider.h"
 #import "GTAlertView.h"
-//#import "GTPagingView.h"
+#import "GTPagingView.h"
 #import "GTActionSheet.h"
-//#import "GTAmountField.h"
-#import "GTAppStoreHelper.h"
-//#import "GTMapViewController.h"
-//#import "GTGraphViewController.h"
-#import "GTGuideViewController.h"
-//#import "GTManagedObjectSelector.h"
-//#import "GTPasscodeViewController.h"
-//#import "GTDetailEditingViewController.h"
-//#import "GTDetailEditingViewController.h"
-#import "GTGuideViewController.h"
-//#import "GTManagedObjectSelector.h"
-//#import "GTMapAnnotation.h"
-//#import "GTMapViewController.h"
-#import "GTMoreAppsView.h"
-//#import "GTPagingView.h"
-//#import "GTPasscodeViewController.h"
-//#import "GTSlider.h"
-//#import "GTSpinnerButton.h"
+#import "GTAmountField.h"
 #import "GTTextViewCell.h"
+#import "GTMoreAppsView.h"
+#import "GTSpinnerButton.h"
+#import "GTAppStoreHelper.h"
+#import "GTGraphViewController.h"
+#import "GTGuideViewController.h"
+#import "GTManagedObjectSelector.h"
+#import "GTPasscodeViewController.h"
+#import "GTDetailEditingViewController.h"
 
 // Categories
 #import "NSDate+Utilities.h"

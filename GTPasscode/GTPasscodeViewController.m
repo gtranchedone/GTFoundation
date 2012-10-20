@@ -156,33 +156,11 @@ NSString * const AskPasswordUserDafaultsKey = @"AskPasswordUserDafaultsKey";
     }
 }
 
-- (void)viewDidUnload 
-{
-    [super viewDidUnload];
-
-    fakeField = nil;
-    
-    self.animationView = nil;
-    
-    self.titleLabel = nil;
-    self.instructionLabel = nil;
-    
-    self.bulletField0 = nil;
-    self.bulletField1 = nil;
-    self.bulletField2 = nil;
-    self.bulletField3 = nil;
-}
-
 - (void)viewWillAppear:(BOOL)animated 
 {
     if (self.isChangingPasscode || !self.isSettingPasscode) {
         self.titleLabel.text = NSLocalizedString(@"Insert your Passcode", @"Passcode entry view instruction");
     }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - View Animations
