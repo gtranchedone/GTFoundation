@@ -216,31 +216,33 @@ static NSString * const MaximumNumberAllowed = @"999999999999";
 
 - (void)setAmount:(NSDecimalNumber *)amount
 {
-    if ([amount isEqualToNumber:[NSDecimalNumber zero]]) {
-        self.negativeAmount = !self.negativeAmount;
-        self.textLabel.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:[NSDecimalNumber zero]];
-    }
-    else {
-        self.negativeAmount = [amount doubleValue] < 0;
-        NSString *amountAsString = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
-        
-        if (self.negativeAmount) {
-            amountAsString = [amountAsString stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    if (amount) {
+        if ([amount isEqualToNumber:[NSDecimalNumber zero]]) {
+            self.negativeAmount = !self.negativeAmount;
+            self.textLabel.text = [[NSNumberFormatter decimalFormatter] stringFromNumber:[NSDecimalNumber zero]];
+        }
+        else {
+            self.negativeAmount = [amount doubleValue] < 0;
+            NSString *amountAsString = [[NSNumberFormatter decimalFormatter] stringFromNumber:amount];
+            
+            if (self.negativeAmount) {
+                amountAsString = [amountAsString stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            }
+            
+            self.textLabel.text = amountAsString;
         }
         
-        self.textLabel.text = amountAsString;
-    }
-    
-    if (!self.negativeAmount) {
-        self.textLabel.textColor = GT_INCOME_TEXT_COLOR;
-    }
-    else {
-        self.textLabel.textColor = GT_EXPENSES_TEXT_COLOR;
-    }
-    
-    if (self.textLabel.text) {
-        if ([self.delegate respondsToSelector:@selector(amountField:didSetNewAmount:)]) {
-            [self.delegate amountField:self didSetNewAmount:self.amount];
+        if (!self.negativeAmount) {
+            self.textLabel.textColor = GT_INCOME_TEXT_COLOR;
+        }
+        else {
+            self.textLabel.textColor = GT_EXPENSES_TEXT_COLOR;
+        }
+        
+        if (self.textLabel.text) {
+            if ([self.delegate respondsToSelector:@selector(amountField:didSetNewAmount:)]) {
+                [self.delegate amountField:self didSetNewAmount:self.amount];
+            }
         }
     }
 }
