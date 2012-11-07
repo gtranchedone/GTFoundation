@@ -107,6 +107,9 @@ NSString * const DetailEditingDelegateIndexKey = @"DetailEditingDelegateIndexKey
         else if (type == DetailEditingTypeDate) {
             self.datePickerMode = UIDatePickerModeDateAndTime;
         }
+        else if (type == DetailEditingTypeCashAmount) {
+            self.amountField.amount = objects;
+        }
         else if (type == DetailEditingTypeRepetingDateSelection) {
             self.choiceIndex = [self.objects intValue];
         }
