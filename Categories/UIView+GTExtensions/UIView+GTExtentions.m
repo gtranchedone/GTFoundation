@@ -12,14 +12,11 @@
 
 - (void)addShadowWithOffset:(CGSize)offset
 {
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.bounds];
+    self.layer.shadowPath = [UIBezierPath bezierPathWithRect:CGRectInset(self.bounds, 2.0f, 2.0f)].CGPath;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowPath = shadowPath.CGPath;
-    self.layer.shouldRasterize = YES;
     self.layer.shadowOffset = offset;
-    self.layer.shadowOpacity = 0.8;
-    self.layer.masksToBounds = NO;
-    self.layer.shadowRadius = 3;
+    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowRadius = 2.0f;
 }
 
 @end
