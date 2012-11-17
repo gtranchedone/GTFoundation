@@ -12,5 +12,6 @@
 @interface UIView (GTExtentions)
 
 - (void)addShadowWithOffset:(CGSize)offset;
+- (void)addShadowWithOffset:(CGSize)offset toLayer:(CALayer *)layer;
 
 @end

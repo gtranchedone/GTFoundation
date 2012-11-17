@@ -12,11 +12,16 @@
 
 - (void)addShadowWithOffset:(CGSize)offset
 {
-    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius].CGPath;
-    self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowOffset = offset;
-    self.layer.shadowOpacity = 0.5f;
-    self.layer.shadowRadius = 2.0f;
+    [self addShadowWithOffset:offset toLayer:self.layer];
+}
+
+- (void)addShadowWithOffset:(CGSize)offset toLayer:(CALayer *)layer
+{
+    layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius].CGPath;
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOffset = offset;
+    layer.shadowOpacity = 0.5f;
+    layer.shadowRadius = 2.0f;
 }
 
 @end
