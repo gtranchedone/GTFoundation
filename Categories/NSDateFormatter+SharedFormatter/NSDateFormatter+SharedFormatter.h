@@ -11,5 +11,6 @@
 @interface NSDateFormatter (SharedFormatter)
 
 + (NSDateFormatter *)sharedFormatter;
++ (NSDateFormatter *)sharedFormatterWithoutTime;
 
 @end
