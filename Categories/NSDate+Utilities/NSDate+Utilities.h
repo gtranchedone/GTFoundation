@@ -13,12 +13,6 @@
 #import <Foundation/Foundation.h>
 #import "TimeFormatters.h"
 
-#define D_MINUTE	60
-#define D_HOUR		3600
-#define D_DAY		86400
-#define D_WEEK		604800
-#define D_YEAR		31556926
-
 @interface NSDate (Utilities)
 
 + (BOOL)timeIs24HourFormat;
@@ -53,7 +47,9 @@
 
 // Adjusting dates
 - (NSDate *)dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit; // Adds enough time to cover the time expressed by the calendar unit.
-- (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit;
+- (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit; // Subtracts enough time to cover the time expressed by the calendar unit.
+- (NSDate *)dateByAddingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
+- (NSDate *)dateBySubtractingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
 
 - (NSDate *)dateByAddingDays:(NSInteger)dDays;
 - (NSDate *)dateBySubtractingDays:(NSInteger)dDays;
@@ -65,12 +61,12 @@
 - (NSDate *)dateAtStartOfDay;
 
 // Retrieving intervals
-- (NSInteger)minutesAfterDate:(NSDate *)aDate;
-- (NSInteger)minutesBeforeDate:(NSDate *)aDate;
-- (NSInteger)hoursAfterDate:(NSDate *) aDate;
-- (NSInteger)hoursBeforeDate:(NSDate *)aDate;
-- (NSInteger)daysAfterDate:(NSDate *)aDate;
-- (NSInteger)daysBeforeDate:(NSDate *)aDate;
+//- (NSInteger)minutesAfterDate:(NSDate *)aDate;
+//- (NSInteger)minutesBeforeDate:(NSDate *)aDate;
+//- (NSInteger)hoursAfterDate:(NSDate *) aDate;
+//- (NSInteger)hoursBeforeDate:(NSDate *)aDate;
+//- (NSInteger)daysAfterDate:(NSDate *)aDate;
+//- (NSInteger)daysBeforeDate:(NSDate *)aDate;
 
 // Decomposing dates
 @property (readonly) NSInteger nearestHour;
