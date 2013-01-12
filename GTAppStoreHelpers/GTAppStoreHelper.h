@@ -19,7 +19,7 @@
 
 @interface GTAppStoreHelper : NSObject
 
-+ (GTAppStoreHelper *)versionCheckerWithAppleAppID:(NSString *)appleAppID; /** @param appleAppID is the Apple's app identifier */
++ (GTAppStoreHelper *)appStoreHelperWithAppleAppID:(NSString *)appleAppID; /** @param appleAppID is the Apple's app identifier */
 
 - (id)initWithAppleAppID:(NSString *)appleAppID; /** @param appleAppID is the Apple's app identifier */
 

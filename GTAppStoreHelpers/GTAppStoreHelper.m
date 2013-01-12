@@ -24,7 +24,7 @@ static NSString * const iTunesLookupAPIURLFormat = @"http://itunes.apple.com/loo
 
 @synthesize appleAppID = _appleAppID;
 
-+ (GTAppStoreHelper *)versionCheckerWithAppleAppID:(NSString *)appleAppID
++ (GTAppStoreHelper *)appStoreHelperWithAppleAppID:(NSString *)appleAppID
 {
     GTAppStoreHelper *checker = [[GTAppStoreHelper alloc] initWithAppleAppID:appleAppID];
     return checker;
