@@ -30,4 +30,13 @@
     return self;
 }
 
+- (id)initWithPlacemark:(CLPlacemark *)placemark
+{
+    self = [self initWithTitle:placemark.locality subtitle:placemark.country coordinate:placemark.location.coordinate];
+    if (self) {
+        self.placemark = placemark;
+    }
+    return self;
+}
+
 @end
