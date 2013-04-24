@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define TODO_WITH_TITLE(title) UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title \
-message:nil delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil]; \
-[alert show];
-
-#define TODO TODO_WITH_TITLE(@"TODO")
+#define TODO_WITH_TITLE_AND_MESSAGE(title, message) ShowAlertViewWithTitleAndMessage(title, message);
+#define TODO_WITH_MESSAGE(message) TODO_WITH_TITLE_AND_MESSAGE(@"TODO", message)
+#define TODO_WITH_TITLE(title) TODO_WITH_TITLE_AND_MESSAGE(title, nil)
+#define TODO TODO_WITH_TITLE_AND_MESSAGE(@"TODO", nil)
 
 extern void ShowAlertViewWithTitleAndMessage(NSString *title, NSString *message);
 
