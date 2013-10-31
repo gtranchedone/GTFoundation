@@ -1,9 +1,9 @@
 //
 //  GTActionSheet.h
-//  iTunesLookupAPITest
+//  GTFoundation
 //
 //  Created by Gianluca Tranchedone on 17/04/12.
-//  Copyright (c) 2012 Sketch to Code. All rights reserved.
+//  Copyright (c) 2013 Cocoa Beans GT Limited. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
