@@ -21,8 +21,10 @@
 		990136651823B8B2008A5908 /* GTFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136641823B8B2008A5908 /* GTFoundationTests.m */; };
 		990136791823B8CB008A5908 /* GTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136711823B8CB008A5908 /* GTActionSheet.m */; };
 		9901367A1823B8CB008A5908 /* GTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136741823B8CB008A5908 /* GTAlertView.m */; };
-		9901367B1823B8CB008A5908 /* GCGeocodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136781823B8CB008A5908 /* GCGeocodingService.m */; };
+		9901367B1823B8CB008A5908 /* GTGoogleGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136781823B8CB008A5908 /* GTGoogleGeocoder.m */; };
 		9901367D1823B91B008A5908 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9901367C1823B91B008A5908 /* CoreLocation.framework */; };
+		990136801823C36E008A5908 /* GTDemosListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9901367F1823C36E008A5908 /* GTDemosListViewController.m */; };
+		990136831823C577008A5908 /* GTGoogleMapsGeocodingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +59,13 @@
 		990136731823B8CB008A5908 /* GTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAlertView.h; sourceTree = "<group>"; };
 		990136741823B8CB008A5908 /* GTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAlertView.m; sourceTree = "<group>"; };
 		990136751823B8CB008A5908 /* GTFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFoundation.h; sourceTree = "<group>"; };
-		990136771823B8CB008A5908 /* GCGeocodingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGeocodingService.h; sourceTree = "<group>"; };
-		990136781823B8CB008A5908 /* GCGeocodingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGeocodingService.m; sourceTree = "<group>"; };
+		990136771823B8CB008A5908 /* GTGoogleGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTGoogleGeocoder.h; sourceTree = "<group>"; };
+		990136781823B8CB008A5908 /* GTGoogleGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTGoogleGeocoder.m; sourceTree = "<group>"; };
 		9901367C1823B91B008A5908 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9901367E1823C36E008A5908 /* GTDemosListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDemosListViewController.h; sourceTree = "<group>"; };
+		9901367F1823C36E008A5908 /* GTDemosListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDemosListViewController.m; sourceTree = "<group>"; };
+		990136811823C577008A5908 /* GTGoogleMapsGeocodingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTGoogleMapsGeocodingViewController.h; sourceTree = "<group>"; };
+		990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTGoogleMapsGeocodingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,10 @@
 				9901366E1823B8CB008A5908 /* Classes */,
 				9901364E1823B8B2008A5908 /* GTAppDelegate.h */,
 				9901364F1823B8B2008A5908 /* GTAppDelegate.m */,
+				9901367E1823C36E008A5908 /* GTDemosListViewController.h */,
+				9901367F1823C36E008A5908 /* GTDemosListViewController.m */,
+				990136811823C577008A5908 /* GTGoogleMapsGeocodingViewController.h */,
+				990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */,
 				990136511823B8B2008A5908 /* Images.xcassets */,
 				990136461823B8B2008A5908 /* Supporting Files */,
 			);
@@ -192,8 +202,8 @@
 		990136761823B8CB008A5908 /* GTGoogleMapsTools */ = {
 			isa = PBXGroup;
 			children = (
-				990136771823B8CB008A5908 /* GCGeocodingService.h */,
-				990136781823B8CB008A5908 /* GCGeocodingService.m */,
+				990136771823B8CB008A5908 /* GTGoogleGeocoder.h */,
+				990136781823B8CB008A5908 /* GTGoogleGeocoder.m */,
 			);
 			path = GTGoogleMapsTools;
 			sourceTree = "<group>";
@@ -295,7 +305,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				990136791823B8CB008A5908 /* GTActionSheet.m in Sources */,
-				9901367B1823B8CB008A5908 /* GCGeocodingService.m in Sources */,
+				9901367B1823B8CB008A5908 /* GTGoogleGeocoder.m in Sources */,
+				990136831823C577008A5908 /* GTGoogleMapsGeocodingViewController.m in Sources */,
+				990136801823C36E008A5908 /* GTDemosListViewController.m in Sources */,
 				9901364C1823B8B2008A5908 /* main.m in Sources */,
 				9901367A1823B8CB008A5908 /* GTAlertView.m in Sources */,
 				990136501823B8B2008A5908 /* GTAppDelegate.m in Sources */,

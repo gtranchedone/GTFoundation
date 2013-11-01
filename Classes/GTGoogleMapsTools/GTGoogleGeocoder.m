@@ -8,11 +8,11 @@
 
 #ifdef __CORELOCATION__
 
-#import "GCGeocodingService.h"
+#import "GTGoogleGeocoder.h"
 
-@implementation GCGeocodingService
+@implementation GTGoogleGeocoder
 
-+ (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLPlacemark *, NSError *))completionBlock
++ (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLLocation *, NSError *))completionBlock
 {
     NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
     NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl,address];
@@ -21,7 +21,7 @@
     NSURL *queryUrl = [NSURL URLWithString:url];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error = nil;
-        CLPlacemark *placemark = nil;
+        CLLocation *location = nil;
         
         NSError *networkError = nil;
         NSData *responseData = [NSData dataWithContentsOfURL:queryUrl options:NSDataReadingMappedIfSafe error:&networkError];
@@ -31,7 +31,7 @@
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
             
             if (jsonDictionary && !jsonError) {
-                placemark = [self placemarkFromResponseDictionary:jsonDictionary];
+                location = [self placemarkFromResponseDictionary:jsonDictionary];
             }
             else {
                 error = jsonError;
@@ -43,13 +43,13 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (completionBlock) {
-                completionBlock(placemark, error);
+                completionBlock(location, error);
             }
         });
     });
 }
 
-+ (CLPlacemark *)placemarkFromResponseDictionary:(NSDictionary *)dictionary {
++ (CLLocation *)placemarkFromResponseDictionary:(NSDictionary *)dictionary {
     NSArray *results = [dictionary objectForKey:@"results"];
     NSDictionary *result = [results objectAtIndex:0];
     
@@ -58,34 +58,7 @@
     NSString *lat = [location objectForKey:@"lat"];
     NSString *lng = [location objectForKey:@"lng"];
     
-    /*
-     The Address Dictionary = {
-        City = London;
-        Country = "United Kingdom";
-        CountryCode = GB;
-        FormattedAddressLines =     (
-            "Marlborough Road",
-            London,
-            "SE18 6PJ",
-            England
-        );
-        PostCodeExtension = PJ;
-        State = England;
-        Street = "Marlborough Road";
-        SubAdministrativeArea = London;
-        SubLocality = "Woolwich Riverside";
-        Thoroughfare = "Marlborough Road";
-        ZIP = "SE18 6";
-     }
-     */
-    NSString *address = [result objectForKey:@"formatted_address"];
-    NSDictionary *addressDictionary = @{};
-    
-    CLPlacemark *placemark = [[CLPlacemark alloc] init];
-    [placemark setValue:addressDictionary forKey:@"addressDictionary"];
-    [placemark setValue:[[CLLocation alloc] initWithLatitude:lat.doubleValue longitude:lng.doubleValue] forKey:@"location"];
-    
-    return placemark;
+    return [[CLLocation alloc] initWithLatitude:lat.doubleValue longitude:lng.doubleValue];
 }
 
 @end

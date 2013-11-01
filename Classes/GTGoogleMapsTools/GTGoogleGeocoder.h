@@ -11,9 +11,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface GCGeocodingService : NSObject
+@interface GTGoogleGeocoder : NSObject
 
-+ (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLPlacemark *placemark, NSError *error))completionBlock;
++ (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLLocation *location, NSError *error))completionBlock;
 
 @end
 
