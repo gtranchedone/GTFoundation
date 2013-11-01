@@ -14,8 +14,8 @@
 
 + (void)autocompleteAddress:(NSString *)address mapsApiKey:(NSString *)apiKey completionBlock:(void (^)(NSArray *, NSError *))completionBlock
 {
-    NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/place/autocomplete/json?";
-    NSString *url = [NSString stringWithFormat:@"%@input=%@&language=en&types=geocode&sensor=false&key=%@", geocodingBaseUrl, address, apiKey];
+    NSString *geocodingBaseUrl = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+    NSString *url = [NSString stringWithFormat:@"%@input=%@&language=en&sensor=false&key=%@", geocodingBaseUrl, address, apiKey];
     url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
     NSURL *queryUrl = [NSURL URLWithString:url];
@@ -31,7 +31,7 @@
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
             
             if (jsonDictionary && !jsonError) {
-                //results = [self placemarkFromResponseDictionary:jsonDictionary];
+                results = [jsonDictionary objectForKey:@"predictions"];
             }
             else {
                 error = jsonError;
