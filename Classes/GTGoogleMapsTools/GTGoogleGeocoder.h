@@ -1,9 +1,9 @@
 //
-//  GCGeocodingService.h
-//  GeocodingAPISample
+//  GTGoogleGeocoder.h
+//  GTFoundation
 //
-//  Created by Mano Marks on 4/11/13.
-//  Copyright (c) 2013 Google. All rights reserved.
+//  Created by Gianluca Tranchedone on 4/11/13.
+//  Copyright (c) 2013 Gianluca Tranchedone. All rights reserved.
 //
 
 //#ifdef __CORELOCATION__
@@ -15,7 +15,7 @@
 
 + (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLLocation *location, NSError *error))completionBlock;
 + (void)reverseGeocodeLocationWithCoordinate:(CLLocationCoordinate2D)coordinate completionBlock:(void (^)(CLPlacemark *placemark, NSError *error))completionBlock;
-+ (void)autocompleteAddress:(NSString *)address mapsApiKey:(NSString *)apiKey completionBlock:(void (^)(NSArray *results, NSError *completionBlock))completionBlock;
++ (void)searchAddress:(NSString *)address nearLocation:(CLLocation *)location mapsApiKey:(NSString *)apiKey completionBlock:(void (^)(NSArray *results, NSError *error))completionBlock;
 
 @end
 

@@ -1,6 +1,6 @@
 //
-//  GCGeocodingService.m
-//  GeocodingAPISample
+//  GTGoogleGeocoder.m
+//  GTFoundation
 //
 //  Created by Mano Marks on 4/11/13.
 //  Copyright (c) 2013 Google. All rights reserved.
@@ -12,13 +12,23 @@
 
 @implementation GTGoogleGeocoder
 
-+ (void)autocompleteAddress:(NSString *)address mapsApiKey:(NSString *)apiKey completionBlock:(void (^)(NSArray *, NSError *))completionBlock
++ (void)searchAddress:(NSString *)address nearLocation:(CLLocation *)location mapsApiKey:(NSString *)apiKey completionBlock:(void (^)(NSArray *, NSError *))completionBlock
 {
-    NSString *geocodingBaseUrl = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?";
-    NSString *url = [NSString stringWithFormat:@"%@input=%@&language=en&sensor=false&key=%@", geocodingBaseUrl, address, apiKey];
-    url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSString *geocodingBaseUrl = nil;
+    NSString *url = nil;
     
+    if (location) {
+        geocodingBaseUrl = @"https://maps.googleapis.com/maps/api/place/textsearch/json?";
+        url = [NSString stringWithFormat:@"%@query=%@&language=en&sensor=true&key=%@&location=%f,%f&radius=50000", geocodingBaseUrl, address, apiKey,location.coordinate.latitude, location.coordinate.longitude];
+    }
+    else {
+        geocodingBaseUrl = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+        url = [NSString stringWithFormat:@"%@input=%@&language=en&sensor=true&key=%@", geocodingBaseUrl, address, apiKey];
+    }
+    
+    url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     NSURL *queryUrl = [NSURL URLWithString:url];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error = nil;
         NSArray *results = nil;
@@ -31,7 +41,7 @@
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
             
             if (jsonDictionary && !jsonError) {
-                results = [jsonDictionary objectForKey:@"predictions"];
+                results = [jsonDictionary objectForKey:@"results"];
             }
             else {
                 error = jsonError;
@@ -52,7 +62,7 @@
 + (void)geocodeAddress:(NSString *)address withCompletionBlock:(void (^)(CLLocation *, NSError *))completionBlock
 {
     NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
-    NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl, address];
+    NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=true", geocodingBaseUrl, address];
     url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
     NSURL *queryUrl = [NSURL URLWithString:url];
@@ -90,7 +100,7 @@
 {
     NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
     NSString *formattedCoordinateString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
-    NSString *url = [NSString stringWithFormat:@"%@latlng=%@&sensor=false", geocodingBaseUrl, formattedCoordinateString];
+    NSString *url = [NSString stringWithFormat:@"%@latlng=%@&sensor=true", geocodingBaseUrl, formattedCoordinateString];
     url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
     url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];

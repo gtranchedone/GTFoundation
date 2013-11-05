@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "GTFoundation"
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
   s.summary      = "GTFoundation is a set of classes that make it easy to work with Foundation and UIKit."
 
   s.description  = <<-DESC
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '6.0'
 
-  s.source       = { :git => "https://github.com/gtranchedone/GTFoundation.git", :tag => "0.0.4" }
+  s.source       = { :git => "https://github.com/gtranchedone/GTFoundation.git", :tag => "0.0.5" }
   s.requires_arc = true
   
   s.source_files  = 'Classes', 'Classes/**/*.{h,m}'
