@@ -2,8 +2,8 @@
 //  GTGoogleGeocoder.m
 //  GTFoundation
 //
-//  Created by Mano Marks on 4/11/13.
-//  Copyright (c) 2013 Google. All rights reserved.
+//  Created by Gianluca Tranchedone on 4/11/13.
+//  Copyright (c) 2013 Gianluca Tranchedone. All rights reserved.
 //
 
 //#ifdef __CORELOCATION__
@@ -41,7 +41,13 @@
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
             
             if (jsonDictionary && !jsonError) {
-                results = [jsonDictionary objectForKey:@"results"];
+                NSString *status = [jsonDictionary objectForKey:@"status"];
+                if (![status isEqualToString:@"OK"] && ![status isEqualToString:@"ZERO_RESULTS"]) {
+                    error = [NSError errorWithDomain:@"ch.gtran.GTGoogleGeocoder" code:1 userInfo:jsonDictionary];
+                }
+                else {
+                    results = [jsonDictionary objectForKey:@"results"];
+                }
             }
             else {
                 error = jsonError;
