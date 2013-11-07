@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
                    GTFoundation is a set of classes that make it easy to work with Foundation and UIKit or AppKit.
                    DESC
   s.homepage     = "http://cocoabeans.me/projects/open-source"
-  s.license      = { :type => 'MIT', :file => 'License' }
+  s.license      = 'MIT'
   s.author       = { "Gianluca Tranchedone" => "gianluca@cocoabeans.me" }
   
   s.ios.deployment_target = '6.0'
