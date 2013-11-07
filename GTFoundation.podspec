@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/gtranchedone/GTFoundation.git", :tag => s.version.to_s }
   s.requires_arc = true
   
-  s.source_files = 'Classes'
+  s.source_files = 'Classes/*'
   s.ios.exclude_files = 'Classes/osx'
   s.osx.exclude_files = 'Classes/ios'
   s.public_header_files = 'Classes/**/*.h' 
