@@ -33,11 +33,12 @@
 #import <AppKit/AppKit.h>
 #endif
 
-#define TODO_WITH_TITLE_AND_MESSAGE(title, message) GTShowAlertViewWithTitleAndMessage(title, message);
-#define TODO_WITH_MESSAGE(message) TODO_WITH_TITLE_AND_MESSAGE(@"TODO", message)
-#define TODO_WITH_TITLE(title) TODO_WITH_TITLE_AND_MESSAGE(title, nil)
-#define TODO TODO_WITH_TITLE_AND_MESSAGE(@"TODO", nil)
+#define GT_TODO_WITH_TITLE_AND_MESSAGE(title, message) GTShowAlertViewWithTitleAndMessage(title, message);
+#define GT_TODO_WITH_MESSAGE(message) GT_TODO_WITH_TITLE_AND_MESSAGE(@"TODO", message)
+#define GT_TODO_WITH_TITLE(title) GT_TODO_WITH_TITLE_AND_MESSAGE(title, nil)
+#define GT_TODO GT_TODO_WITH_TITLE_AND_MESSAGE(@"TODO", nil)
 
+// For Debug use only.
 FOUNDATION_EXTERN void GTShowAlertViewWithTitleAndMessage(NSString *title, NSString *message);
 
 FOUNDATION_EXTERN CGFloat GTRadiansFromDegrees(CGFloat degrees);

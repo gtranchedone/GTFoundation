@@ -29,7 +29,7 @@
 
 @implementation NSDecimalNumber (Opposite)
 
-- (NSDecimalNumber *)oppositeValue
+- (NSDecimalNumber *)GT_oppositeValue
 {
     return [self decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"-1"]];
 }

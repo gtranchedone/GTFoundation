@@ -44,29 +44,29 @@
     return is24Hour;
 }
 
-#pragma mark Relative Dates
+#pragma mark - Relative Dates
 
-+ (NSDate *)dateWithDaysFromNow:(NSInteger)days
++ (NSDate *)GT_dateWithDaysFromNow:(NSInteger)days
 {
-	return [[NSDate date] dateByAddingDays:days];
+	return [[NSDate date] GT_dateByAddingDays:days];
 }
 
-+ (NSDate *)dateWithDaysBeforeNow:(NSInteger)days
++ (NSDate *)GT_dateWithDaysBeforeNow:(NSInteger)days
 {
-	return [[NSDate date] dateBySubtractingDays:days];
+	return [[NSDate date] GT_dateBySubtractingDays:days];
 }
 
-+ (NSDate *)dateTomorrow
++ (NSDate *)GT_dateTomorrow
 {
-	return [NSDate dateWithDaysFromNow:1];
+	return [NSDate GT_dateWithDaysFromNow:1];
 }
 
-+ (NSDate *)dateYesterday
++ (NSDate *)GT_dateYesterday
 {
-	return [NSDate dateWithDaysBeforeNow:1];
+	return [NSDate GT_dateWithDaysBeforeNow:1];
 }
 
-+ (NSDate *)dateAtBeginningOfYear
++ (NSDate *)GT_dateAtBeginningOfYear
 {
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.year = [[NSDate date] year];
@@ -76,27 +76,27 @@
     return [[NSCalendar currentCalendar] dateFromComponents:dateComponents];;
 }
 
-+ (NSDate *)dateWithHoursFromNow:(NSInteger)hours
++ (NSDate *)GT_dateWithHoursFromNow:(NSInteger)hours
 {
-	return [[NSDate date] dateByAddingHours:hours];
+	return [[NSDate date] GT_dateByAddingHours:hours];
 }
 
-+ (NSDate *)dateWithHoursBeforeNow:(NSInteger)hours
++ (NSDate *)GT_dateWithHoursBeforeNow:(NSInteger)hours
 {
-	return [[NSDate date] dateBySubtractingHours:hours];
+	return [[NSDate date] GT_dateBySubtractingHours:hours];
 }
 
-+ (NSDate *)dateWithMinutesFromNow:(NSInteger)minutes
++ (NSDate *)GT_dateWithMinutesFromNow:(NSInteger)minutes
 {
-	return [[NSDate date] dateByAddingMinutes:minutes];
+	return [[NSDate date] GT_dateByAddingMinutes:minutes];
 }
 
-+ (NSDate *)dateWithMinutesBeforeNow:(NSInteger)minutes
++ (NSDate *)GT_dateWithMinutesBeforeNow:(NSInteger)minutes
 {
-	return [[NSDate date] dateBySubtractingMinutes:minutes];
+	return [[NSDate date] GT_dateBySubtractingMinutes:minutes];
 }
 
-#pragma mark Comparing Dates
+#pragma mark - Comparing Dates
 
 - (BOOL)isEqualToDateIgnoringTime:(NSDate *) aDate
 {
@@ -114,12 +114,12 @@
 
 - (BOOL)isTomorrow
 {
-	return [self isEqualToDateIgnoringTime:[NSDate dateTomorrow]];
+	return [self isEqualToDateIgnoringTime:[NSDate GT_dateTomorrow]];
 }
 
 - (BOOL)isYesterday
 {
-	return [self isEqualToDateIgnoringTime:[NSDate dateYesterday]];
+	return [self isEqualToDateIgnoringTime:[NSDate GT_dateYesterday]];
 }
 
 // This hard codes the assumption that a week is 7 days
@@ -142,13 +142,13 @@
 
 - (BOOL)isNextWeek
 {
-	NSDate *newDate = [[NSDate date] dateByAddingCalendarUnit:NSWeekCalendarUnit];
+	NSDate *newDate = [[NSDate date] GT_dateByAddingCalendarUnit:NSWeekCalendarUnit];
 	return [self isSameYearAsDate:newDate];
 }
 
 - (BOOL)isLastWeek
 {
-	NSDate *newDate = [[NSDate date] dateBySubtractingCalendarUnit:NSWeekCalendarUnit];
+	NSDate *newDate = [[NSDate date] GT_dateBySubtractingCalendarUnit:NSWeekCalendarUnit];
 	return [self isSameYearAsDate:newDate];
 }
 
@@ -197,20 +197,19 @@
 	return ([self laterDate:aDate] == self);
 }
 
+#pragma mark - Adjusting Dates
 
-#pragma mark Adjusting Dates
-
-- (NSDate *)dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit
+- (NSDate *)GT_dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit
 {
-    return [self dateByAddingNumberOfCalendarUnit:1 ofKind:calendarUnit];
+    return [self GT_dateByAddingNumberOfCalendarUnit:1 ofKind:calendarUnit];
 }
 
-- (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit
+- (NSDate *)GT_dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit
 {
-    return [self dateBySubtractingNumberOfCalendarUnit:1 ofKind:calendarUnit];
+    return [self GT_dateBySubtractingNumberOfCalendarUnit:1 ofKind:calendarUnit];
 }
 
-- (NSDate *)dateByAddingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit
+- (NSDate *)GT_dateByAddingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit
 {
     NSDateComponents *components = [[NSDateComponents alloc] init];
     
@@ -251,42 +250,42 @@
     return [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:self options:0];
 }
 
-- (NSDate *)dateBySubtractingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit
+- (NSDate *)GT_dateBySubtractingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit
 {
-    return [self dateByAddingNumberOfCalendarUnit:(numberOfCalendarUnit * -1) ofKind:calendarUnit];
+    return [self GT_dateByAddingNumberOfCalendarUnit:(numberOfCalendarUnit * -1) ofKind:calendarUnit];
 }
 
-- (NSDate *)dateByAddingDays:(NSInteger)days
+- (NSDate *)GT_dateByAddingDays:(NSInteger)days
 {
-	return [self dateByAddingNumberOfCalendarUnit:days ofKind:NSDayCalendarUnit];
+	return [self GT_dateByAddingNumberOfCalendarUnit:days ofKind:NSDayCalendarUnit];
 }
 
-- (NSDate *)dateBySubtractingDays:(NSInteger)days
+- (NSDate *)GT_dateBySubtractingDays:(NSInteger)days
 {
-	return [self dateByAddingDays:(days * -1)];
+	return [self GT_dateByAddingDays:(days * -1)];
 }
 
-- (NSDate *)dateByAddingHours:(NSInteger)hours
+- (NSDate *)GT_dateByAddingHours:(NSInteger)hours
 {
-	return [self dateByAddingNumberOfCalendarUnit:hours ofKind:NSHourCalendarUnit];
+	return [self GT_dateByAddingNumberOfCalendarUnit:hours ofKind:NSHourCalendarUnit];
 }
 
-- (NSDate *)dateBySubtractingHours:(NSInteger)hours
+- (NSDate *)GT_dateBySubtractingHours:(NSInteger)hours
 {
-	return [self dateByAddingHours:(hours * -1)];
+	return [self GT_dateByAddingHours:(hours * -1)];
 }
 
-- (NSDate *)dateByAddingMinutes:(NSInteger)minutes
+- (NSDate *)GT_dateByAddingMinutes:(NSInteger)minutes
 {
-	return [self dateByAddingNumberOfCalendarUnit:minutes ofKind:NSMinuteCalendarUnit];
+	return [self GT_dateByAddingNumberOfCalendarUnit:minutes ofKind:NSMinuteCalendarUnit];
 }
 
-- (NSDate *)dateBySubtractingMinutes:(NSInteger)minutes
+- (NSDate *)GT_dateBySubtractingMinutes:(NSInteger)minutes
 {
-	return [self dateByAddingMinutes:(minutes * -1)];
+	return [self GT_dateByAddingMinutes:(minutes * -1)];
 }
 
-- (NSDate *)dateAtStartOfDayWithTimeZone:(NSTimeZone *)timeZone
+- (NSDate *)GT_dateAtStartOfDayWithTimeZone:(NSTimeZone *)timeZone
 {
     NSDateComponents *components = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:self];
 	[components setHour:0];
@@ -296,9 +295,9 @@
 	return [[NSCalendar currentCalendar] dateFromComponents:components];
 }
 
-- (NSDate *)dateAtStartOfDay
+- (NSDate *)GT_dateAtStartOfDay
 {
-	return [self dateAtStartOfDayWithTimeZone:[NSTimeZone defaultTimeZone]];
+	return [self GT_dateAtStartOfDayWithTimeZone:[NSTimeZone defaultTimeZone]];
 }
 
 - (NSDateComponents *)componentsWithOffsetFromDate: (NSDate *) aDate
@@ -362,12 +361,6 @@
 {
 	NSDateComponents *components = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:self];
 	return [components weekday];
-}
-
-- (NSInteger)nthWeekday // e.g. 2nd Tuesday of the month is 2
-{
-	NSDateComponents *components = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:self];
-	return [components weekdayOrdinal];
 }
 
 - (NSInteger)year

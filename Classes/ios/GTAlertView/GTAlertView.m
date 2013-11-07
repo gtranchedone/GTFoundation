@@ -25,9 +25,9 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-
 #import "GTAlertView.h"
+
+#if TARGET_OS_IPHONE
 
 @interface GTAlertView () <UIAlertViewDelegate>
 
@@ -39,19 +39,57 @@
 
 @implementation GTAlertView
 
-@synthesize blocksArray = _blocksArray;
-
-- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle
 {
-    return [self initWithTitle:title message:message cancelButtonTitle:cancelButton cancelBlock:^{}];
+    GTAlertView *alertView = [[self alloc] initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle];
+    [alertView show];
 }
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton cancelBlock:(void (^)(void))cancelBlock
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle cancelBlock:(void(^)(void))cancelBlock
 {
-    self = [super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButton otherButtonTitles:nil];
+    GTAlertView *alertView = [[self alloc] initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle cancelBlock:cancelBlock];
+    [alertView show];
+}
+
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle firstOtherButtonTitle:(NSString *)firstButtonTitle firstOtherButtonBlock:(void(^)(void))block
+{
+    GTAlertView *alertView = [[self alloc] initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle firstOtherButtonTitle:firstButtonTitle firstOtherButtonBlock:block];
+    [alertView show];
+}
+
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle cancelBlock:(void(^)(void))cancelBlock firstOtherButtonTitle:(NSString *)firstButtonTitle firstOtherButtonBlock:(void(^)(void))block
+{
+    GTAlertView *alertView = [[self alloc] initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle cancelBlock:cancelBlock firstOtherButtonTitle:firstButtonTitle firstOtherButtonBlock:block];
+    [alertView show];
+}
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton
+{
+    return [self initWithTitle:title message:message cancelButtonTitle:cancelButton cancelBlock:nil];
+}
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle cancelBlock:(void (^)(void))cancelBlock
+{
+    return [self initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle cancelBlock:cancelBlock firstOtherButtonTitle:nil firstOtherButtonBlock:nil];
+}
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle firstOtherButtonTitle:(NSString *)firstButtonTitle firstOtherButtonBlock:(void(^)(void))block
+{
+    return [self initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle cancelBlock:nil firstOtherButtonTitle:firstButtonTitle firstOtherButtonBlock:block];
+}
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle cancelBlock:(void(^)(void))cancelBlock firstOtherButtonTitle:(NSString *)firstButtonTitle firstOtherButtonBlock:(void(^)(void))block
+{
+    self = [super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     if (self) {
         self.blocksArray = [NSMutableArray array];
-        [self.blocksArray addObject:[cancelBlock copy]];
+        if (cancelBlock) {
+            [self.blocksArray addObject:[cancelBlock copy]];
+        }
+        
+        if (firstButtonTitle) {
+            [self addButtonWithTitle:firstButtonTitle selectionBlock:block];
+        }
     }
     return self;
 }
@@ -59,7 +97,10 @@
 - (void)addButtonWithTitle:(NSString *)title selectionBlock:(void (^)(void))selectionBlock
 {
     [super addButtonWithTitle:title];
-    [self.blocksArray addObject:[selectionBlock copy]];
+    
+    if (selectionBlock) {
+        [self.blocksArray addObject:[selectionBlock copy]];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -31,18 +31,24 @@
 
 + (BOOL)timeIs24HourFormat;
 
-// Relative dates from the current date
-+ (NSDate *)dateTomorrow;
-+ (NSDate *)dateYesterday;
-+ (NSDate *)dateAtBeginningOfYear;
-+ (NSDate *)dateWithDaysFromNow:(NSInteger)days;
-+ (NSDate *)dateWithDaysBeforeNow:(NSInteger)days;
-+ (NSDate *)dateWithHoursFromNow:(NSInteger)dHours;
-+ (NSDate *)dateWithHoursBeforeNow:(NSInteger)dHours;
-+ (NSDate *)dateWithMinutesFromNow:(NSInteger)dMinutes;
-+ (NSDate *)dateWithMinutesBeforeNow:(NSInteger)dMinutes;
+///--------------------------------------------------
+/// @name Relative Dates
+///--------------------------------------------------
 
-// Comparing dates
++ (NSDate *)GT_dateTomorrow;
++ (NSDate *)GT_dateYesterday;
++ (NSDate *)GT_dateAtBeginningOfYear;
++ (NSDate *)GT_dateWithDaysFromNow:(NSInteger)days;
++ (NSDate *)GT_dateWithDaysBeforeNow:(NSInteger)days;
++ (NSDate *)GT_dateWithHoursFromNow:(NSInteger)dHours;
++ (NSDate *)GT_dateWithHoursBeforeNow:(NSInteger)dHours;
++ (NSDate *)GT_dateWithMinutesFromNow:(NSInteger)dMinutes;
++ (NSDate *)GT_dateWithMinutesBeforeNow:(NSInteger)dMinutes;
+
+///--------------------------------------------------
+/// @name Comparing Dates
+///--------------------------------------------------
+
 - (BOOL)isEqualToDateIgnoringTime:(NSDate *)aDate;
 - (BOOL)isToday;
 - (BOOL)isTomorrow;
@@ -59,22 +65,28 @@
 - (BOOL)isEarlierThanDate:(NSDate *)aDate;
 - (BOOL)isLaterThanDate:(NSDate *)aDate;
 
-// Adjusting dates
-- (NSDate *)dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit; // Adds enough time to cover the time expressed by the calendar unit.
-- (NSDate *)dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit; // Subtracts enough time to cover the time expressed by the calendar unit.
-- (NSDate *)dateByAddingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
-- (NSDate *)dateBySubtractingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
+///--------------------------------------------------
+/// @name Adjusting Dates
+///--------------------------------------------------
 
-- (NSDate *)dateByAddingDays:(NSInteger)dDays;
-- (NSDate *)dateBySubtractingDays:(NSInteger)dDays;
-- (NSDate *)dateByAddingHours:(NSInteger)dHours;
-- (NSDate *)dateBySubtractingHours:(NSInteger)dHours;
-- (NSDate *)dateByAddingMinutes: (NSInteger)dMinutes;
-- (NSDate *)dateBySubtractingMinutes:(NSInteger)dMinutes;
-- (NSDate *)dateAtStartOfDayWithTimeZone:(NSTimeZone *)timeZone;
-- (NSDate *)dateAtStartOfDay;
+- (NSDate *)GT_dateByAddingCalendarUnit:(NSCalendarUnit)calendarUnit; // Adds enough time to cover the time expressed by the calendar unit.
+- (NSDate *)GT_dateBySubtractingCalendarUnit:(NSCalendarUnit)calendarUnit; // Subtracts enough time to cover the time expressed by the calendar unit.
+- (NSDate *)GT_dateByAddingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
+- (NSDate *)GT_dateBySubtractingNumberOfCalendarUnit:(NSInteger)numberOfCalendarUnit ofKind:(NSCalendarUnit)calendarUnit;
 
-// Decomposing dates
+- (NSDate *)GT_dateAtStartOfDay;
+- (NSDate *)GT_dateByAddingDays:(NSInteger)days;
+- (NSDate *)GT_dateBySubtractingDays:(NSInteger)days;
+- (NSDate *)GT_dateByAddingHours:(NSInteger)hours;
+- (NSDate *)GT_dateBySubtractingHours:(NSInteger)hours;
+- (NSDate *)GT_dateByAddingMinutes: (NSInteger)minutes;
+- (NSDate *)GT_dateBySubtractingMinutes:(NSInteger)minutes;
+- (NSDate *)GT_dateAtStartOfDayWithTimeZone:(NSTimeZone *)timeZone;
+
+///--------------------------------------------------
+/// @name Decomposing Dates
+///--------------------------------------------------
+
 @property (readonly) NSInteger nearestHour;
 @property (readonly) NSInteger hour;
 @property (readonly) NSInteger minute;
@@ -83,7 +95,6 @@
 @property (readonly) NSInteger month;
 @property (readonly) NSInteger week;
 @property (readonly) NSInteger weekday;
-@property (readonly) NSInteger nthWeekday; // e.g. 2nd Tuesday of the month == 2
 @property (readonly) NSInteger year;
 
 @end

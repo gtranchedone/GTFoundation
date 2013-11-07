@@ -30,11 +30,7 @@
 void GTShowAlertViewWithTitleAndMessage(NSString *title, NSString *message)
 {
 #if TARGET_OS_IPHONE
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title 
-                                                    message:message 
-                                                   delegate:nil 
-                                          cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) 
-                                          otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
     [alert show];
 #else
 #endif

@@ -25,14 +25,15 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// Classes
 #import <Availability.h>
 #import "GTUtilityFunctions.h"
+#import "GTColor+ColorsAddition.h"
 
 #if TARGET_OS_IPHONE
+
 #import "GTAlertView.h"
 #import "GTActionSheet.h"
-#import "UIColor+ColorsAddition.h"
 
 #else
+
 #endif

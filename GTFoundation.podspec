@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GTFoundation"
-  s.version      = "0.1.0"
+  s.version      = "0.0.9"
   s.summary      = "GTFoundation is a set of classes that make it easy to work with Foundation and UIKit or AppKit."
   s.description  = <<-DESC
                    GTFoundation is a set of classes that make it easy to work with Foundation and UIKit or AppKit.
