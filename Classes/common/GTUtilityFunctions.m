@@ -1,29 +1,51 @@
 //
 //  GTUtilityFunctions.m
-//  MoneyClip
+//  GTFoundation
 //
-//  Created by Gianluca Tranchedone on 26/06/12.
-//  Copyright (c) 2012 Gianluca Tranchedone. All rights reserved.
+//  Created by Gianluca Tranchedone on 14/08/13.
+//  The MIT License (MIT)
+//
+//  Copyright (c) 2013 Gianluca Tranchedone
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+//  the Software, and to permit persons to whom the Software is furnished to do so,
+//  subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+//  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+//  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+//  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
 #import "GTUtilityFunctions.h"
 
-void ShowAlertViewWithTitleAndMessage(NSString *title, NSString *message)
+void GTShowAlertViewWithTitleAndMessage(NSString *title, NSString *message)
 {
+#if TARGET_OS_IPHONE
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title 
                                                     message:message 
                                                    delegate:nil 
                                           cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) 
                                           otherButtonTitles:nil];
     [alert show];
+#else
+#endif
 }
 
-CGFloat RadiansFromDegrees(CGFloat degrees)
+CGFloat GTRadiansFromDegrees(CGFloat degrees)
 {
     return (degrees * M_PI) / 180;
 }
 
-NSString *CurrencySymbolFromCurrencyCode(NSString *currencyCode)
+NSString *GTCurrencySymbolFromCurrencyCode(NSString *currencyCode)
 {
     if (!currencyCode) {
         return nil;
@@ -40,71 +62,5 @@ NSString *CurrencySymbolFromCurrencyCode(NSString *currencyCode)
         }
         
         return currencySymbol;
-    }
-}
-
-NSString *NSStringFromNSCalendarUnit(NSCalendarUnit calendarUnit)
-{
-    NSString *resultString = nil;
-    
-    if (calendarUnit) {
-        switch (calendarUnit) {
-            case NSDayCalendarUnit:
-                resultString = NSLocalizedString(@"Repeat Every Day", nil);
-                break;
-                
-            case NSWeekCalendarUnit:
-                resultString = NSLocalizedString(@"Repeat Every Week", nil);
-                break;
-                
-            case NSMonthCalendarUnit:
-                resultString = NSLocalizedString(@"Repeat Every Month", nil);
-                break;
-                
-            case NSYearCalendarUnit:
-                resultString = NSLocalizedString(@"Repeat Every Year", nil);
-                break;
-                
-            default:
-                NSLog(@"Calendar Unit Not Valid: %d", calendarUnit);
-                break;
-        }
-    }
-    else {
-        resultString = NSLocalizedString(@"Never Repeat", nil);
-    }
-    
-    return resultString;
-}
-
-NSString *ImagePathForSavingImageInDirectory(UIImage *image, NSString *imageDirectoryPath)
-{
-    BOOL directoryExists = YES;
-    BOOL pathExists = [[NSFileManager defaultManager] fileExistsAtPath:imageDirectoryPath isDirectory:&directoryExists];
-    
-    if (pathExists && directoryExists) {
-        NSString *jpgImageName = [NSString stringWithFormat:@"%@.jpg", [NSDate date]];
-        NSString *jpgImagePath = [imageDirectoryPath stringByAppendingPathComponent:jpgImageName];
-        NSData *data = [NSData dataWithData:UIImageJPEGRepresentation(image, 1.0)];
-        
-        NSError *error = nil;
-        [data writeToFile:jpgImagePath options:NSDataWritingAtomic error:&error];
-        if (error) {
-            NSLog(@"Error while writing image to file: %@", error);
-        }
-        
-        return jpgImageName;
-    }
-    else {
-        NSError *error = nil;
-        [[NSFileManager defaultManager] createDirectoryAtPath:imageDirectoryPath withIntermediateDirectories:YES attributes:nil error:&error];
-        
-        if (!error) {
-            return ImagePathForSavingImageInDirectory(image, imageDirectoryPath);
-        }
-        else {
-            NSLog(@"Couldn't create directory at path %@. Error: %@.", imageDirectoryPath, error);
-            return nil;
-        }
     }
 }

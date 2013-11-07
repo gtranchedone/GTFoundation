@@ -1,5 +1,5 @@
 //
-//  GTActionSheet.h
+//  NSDecimalNumber+Opposite.m
 //  GTFoundation
 //
 //  Created by Gianluca Tranchedone on 14/08/13.
@@ -25,26 +25,13 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
+#import "NSDecimalNumber+Opposite.h"
 
-#import <UIKit/UIKit.h>
+@implementation NSDecimalNumber (Opposite)
 
-@interface GTActionSheet : UIActionSheet {
-    @protected
-    NSMutableArray *_blocksArray;
+- (NSDecimalNumber *)oppositeValue
+{
+    return [self decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"-1"]];
 }
 
-- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle;
-- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)buttonTitle destructiveBlock:(void(^)(void))destructiveBlock;
-
-- (id)initWithTitle:(NSString *)title 
-        cancelButtonTitle:(NSString *)cancelButtonTitle 
-        cancelButtonSelectionBlock:(void(^)(void))cancelButtonBlock 
-        destructiveButtonTitle:(NSString *)destructiveButtonTitle 
-        destructiveButtonSelectionBlock:(void(^)(void))destructiveButtonSelectionBlock;
-
-- (NSInteger)addButtonWithTitle:(NSString *)title selectionBlock:(void(^)(void))block;
-
 @end
-
-#endif

@@ -1,20 +1,29 @@
-/*
- Erica Sadun, http://ericasadun.com
- iPhone Developer's Cookbook 3.x and beyond
- BSD License, Use at your own risk
- */
-
-/*
- #import <humor.h> : Not planning to implement: dateByAskingBoyOut and dateByGettingBabysitter
- ----
- General Thanks: sstreza, Scott Lawrence, Kevin Ballard, NoOneButMe, Avi`, August Joki. Emanuele Vulcano, jcromartiej
-*/
-
-/**
- This version of the file contains additions and changes made by
- Gianluca Tranchedone ( http://sketchtocode.com ).
- The author, Erica Sadun, is not responsible for those changes.
- */
+//
+//  NSDate+Utilities.m
+//  GTFoundation
+//
+//  Created by Gianluca Tranchedone on 14/08/13.
+//  The MIT License (MIT)
+//
+//  Copyright (c) 2013 Gianluca Tranchedone
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+//  the Software, and to permit persons to whom the Software is furnished to do so,
+//  subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+//  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+//  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+//  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 #import "NSDate+Utilities.h"
 
@@ -297,44 +306,6 @@
 	NSDateComponents *dTime = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:aDate toDate:self options:0];
 	return dTime;
 }
-
-#pragma mark Retrieving Intervals
-
-//- (NSInteger)minutesAfterDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [self timeIntervalSinceDate:aDate];
-//	return (NSInteger) (ti / D_MINUTE);
-//}
-//
-//- (NSInteger)minutesBeforeDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [aDate timeIntervalSinceDate:self];
-//	return (NSInteger) (ti / D_MINUTE);
-//}
-//
-//- (NSInteger)hoursAfterDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [self timeIntervalSinceDate:aDate];
-//	return (NSInteger) (ti / D_HOUR);
-//}
-//
-//- (NSInteger)hoursBeforeDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [aDate timeIntervalSinceDate:self];
-//	return (NSInteger) (ti / D_HOUR);
-//}
-//
-//- (NSInteger)daysAfterDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [self timeIntervalSinceDate:aDate];
-//	return (NSInteger) (ti / D_DAY);
-//}
-//
-//- (NSInteger)daysBeforeDate: (NSDate *) aDate
-//{
-//	NSTimeInterval ti = [aDate timeIntervalSinceDate:self];
-//	return (NSInteger) (ti / D_DAY);
-//}
 
 #pragma mark Decomposing Dates
 

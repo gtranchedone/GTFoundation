@@ -1,0 +1,7 @@
+pod "GTLocation", :path => "../"
+
+target "GTFoundation" do
+end
+
+target "GTFoundationTests" do
+end

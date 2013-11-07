@@ -19,12 +19,14 @@
 		9901365B1823B8B2008A5908 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 990136431823B8B2008A5908 /* UIKit.framework */; };
 		990136631823B8B2008A5908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 990136611823B8B2008A5908 /* InfoPlist.strings */; };
 		990136651823B8B2008A5908 /* GTFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136641823B8B2008A5908 /* GTFoundationTests.m */; };
-		990136791823B8CB008A5908 /* GTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136711823B8CB008A5908 /* GTActionSheet.m */; };
-		9901367A1823B8CB008A5908 /* GTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136741823B8CB008A5908 /* GTAlertView.m */; };
-		9901367B1823B8CB008A5908 /* GTGoogleGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136781823B8CB008A5908 /* GTGoogleGeocoder.m */; };
 		9901367D1823B91B008A5908 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9901367C1823B91B008A5908 /* CoreLocation.framework */; };
 		990136801823C36E008A5908 /* GTDemosListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9901367F1823C36E008A5908 /* GTDemosListViewController.m */; };
-		990136831823C577008A5908 /* GTGoogleMapsGeocodingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */; };
+		99DDD6B4182C1CE100D53E09 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6A3182C1CE100D53E09 /* NSDate+Utilities.m */; };
+		99DDD6B5182C1CE100D53E09 /* NSDecimalNumber+Opposite.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6A5182C1CE100D53E09 /* NSDecimalNumber+Opposite.m */; };
+		99DDD6B6182C1CE100D53E09 /* GTUtilityFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6A8182C1CE100D53E09 /* GTUtilityFunctions.m */; };
+		99DDD6B7182C1CE100D53E09 /* UIColor+ColorsAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6AC182C1CE100D53E09 /* UIColor+ColorsAddition.m */; };
+		99DDD6B8182C1CE100D53E09 /* GTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6AF182C1CE100D53E09 /* GTActionSheet.m */; };
+		99DDD6B9182C1CE100D53E09 /* GTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DDD6B2182C1CE100D53E09 /* GTAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,18 +56,22 @@
 		990136601823B8B2008A5908 /* GTFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTFoundationTests-Info.plist"; sourceTree = "<group>"; };
 		990136621823B8B2008A5908 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		990136641823B8B2008A5908 /* GTFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTFoundationTests.m; sourceTree = "<group>"; };
-		990136701823B8CB008A5908 /* GTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTActionSheet.h; sourceTree = "<group>"; };
-		990136711823B8CB008A5908 /* GTActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTActionSheet.m; sourceTree = "<group>"; };
-		990136731823B8CB008A5908 /* GTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAlertView.h; sourceTree = "<group>"; };
-		990136741823B8CB008A5908 /* GTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAlertView.m; sourceTree = "<group>"; };
-		990136751823B8CB008A5908 /* GTFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFoundation.h; sourceTree = "<group>"; };
-		990136771823B8CB008A5908 /* GTGoogleGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTGoogleGeocoder.h; sourceTree = "<group>"; };
-		990136781823B8CB008A5908 /* GTGoogleGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTGoogleGeocoder.m; sourceTree = "<group>"; };
 		9901367C1823B91B008A5908 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9901367E1823C36E008A5908 /* GTDemosListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDemosListViewController.h; sourceTree = "<group>"; };
 		9901367F1823C36E008A5908 /* GTDemosListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDemosListViewController.m; sourceTree = "<group>"; };
-		990136811823C577008A5908 /* GTGoogleMapsGeocodingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTGoogleMapsGeocodingViewController.h; sourceTree = "<group>"; };
-		990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTGoogleMapsGeocodingViewController.m; sourceTree = "<group>"; };
+		99DDD6A2182C1CE100D53E09 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
+		99DDD6A3182C1CE100D53E09 /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
+		99DDD6A4182C1CE100D53E09 /* NSDecimalNumber+Opposite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+Opposite.h"; sourceTree = "<group>"; };
+		99DDD6A5182C1CE100D53E09 /* NSDecimalNumber+Opposite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+Opposite.m"; sourceTree = "<group>"; };
+		99DDD6A6182C1CE100D53E09 /* GTFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFoundation.h; sourceTree = "<group>"; };
+		99DDD6A7182C1CE100D53E09 /* GTUtilityFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTUtilityFunctions.h; sourceTree = "<group>"; };
+		99DDD6A8182C1CE100D53E09 /* GTUtilityFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTUtilityFunctions.m; sourceTree = "<group>"; };
+		99DDD6AB182C1CE100D53E09 /* UIColor+ColorsAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorsAddition.h"; sourceTree = "<group>"; };
+		99DDD6AC182C1CE100D53E09 /* UIColor+ColorsAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorsAddition.m"; sourceTree = "<group>"; };
+		99DDD6AE182C1CE100D53E09 /* GTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTActionSheet.h; sourceTree = "<group>"; };
+		99DDD6AF182C1CE100D53E09 /* GTActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTActionSheet.m; sourceTree = "<group>"; };
+		99DDD6B1182C1CE100D53E09 /* GTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAlertView.h; sourceTree = "<group>"; };
+		99DDD6B2182C1CE100D53E09 /* GTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,7 @@
 		990136331823B8B2008A5908 = {
 			isa = PBXGroup;
 			children = (
+				99DDD69F182C1CE100D53E09 /* Classes */,
 				990136451823B8B2008A5908 /* GTFoundation */,
 				9901365E1823B8B2008A5908 /* GTFoundationTests */,
 				9901363E1823B8B2008A5908 /* Frameworks */,
@@ -127,13 +134,10 @@
 		990136451823B8B2008A5908 /* GTFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				9901366E1823B8CB008A5908 /* Classes */,
 				9901364E1823B8B2008A5908 /* GTAppDelegate.h */,
 				9901364F1823B8B2008A5908 /* GTAppDelegate.m */,
 				9901367E1823C36E008A5908 /* GTDemosListViewController.h */,
 				9901367F1823C36E008A5908 /* GTDemosListViewController.m */,
-				990136811823C577008A5908 /* GTGoogleMapsGeocodingViewController.h */,
-				990136821823C577008A5908 /* GTGoogleMapsGeocodingViewController.m */,
 				990136511823B8B2008A5908 /* Images.xcassets */,
 				990136461823B8B2008A5908 /* Supporting Files */,
 			);
@@ -169,43 +173,81 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9901366E1823B8CB008A5908 /* Classes */ = {
+		99DDD69F182C1CE100D53E09 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				990136751823B8CB008A5908 /* GTFoundation.h */,
-				9901366F1823B8CB008A5908 /* GTActionSheet */,
-				990136721823B8CB008A5908 /* GTAlertView */,
-				990136761823B8CB008A5908 /* GTGoogleMapsTools */,
+				99DDD6A0182C1CE100D53E09 /* common */,
+				99DDD6A9182C1CE100D53E09 /* ios */,
+				99DDD6B3182C1CE100D53E09 /* osx */,
 			);
 			name = Classes;
-			path = ../../Classes;
+			path = ../Classes;
 			sourceTree = "<group>";
 		};
-		9901366F1823B8CB008A5908 /* GTActionSheet */ = {
+		99DDD6A0182C1CE100D53E09 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				990136701823B8CB008A5908 /* GTActionSheet.h */,
-				990136711823B8CB008A5908 /* GTActionSheet.m */,
+				99DDD6A1182C1CE100D53E09 /* Categories */,
+				99DDD6A6182C1CE100D53E09 /* GTFoundation.h */,
+				99DDD6A7182C1CE100D53E09 /* GTUtilityFunctions.h */,
+				99DDD6A8182C1CE100D53E09 /* GTUtilityFunctions.m */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		99DDD6A1182C1CE100D53E09 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				99DDD6A2182C1CE100D53E09 /* NSDate+Utilities.h */,
+				99DDD6A3182C1CE100D53E09 /* NSDate+Utilities.m */,
+				99DDD6A4182C1CE100D53E09 /* NSDecimalNumber+Opposite.h */,
+				99DDD6A5182C1CE100D53E09 /* NSDecimalNumber+Opposite.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		99DDD6A9182C1CE100D53E09 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				99DDD6AA182C1CE100D53E09 /* Categories */,
+				99DDD6AD182C1CE100D53E09 /* GTActionSheet */,
+				99DDD6B0182C1CE100D53E09 /* GTAlertView */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		99DDD6AA182C1CE100D53E09 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				99DDD6AB182C1CE100D53E09 /* UIColor+ColorsAddition.h */,
+				99DDD6AC182C1CE100D53E09 /* UIColor+ColorsAddition.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		99DDD6AD182C1CE100D53E09 /* GTActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				99DDD6AE182C1CE100D53E09 /* GTActionSheet.h */,
+				99DDD6AF182C1CE100D53E09 /* GTActionSheet.m */,
 			);
 			path = GTActionSheet;
 			sourceTree = "<group>";
 		};
-		990136721823B8CB008A5908 /* GTAlertView */ = {
+		99DDD6B0182C1CE100D53E09 /* GTAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				990136731823B8CB008A5908 /* GTAlertView.h */,
-				990136741823B8CB008A5908 /* GTAlertView.m */,
+				99DDD6B1182C1CE100D53E09 /* GTAlertView.h */,
+				99DDD6B2182C1CE100D53E09 /* GTAlertView.m */,
 			);
 			path = GTAlertView;
 			sourceTree = "<group>";
 		};
-		990136761823B8CB008A5908 /* GTGoogleMapsTools */ = {
+		99DDD6B3182C1CE100D53E09 /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				990136771823B8CB008A5908 /* GTGoogleGeocoder.h */,
-				990136781823B8CB008A5908 /* GTGoogleGeocoder.m */,
 			);
-			path = GTGoogleMapsTools;
+			path = osx;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,13 +346,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				990136791823B8CB008A5908 /* GTActionSheet.m in Sources */,
-				9901367B1823B8CB008A5908 /* GTGoogleGeocoder.m in Sources */,
-				990136831823C577008A5908 /* GTGoogleMapsGeocodingViewController.m in Sources */,
+				99DDD6B7182C1CE100D53E09 /* UIColor+ColorsAddition.m in Sources */,
+				99DDD6B5182C1CE100D53E09 /* NSDecimalNumber+Opposite.m in Sources */,
+				99DDD6B9182C1CE100D53E09 /* GTAlertView.m in Sources */,
+				99DDD6B6182C1CE100D53E09 /* GTUtilityFunctions.m in Sources */,
 				990136801823C36E008A5908 /* GTDemosListViewController.m in Sources */,
+				99DDD6B8182C1CE100D53E09 /* GTActionSheet.m in Sources */,
 				9901364C1823B8B2008A5908 /* main.m in Sources */,
-				9901367A1823B8CB008A5908 /* GTAlertView.m in Sources */,
 				990136501823B8B2008A5908 /* GTAppDelegate.m in Sources */,
+				99DDD6B4182C1CE100D53E09 /* NSDate+Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +557,7 @@
 				9901366A1823B8B3008A5908 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9901366B1823B8B3008A5908 /* Build configuration list for PBXNativeTarget "GTFoundationTests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +566,7 @@
 				9901366D1823B8B3008A5908 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
