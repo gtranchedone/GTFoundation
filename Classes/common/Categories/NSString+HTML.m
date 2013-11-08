@@ -27,7 +27,7 @@
 
 #import "NSString+HTML.h"
 
-@implementation NSDecimalNumber (Opposite)
+@implementation NSString (HTML)
 
 - (NSString *)stringByStrippingHTML {
     NSString *s = [self copy];
