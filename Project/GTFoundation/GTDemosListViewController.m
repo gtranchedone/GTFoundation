@@ -26,7 +26,6 @@
 //
 
 #import "GTDemosListViewController.h"
-#import "GTFoundation.h"
 
 @interface GTDemosMenuItem : NSObject
 

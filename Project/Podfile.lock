@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  GTFoundation: 797ae68f72ac97128dd1a811ef7666cc675d442e
+  GTFoundation: 26ee030a78e3e5bfe8ce83abd663586581d76757
 
 COCOAPODS: 0.27.1
