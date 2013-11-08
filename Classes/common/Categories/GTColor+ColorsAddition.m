@@ -39,7 +39,7 @@
     CGFloat green = (hexColor >> 8 & 0xff) / 255.0f;
     CGFloat red = (hexColor >> 16 & 0xff) / 255.0f;
     
-    return [GTColor colorWithRed:red green:green blue:blue alpha:1.0];
+    return [GTColor GT_colorWithRed:red green:green blue:blue alpha:1.0];
 }
 
 + (GTColor *)colorWithHexString:(NSString *)hexString
