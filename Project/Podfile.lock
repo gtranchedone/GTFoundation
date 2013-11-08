@@ -1,0 +1,14 @@
+PODS:
+  - GTFoundation (0.0.7)
+
+DEPENDENCIES:
+  - GTFoundation (from `../`)
+
+EXTERNAL SOURCES:
+  GTFoundation:
+    :path: ../
+
+SPEC CHECKSUMS:
+  GTFoundation: 797ae68f72ac97128dd1a811ef7666cc675d442e
+
+COCOAPODS: 0.27.1
