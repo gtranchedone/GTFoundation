@@ -26,13 +26,17 @@
 //
 
 #import <Availability.h>
-#import "GTUtilityFunctions.h"
-#import "GTColor+ColorsAddition.h"
+
+#import <GTFoundation/GTColor+ColorsAddition.h>
+#import <GTFoundation/NSDate+Utilities.h>
+#import <GTFoundation/NSDecimalNumber+Opposite.h>
+#import <GTFoundation/NSString+HTML.h>
+#import <GTFoundation/GTUtilityFunctions.h>
 
 #if TARGET_OS_IPHONE
 
-#import "GTAlertView.h"
-#import "GTActionSheet.h"
+#import <GTFoundation/GTAlertView.h>
+#import <GTFoundation/GTActionSheet.h>
 
 #else
 

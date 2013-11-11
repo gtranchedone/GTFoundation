@@ -35,9 +35,11 @@
 
 @end
 
-#pragma mark - Implementation
 
 @implementation GTAlertView
+
+#pragma mark - Public APIs -
+#pragma mark Presenting an Alert View
 
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle
 {
@@ -62,6 +64,8 @@
     GTAlertView *alertView = [[self alloc] initWithTitle:title message:message cancelButtonTitle:cancelButtonTitle cancelBlock:cancelBlock firstOtherButtonTitle:firstButtonTitle firstOtherButtonBlock:block];
     [alertView show];
 }
+
+#pragma mark Initialization
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButton
 {
@@ -94,6 +98,8 @@
     return self;
 }
 
+#pragma mark Adding Buttons
+
 - (void)addButtonWithTitle:(NSString *)title selectionBlock:(void (^)(void))selectionBlock
 {
     [super addButtonWithTitle:title];
@@ -102,6 +108,8 @@
         [self.blocksArray addObject:[selectionBlock copy]];
     }
 }
+
+#pragma mark - UIAlertViewDelegate -
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

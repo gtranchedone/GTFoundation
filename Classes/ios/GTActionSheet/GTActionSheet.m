@@ -39,13 +39,12 @@
 
 @end
 
-#pragma mark - Implementation
+#pragma mark -
 
 @implementation GTActionSheet
 
-@synthesize blocksArray = _blocksArray;
-@synthesize cancelButtonTitle = _cancelButtonTitle;
-@synthesize cancelButtonBlock = _cancelButtonBlock;
+#pragma mark - Public APIs -
+#pragma mark Initialization
 
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle
 {
@@ -69,7 +68,7 @@
         self.cancelButtonTitle = cancelButtonTitle;
         self.cancelButtonBlock = cancelButtonBlock;
         
-        if (self.destructiveButtonIndex >= 0) {
+        if (self.destructiveButtonIndex >= 0 && destructiveButtonSelectionBlock) {
             [self.blocksArray insertObject:[destructiveButtonSelectionBlock copy] atIndex:self.destructiveButtonIndex];
         }
     }
@@ -77,17 +76,23 @@
     return self;
 }
 
+#pragma mark Adding Buttons
+
 - (NSInteger)addButtonWithTitle:(NSString *)title selectionBlock:(void (^)(void))block
 {
     NSInteger buttonIndex = [super addButtonWithTitle:title];
-    if (buttonIndex < [self.blocksArray count]) {
-        [self.blocksArray insertObject:[block copy] atIndex:buttonIndex];
-    }
-    else {
-        [self.blocksArray addObject:[block copy]];
+    if (block) {
+        if (buttonIndex < [self.blocksArray count]) {
+            [self.blocksArray insertObject:[block copy] atIndex:buttonIndex];
+        }
+        else {
+            [self.blocksArray addObject:[block copy]];
+        }
     }
     return buttonIndex;
 }
+
+#pragma mark - Private APIs -
 
 - (void)addCancelButton
 {
@@ -95,13 +100,7 @@
     self.cancelButtonIndex = cancelButtonIndex;
 }
 
-- (NSMutableArray *)blocksArray
-{
-    if (!_blocksArray) _blocksArray = [NSMutableArray array];
-    return _blocksArray;
-}
-
-#pragma mark - Ovverrides for Cancel Button
+#pragma mark - Ovverrides for Cancel Button -
 // Must override this methods to show the cancel button in the correct place.
 
 - (void)showFromBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated
@@ -134,7 +133,7 @@
     [super showInView:view];
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark - UIActionSheetDelegate -
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -142,6 +141,14 @@
     if (block) {
         block();
     }
+}
+
+#pragma mark - Setters and Getters -
+
+- (NSMutableArray *)blocksArray
+{
+    if (!_blocksArray) _blocksArray = [NSMutableArray array];
+    return _blocksArray;
 }
 
 @end

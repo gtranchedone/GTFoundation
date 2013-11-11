@@ -32,7 +32,6 @@
 #import <UIKit/UIKit.h>
 
 /**
- @class GTAlertView
  @abstract GTAlertView is a subclass of UIAlertView that takes advantage of blocks to add to its superclass block-based and utility APIs.
  */
 @interface GTAlertView : UIAlertView {
@@ -141,9 +140,9 @@
 
 /**
  @abstract Adds a button to the alertView. The block passed in this method is associated with the button and it's called when the button is pressed.
+ @throws An exeption is thrown if you pass nil or an empty string for the title parameter.
  @param title The new button's title. This paramenter cannot be nil or an empty string.
  @param selectionBlock The block that should be called when the button is pressed. This parameter can be nil.
- @throws An exeption is thrown if you pass nil or an empty string for the title parameter.
  @see -[UIAlertView addButtonWithTitle:]
  */
 - (void)addButtonWithTitle:(NSString *)title selectionBlock:(void(^)(void))selectionBlock;
