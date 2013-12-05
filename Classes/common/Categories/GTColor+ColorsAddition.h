@@ -37,7 +37,7 @@
     #define GTColor NSColor
 #endif
 
-#error Finish refactoring categories to use GT_ prefix for method names.
+#warning Finish refactoring categories to use GT_ prefix for method names.
 
 @interface GTColor (ColorsAddition)
 
