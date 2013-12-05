@@ -33,7 +33,7 @@
 
 #pragma mark - Helpers
 
-+ (GTColor *)colorFromHex:(uint32_t)hexColor
++ (GTColor *)GT_colorFromHex:(uint32_t)hexColor
 {
     CGFloat blue = (hexColor & 0xff) / 255.0f;
     CGFloat green = (hexColor >> 8 & 0xff) / 255.0f;
@@ -42,12 +42,12 @@
     return [GTColor GT_colorWithRed:red green:green blue:blue alpha:1.0];
 }
 
-+ (GTColor *)colorWithHexString:(NSString *)hexString
++ (GTColor *)GT_colorWithHexString:(NSString *)hexString
 {
     return [[self class] colorWithHexString:hexString alpha:1.0];
 }
 
-+ (GTColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha
++ (GTColor *)GT_colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha
 {
     // Check for hash and add the missing hash
     if('#' != [hexString characterAtIndex:0])
@@ -70,17 +70,17 @@
     NSString *blueHex   = [NSString stringWithFormat:@"0x%@", [hexString substringWithRange:NSMakeRange(5, 2)]];
     unsigned blueInt = [[self class] hexValueToUnsigned:blueHex];
     
-    GTColor *color = [GTColor colorWith8BitRed:redInt green:greenInt blue:blueInt alpha:alpha];
+    GTColor *color = [GTColor GT_colorWith8BitRed:redInt green:greenInt blue:blueInt alpha:alpha];
     
     return color;
 }
 
-+ (GTColor *)colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue
++ (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue
 {
     return [[self class] colorWith8BitRed:red green:green blue:blue alpha:1.0];
 }
 
-+ (GTColor *)colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha
++ (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha
 {
     return [GTColor GT_colorWithRed:(red / 255.0) green:(green / 255.0) blue:(blue / 255.0) alpha:alpha];
 }
@@ -121,7 +121,7 @@
     return value;
 }
 
-+ (GTColor *)colorFromRGBWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue andAlpha:(CGFloat)alpha
++ (GTColor *)GT_colorFromRGBWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue andAlpha:(CGFloat)alpha
 {
     if (alpha > 1.0) 
         alpha = 1.0;
@@ -131,7 +131,7 @@
     return [[self class] colorWith8BitRed:red green:green blue:blue];
 }
 
-+ (GTColor *)randomColor
++ (GTColor *)GT_randomColor
 {
     CGFloat blue = arc4random() % 255;
     CGFloat red = arc4random() % 255;
@@ -142,52 +142,52 @@
 
 #pragma mark - Colors
 
-+ (GTColor *)aliceBlueColor
++ (GTColor *)GT_aliceBlueColor
 {
     return [GTColor GT_colorWithRed:0.941 green:0.973 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)antiqueWhiteColor
++ (GTColor *)GT_antiqueWhiteColor
 {
     return [GTColor GT_colorWithRed:0.980 green:0.922 blue:0.843 alpha:1.000];
 }
 
-+ (GTColor *)acquaColor
++ (GTColor *)GT_acquaColor
 {
     return [GTColor GT_colorWithRed:0.000 green:1.000 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)acquamarineColor
++ (GTColor *)GT_acquamarineColor
 {
     return [GTColor GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
 }
 
-+ (GTColor *)azureColor
++ (GTColor *)GT_azureColor
 {
     return [GTColor GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
 }
 
-+ (GTColor *)beigeColor
++ (GTColor *)GT_beigeColor
 {
     return [GTColor GT_colorWithRed:0.961 green:0.961 blue:0.863 alpha:1.000];
 }
 
-+ (GTColor *)bisqueColor
++ (GTColor *)GT_bisqueColor
 {
     return [GTColor GT_colorWithRed:1.000 green:0.894 blue:0.769 alpha:1.000];
 }
 
-+ (GTColor *)blanchetAlmondColor
++ (GTColor *)GT_blanchetAlmondColor
 {
     return [GTColor GT_colorWithRed:1.000 green:1.000 blue:0.804 alpha:1.000];
 }
 
-+ (GTColor *)blueVioletColor
++ (GTColor *)GT_blueVioletColor
 {
     return [GTColor GT_colorWithRed:0.541 green:0.169 blue:0.886 alpha:1.000];
 }
 
-+ (GTColor *)burlyWoodColor
++ (GTColor *)GT_burlyWoodColor
 {
     return [GTColor GT_colorWithRed:0.871 green:0.722 blue:0.529 alpha:1.000];
 }

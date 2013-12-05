@@ -30,9 +30,15 @@
 @interface NSString (HTML)
 
 /**
- @abstract Removes HTML tags from the receiver.
- @return Returns a new string that doesn't contain any HTML tag.
+ *  @abstract Removes HTML tags from the receiver.
+ *  @return Returns a new string that doesn't contain any HTML tag.
  */
-- (NSString *)stringByStrippingHTML;
+- (NSString *)GT_stringByStrippingHTML;
+
+/**
+ *  @abstract Encodes the receiver for use in a URL.
+ *  @return A new URL-encoded string created by encoding the contents of the receiver.
+ */
+- (NSString *)GT_urlEncodedString;
 
 @end

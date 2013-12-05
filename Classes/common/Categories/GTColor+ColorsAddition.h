@@ -37,42 +37,44 @@
     #define GTColor NSColor
 #endif
 
+#error Finish refactoring categories to use GT_ prefix for method names.
+
 @interface GTColor (ColorsAddition)
 
 ///--------------------------------------------------
 /// @name Creating Colors
 ///--------------------------------------------------
 
-+ (GTColor *)colorFromHex:(uint32_t)hexColor;
-+ (GTColor *)colorFromRGBWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue andAlpha:(CGFloat)alpha;
++ (GTColor *)GT_colorFromHex:(uint32_t)hexColor;
++ (GTColor *)GT_colorFromRGBWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue andAlpha:(CGFloat)alpha;
 
 // Taken from the HexColors project
-+ (GTColor *)colorWithHexString:(NSString *)hexString;
-+ (GTColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha;
-+ (GTColor *)colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue;
-+ (GTColor *)colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha;
++ (GTColor *)GT_colorWithHexString:(NSString *)hexString;
++ (GTColor *)GT_colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha;
++ (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue;
++ (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha;
 
 ///--------------------------------------------------
 /// @name Getting Random Colors
 ///--------------------------------------------------
 
-+ (GTColor *)randomColor;
++ (GTColor *)GT_randomColor;
 
 ///--------------------------------------------------
 /// @name Getting Predefined Colors
 ///--------------------------------------------------
 
-+ (GTColor *)aliceBlueColor;
-+ (GTColor *)antiqueWhiteColor;
-+ (GTColor *)acquaColor;
-+ (GTColor *)acquamarineColor;
-+ (GTColor *)azureColor;
++ (GTColor *)GT_aliceBlueColor;
++ (GTColor *)GT_antiqueWhiteColor;
++ (GTColor *)GT_acquaColor;
++ (GTColor *)GT_acquamarineColor;
++ (GTColor *)GT_azureColor;
 
-+ (GTColor *)beigeColor;
-+ (GTColor *)bisqueColor;
-+ (GTColor *)blanchetAlmondColor;
-+ (GTColor *)blueVioletColor;
-+ (GTColor *)burlyWoodColor;
++ (GTColor *)GT_beigeColor;
++ (GTColor *)GT_bisqueColor;
++ (GTColor *)GT_blanchetAlmondColor;
++ (GTColor *)GT_blueVioletColor;
++ (GTColor *)GT_burlyWoodColor;
 
 + (GTColor *)cadetBlueColor;
 + (GTColor *)chartreuseColor;

@@ -33,13 +33,19 @@
 #import <AppKit/AppKit.h>
 #endif
 
+/*
+ For debug use only. If you want this macros and methods to be available in prerelease builds
+ go to [Your Project] -> Build Settings -> Preprocessor Macros and add the macro DEBUG = 1 to your prerelease/ad-hoc configuration.
+ A simpler way to do this is creating an Ad-Hoc configuration by copying the preconfigured Debug configuration instead of the release one.
+ */
+#ifdef DEBUG
 #define GT_TODO_WITH_TITLE_AND_MESSAGE(title, message) GTShowAlertViewWithTitleAndMessage(title, message);
 #define GT_TODO_WITH_MESSAGE(message) GT_TODO_WITH_TITLE_AND_MESSAGE(@"TODO", message)
 #define GT_TODO_WITH_TITLE(title) GT_TODO_WITH_TITLE_AND_MESSAGE(title, nil)
 #define GT_TODO GT_TODO_WITH_TITLE_AND_MESSAGE(@"TODO", nil)
 
-// For Debug use only.
 FOUNDATION_EXTERN void GTShowAlertViewWithTitleAndMessage(NSString *title, NSString *message);
+#endif
 
 FOUNDATION_EXTERN CGFloat GTRadiansFromDegrees(CGFloat degrees);
 FOUNDATION_EXTERN NSString *GTCurrencySymbolFromCurrencyCode(NSString *currencyCode);

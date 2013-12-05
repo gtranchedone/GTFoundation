@@ -90,6 +90,9 @@
         if (cancelBlock) {
             [self.blocksArray addObject:[cancelBlock copy]];
         }
+        else {
+            [self.blocksArray addObject:^{}];
+        }
         
         if (firstButtonTitle) {
             [self addButtonWithTitle:firstButtonTitle selectionBlock:block];
@@ -106,6 +109,9 @@
     
     if (selectionBlock) {
         [self.blocksArray addObject:[selectionBlock copy]];
+    }
+    else {
+        [self.blocksArray addObject:^{}];
     }
 }
 

@@ -29,7 +29,7 @@
 
 @implementation NSString (HTML)
 
-- (NSString *)stringByStrippingHTML {
+- (NSString *)GT_stringByStrippingHTML {
     NSString *s = [self copy];
     NSRange r = NSMakeRange(0, 0);
     
@@ -38,6 +38,14 @@
     }
     
     return s;
+}
+
+- (NSString *)GT_urlEncodedString
+{
+    NSString *reference = @"!*'();:@&=+$,/?%#[]";
+    NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self, NULL, (CFStringRef)reference, kCFStringEncodingUTF8));
+    
+    return encodedString;
 }
 
 @end
