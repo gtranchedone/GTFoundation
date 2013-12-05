@@ -68,8 +68,13 @@
         self.cancelButtonTitle = cancelButtonTitle;
         self.cancelButtonBlock = cancelButtonBlock;
         
-        if (self.destructiveButtonIndex >= 0 && destructiveButtonSelectionBlock) {
-            [self.blocksArray insertObject:[destructiveButtonSelectionBlock copy] atIndex:self.destructiveButtonIndex];
+        if (self.destructiveButtonIndex >= 0) {
+            if (destructiveButtonSelectionBlock) {
+                [self.blocksArray insertObject:[destructiveButtonSelectionBlock copy] atIndex:self.destructiveButtonIndex];
+            }
+            else {
+                [self.blocksArray insertObject:^{} atIndex:self.destructiveButtonIndex];
+            }
         }
     }
     
@@ -89,6 +94,10 @@
             [self.blocksArray addObject:[block copy]];
         }
     }
+    else {
+        [self.blocksArray addObject:^{}];
+    }
+    
     return buttonIndex;
 }
 
