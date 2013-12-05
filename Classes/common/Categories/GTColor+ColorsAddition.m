@@ -44,7 +44,7 @@
 
 + (GTColor *)GT_colorWithHexString:(NSString *)hexString
 {
-    return [[self class] colorWithHexString:hexString alpha:1.0];
+    return [[self class] GT_colorWithHexString:hexString alpha:1.0];
 }
 
 + (GTColor *)GT_colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha
@@ -77,7 +77,7 @@
 
 + (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue
 {
-    return [[self class] colorWith8BitRed:red green:green blue:blue alpha:1.0];
+    return [[self class] GT_colorWith8BitRed:red green:green blue:blue alpha:1.0];
 }
 
 + (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha
@@ -128,7 +128,7 @@
     else if (alpha < 0.0)
         alpha = 0.0;
     
-    return [[self class] colorWith8BitRed:red green:green blue:blue];
+    return [[self class] GT_colorWith8BitRed:red green:green blue:blue];
 }
 
 + (GTColor *)GT_randomColor
@@ -137,7 +137,7 @@
     CGFloat red = arc4random() % 255;
     CGFloat green = arc4random() % 255;
     
-    return [[self class] colorWith8BitRed:red green:green blue:blue];
+    return [[self class] GT_colorWith8BitRed:red green:green blue:blue];
 }
 
 #pragma mark - Colors
