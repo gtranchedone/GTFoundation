@@ -33,6 +33,11 @@ void GTShowAlertViewWithTitleAndMessage(NSString *title, NSString *message)
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
     [alert show];
 #else
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.informativeText = message;
+    alert.messageText = title;
+    
+    [alert runModal];
 #endif
 }
 
