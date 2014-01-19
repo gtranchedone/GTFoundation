@@ -1,9 +1,9 @@
 target :GTFoundation do
 	platform :ios, "7.0" 
-	pod "GTFoundation", :path => "../"
+	pod "GTFoundation", :path => "../GTFoundation.podspec"
 end
 
 target :GTFoundationMac do
 	platform :osx, "10.9"
-	pod "GTFoundation", :path => "../"
+	pod "GTFoundation", :path => "../GTFoundation.podspec"
 end

@@ -37,15 +37,13 @@
     #define GTColor NSColor
 #endif
 
-#warning Finish refactoring categories to use GT_ prefix for method names.
-
 @interface GTColor (ColorsAddition)
 
 ///--------------------------------------------------
 /// @name Creating Colors
 ///--------------------------------------------------
 
-+ (GTColor *)GT_colorFromHex:(uint32_t)hexColor;
++ (GTColor *)GT_colorWithHex:(uint32_t)hexColor;
 + (GTColor *)GT_colorFromRGBWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue andAlpha:(CGFloat)alpha;
 
 // Taken from the HexColors project
@@ -76,139 +74,139 @@
 + (GTColor *)GT_blueVioletColor;
 + (GTColor *)GT_burlyWoodColor;
 
-+ (GTColor *)cadetBlueColor;
-+ (GTColor *)chartreuseColor;
-+ (GTColor *)chocolateColor;
-+ (GTColor *)coralColor;
-+ (GTColor *)cornflowerColor;
-+ (GTColor *)cornsilkColor;
-+ (GTColor *)crimsonColor;
++ (GTColor *)GT_cadetBlueColor;
++ (GTColor *)GT_chartreuseColor;
++ (GTColor *)GT_chocolateColor;
++ (GTColor *)GT_coralColor;
++ (GTColor *)GT_cornflowerColor;
++ (GTColor *)GT_cornsilkColor;
++ (GTColor *)GT_crimsonColor;
 
-+ (GTColor *)darkBlueColor;
-+ (GTColor *)darkCyanColor;
-+ (GTColor *)darkGoldenrodColor;
-+ (GTColor *)darkGreenColor;
-+ (GTColor *)darkKhakiColor;
-+ (GTColor *)darkMagentaColor;
-+ (GTColor *)darkOliveGreenColor;
-+ (GTColor *)darkOrangeColor;
-+ (GTColor *)darkOrchidColor;
-+ (GTColor *)darkRedColor;
-+ (GTColor *)darkSalmonColor;
-+ (GTColor *)darkSeaGreenColor;
-+ (GTColor *)darkSlateBlueColor;
-+ (GTColor *)darkSlateGrayColor;
-+ (GTColor *)darkTurquoiseColor;
-+ (GTColor *)darkVioletColor;
-+ (GTColor *)deepPinkColor;
-+ (GTColor *)deepSkyBlueColor;
-+ (GTColor *)dimGrayColor;
-+ (GTColor *)dodgerBlueColor;
++ (GTColor *)GT_darkBlueColor;
++ (GTColor *)GT_darkCyanColor;
++ (GTColor *)GT_darkGoldenrodColor;
++ (GTColor *)GT_darkGreenColor;
++ (GTColor *)GT_darkKhakiColor;
++ (GTColor *)GT_darkMagentaColor;
++ (GTColor *)GT_darkOliveGreenColor;
++ (GTColor *)GT_darkOrangeColor;
++ (GTColor *)GT_darkOrchidColor;
++ (GTColor *)GT_darkRedColor;
++ (GTColor *)GT_darkSalmonColor;
++ (GTColor *)GT_darkSeaGreenColor;
++ (GTColor *)GT_darkSlateBlueColor;
++ (GTColor *)GT_darkSlateGrayColor;
++ (GTColor *)GT_darkTurquoiseColor;
++ (GTColor *)GT_darkVioletColor;
++ (GTColor *)GT_deepPinkColor;
++ (GTColor *)GT_deepSkyBlueColor;
++ (GTColor *)GT_dimGrayColor;
++ (GTColor *)GT_dodgerBlueColor;
 
-+ (GTColor *)firebrickColor;
-+ (GTColor *)floralWhiteColor;
-+ (GTColor *)forestGreenColor;
-+ (GTColor *)fuschiaColor;
++ (GTColor *)GT_firebrickColor;
++ (GTColor *)GT_floralWhiteColor;
++ (GTColor *)GT_forestGreenColor;
++ (GTColor *)GT_fuschiaColor;
 
-+ (GTColor *)gainsboroColor;
-+ (GTColor *)ghostWhiteColor;
-+ (GTColor *)goldColor;
-+ (GTColor *)golderonColor;
-+ (GTColor *)greenYellowColor;
++ (GTColor *)GT_gainsboroColor;
++ (GTColor *)GT_ghostWhiteColor;
++ (GTColor *)GT_goldColor;
++ (GTColor *)GT_golderonColor;
++ (GTColor *)GT_greenYellowColor;
 
-+ (GTColor *)honeydewColor;
-+ (GTColor *)hotPinkColor;
++ (GTColor *)GT_honeydewColor;
++ (GTColor *)GT_hotPinkColor;
 
-+ (GTColor *)indianRedColor;
-+ (GTColor *)indigoColor;
-+ (GTColor *)ivoryColor;
++ (GTColor *)GT_indianRedColor;
++ (GTColor *)GT_indigoColor;
++ (GTColor *)GT_ivoryColor;
 
-+ (GTColor *)khakiColor;
++ (GTColor *)GT_khakiColor;
 
-+ (GTColor *)lavanderColor;
-+ (GTColor *)lavanderBlushColor;
-+ (GTColor *)lawnGreenColor;
-+ (GTColor *)lemonChiffonColor;
-+ (GTColor *)lightBlueColor;
-+ (GTColor *)lightCoralColor;
-+ (GTColor *)lightCyanColor;
-+ (GTColor *)lightGoldenrodYellowColor;
-+ (GTColor *)lightGreenColor;
-+ (GTColor *)lightPinkColor;
-+ (GTColor *)lightSalmonColor;
-+ (GTColor *)lightSeaGreenColor;
-+ (GTColor *)lightSkyBlueColor;
-+ (GTColor *)lightSlateGrayColor;
-+ (GTColor *)lightSteelBlueColor;
-+ (GTColor *)lightYellowColor;
-+ (GTColor *)limeColor;
-+ (GTColor *)limeGreenColor;
-+ (GTColor *)linenColor;
++ (GTColor *)GT_lavanderColor;
++ (GTColor *)GT_lavanderBlushColor;
++ (GTColor *)GT_lawnGreenColor;
++ (GTColor *)GT_lemonChiffonColor;
++ (GTColor *)GT_lightBlueColor;
++ (GTColor *)GT_lightCoralColor;
++ (GTColor *)GT_lightCyanColor;
++ (GTColor *)GT_lightGoldenrodYellowColor;
++ (GTColor *)GT_lightGreenColor;
++ (GTColor *)GT_lightPinkColor;
++ (GTColor *)GT_lightSalmonColor;
++ (GTColor *)GT_lightSeaGreenColor;
++ (GTColor *)GT_lightSkyBlueColor;
++ (GTColor *)GT_lightSlateGrayColor;
++ (GTColor *)GT_lightSteelBlueColor;
++ (GTColor *)GT_lightYellowColor;
++ (GTColor *)GT_limeColor;
++ (GTColor *)GT_limeGreenColor;
++ (GTColor *)GT_linenColor;
 
-+ (GTColor *)maroonColor;
-+ (GTColor *)mediumAcquamarineColor;
-+ (GTColor *)mediumBlueColor;
-+ (GTColor *)mediumOrchidColor;
-+ (GTColor *)mediumPurpleColor;
-+ (GTColor *)mediumSeaGreenColor;
-+ (GTColor *)mediumSlateBlueColor;
-+ (GTColor *)mediumSpringGreenColor;
-+ (GTColor *)mediumTurquoiseColor;
-+ (GTColor *)mediumVioletRedColor;
-+ (GTColor *)midnightBlueColor;
-+ (GTColor *)mintCreamColor;
-+ (GTColor *)mistyRoseColor;
-+ (GTColor *)moccasinColor;
++ (GTColor *)GT_maroonColor;
++ (GTColor *)GT_mediumAcquamarineColor;
++ (GTColor *)GT_mediumBlueColor;
++ (GTColor *)GT_mediumOrchidColor;
++ (GTColor *)GT_mediumPurpleColor;
++ (GTColor *)GT_mediumSeaGreenColor;
++ (GTColor *)GT_mediumSlateBlueColor;
++ (GTColor *)GT_mediumSpringGreenColor;
++ (GTColor *)GT_mediumTurquoiseColor;
++ (GTColor *)GT_mediumVioletRedColor;
++ (GTColor *)GT_midnightBlueColor;
++ (GTColor *)GT_mintCreamColor;
++ (GTColor *)GT_mistyRoseColor;
++ (GTColor *)GT_moccasinColor;
 
-+ (GTColor *)navajoWhiteColor;
-+ (GTColor *)navyColor;
++ (GTColor *)GT_navajoWhiteColor;
++ (GTColor *)GT_navyColor;
 
-+ (GTColor *)oceanColor;
-+ (GTColor *)oldLaceColor;
-+ (GTColor *)oliveColor;
-+ (GTColor *)oliveDrabColor;
-+ (GTColor *)orangeRedColor;
-+ (GTColor *)orchidColor;
++ (GTColor *)GT_oceanColor;
++ (GTColor *)GT_oldLaceColor;
++ (GTColor *)GT_oliveColor;
++ (GTColor *)GT_oliveDrabColor;
++ (GTColor *)GT_orangeRedColor;
++ (GTColor *)GT_orchidColor;
 
-+ (GTColor *)paleGoldenrodColor;
-+ (GTColor *)paleGreenColor;
-+ (GTColor *)paleTurquoiseColor;
-+ (GTColor *)paleVioletRedColor;
-+ (GTColor *)papayaWhipColor;
-+ (GTColor *)peachPuffColor;
-+ (GTColor *)peruColor;
-+ (GTColor *)pinkColor;
-+ (GTColor *)plumColor;
-+ (GTColor *)powderBlueColor;
++ (GTColor *)GT_paleGoldenrodColor;
++ (GTColor *)GT_paleGreenColor;
++ (GTColor *)GT_paleTurquoiseColor;
++ (GTColor *)GT_paleVioletRedColor;
++ (GTColor *)GT_papayaWhipColor;
++ (GTColor *)GT_peachPuffColor;
++ (GTColor *)GT_peruColor;
++ (GTColor *)GT_pinkColor;
++ (GTColor *)GT_plumColor;
++ (GTColor *)GT_powderBlueColor;
 
-+ (GTColor *)rosyBrownColor;
-+ (GTColor *)royalBlueColor;
++ (GTColor *)GT_rosyBrownColor;
++ (GTColor *)GT_royalBlueColor;
 
-+ (GTColor *)saddleBrownColor;
-+ (GTColor *)salmonColor;
-+ (GTColor *)sandyBrownColor;
-+ (GTColor *)seaGreenColor;
-+ (GTColor *)seaShellColor;
-+ (GTColor *)siennaColor;
-+ (GTColor *)silverColor;
-+ (GTColor *)skyBlueColor;
-+ (GTColor *)slateBlueColor;
-+ (GTColor *)slateGrayColor;
-+ (GTColor *)snowColor;
-+ (GTColor *)springGreenColor;
-+ (GTColor *)steelBlueColor;
++ (GTColor *)GT_saddleBrownColor;
++ (GTColor *)GT_salmonColor;
++ (GTColor *)GT_sandyBrownColor;
++ (GTColor *)GT_seaGreenColor;
++ (GTColor *)GT_seaShellColor;
++ (GTColor *)GT_siennaColor;
++ (GTColor *)GT_silverColor;
++ (GTColor *)GT_skyBlueColor;
++ (GTColor *)GT_slateBlueColor;
++ (GTColor *)GT_slateGrayColor;
++ (GTColor *)GT_snowColor;
++ (GTColor *)GT_springGreenColor;
++ (GTColor *)GT_steelBlueColor;
 
-+ (GTColor *)tanColor;
-+ (GTColor *)tealColor;
-+ (GTColor *)thistleColor;
-+ (GTColor *)tomatoColor;
-+ (GTColor *)turquoiseColor;
++ (GTColor *)GT_tanColor;
++ (GTColor *)GT_tealColor;
++ (GTColor *)GT_thistleColor;
++ (GTColor *)GT_tomatoColor;
++ (GTColor *)GT_turquoiseColor;
 
-+ (GTColor *)violetColor;
++ (GTColor *)GT_violetColor;
 
-+ (GTColor *)wheatColor;
-+ (GTColor *)whiteSmokeColor;
++ (GTColor *)GT_wheatColor;
++ (GTColor *)GT_whiteSmokeColor;
 
-+ (GTColor *)yellowGreenColor;
++ (GTColor *)GT_yellowGreenColor;
 
 @end

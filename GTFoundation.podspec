@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "GTFoundation"
-  s.version      = "0.0.9"
+  s.version      = "0.1.0"
   s.summary      = "GTFoundation is a set of classes that makes it easy to work with the Foundation and UIKit / AppKit."
   s.description  = <<-DESC
                 	GTFoundation is a set of classes that makes it easy to work with the Foundation and UIKit / AppKit frameworks when developing Mac and iOS apps.
                    DESC
-  s.homepage     = "http://cocoabeans.me/projects/open-source"
+  s.homepage     = "https://github.com/gtranchedone/GTFoundation"
   s.license      = 'MIT'
   s.author       = { "Gianluca Tranchedone" => "gianluca@cocoabeans.me" }
   s.source       = { :git => "https://github.com/gtranchedone/GTFoundation.git", :tag => s.version.to_s }

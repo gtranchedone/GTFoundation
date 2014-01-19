@@ -69,13 +69,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>5B1DF800A9064AB5A86FE750</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EA96B03EEE7C4CC0BE6C8056</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>5FD2D6F2AAD342D7A342D62E</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -236,8 +229,7 @@ fi
 				<string>9901367D1823B91B008A5908</string>
 				<string>990136401823B8B2008A5908</string>
 				<string>990136441823B8B2008A5908</string>
-				<string>5B1DF800A9064AB5A86FE750</string>
-				<string>C568F79323964930A407304C</string>
+				<string>9CBFFF8181904B758D3D04E1</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -1853,6 +1845,8 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
@@ -1865,6 +1859,8 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
@@ -1889,6 +1885,13 @@ fi
 			<string>9901363B1823B8B2008A5908</string>
 			<key>targetProxy</key>
 			<string>998B2AF8182D01D20085CE5F</string>
+		</dict>
+		<key>9CBFFF8181904B758D3D04E1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AD0789A6F2EC4971ABD3E7A4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>9F124A956B7B48D3BA4F18F8</key>
 		<dict>
@@ -1947,13 +1950,6 @@ fi
 			<string>libPods-GTFoundation.a</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>C568F79323964930A407304C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AD0789A6F2EC4971ABD3E7A4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
 		</dict>
 		<key>CF544B69E80C46868E2D3F53</key>
 		<dict>

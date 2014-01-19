@@ -1,5 +1,5 @@
 //
-//  NSString+HTML.h
+//  NSString+HTML.m
 //  GTFoundation
 //
 //  Created by Gianluca Tranchedone on 14/08/13.
@@ -25,20 +25,35 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "NSString+Web.h"
 
-@interface NSString (HTML)
+@implementation NSString (HTML)
 
-/**
- *  @abstract Removes HTML tags from the receiver.
- *  @return Returns a new string that doesn't contain any HTML tag.
- */
-- (NSString *)GT_stringByStrippingHTML;
+- (NSString *)GT_stringByStrippingHTML {
+    NSString *s = [self copy];
+    NSRange r = NSMakeRange(0, 0);
+    
+    while ((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound) {
+        s = [s stringByReplacingCharactersInRange:r withString:@""];
+    }
+    
+    return s;
+}
 
-/**
- *  @abstract Encodes the receiver for use in a URL.
- *  @return A new URL-encoded string created by encoding the contents of the receiver.
- */
-- (NSString *)GT_urlEncodedString;
+- (NSString *)GT_urlEncodedString
+{
+    NSString *reference = @"!*'();:@&=+$,/?%#[]";
+    NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self, NULL, (CFStringRef)reference, kCFStringEncodingUTF8));
+    
+    return encodedString;
+}
+
+- (BOOL)GT_isValidEmailAddress
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    
+    return [emailTest evaluateWithObject:self];
+}
 
 @end

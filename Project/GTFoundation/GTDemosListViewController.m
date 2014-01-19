@@ -61,13 +61,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.demos = @[];
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
-    GTAlertView *alertView = [[GTAlertView alloc] initWithTitle:@"TEST" message:@"This is a test" cancelButtonTitle:@"Dismiss"];
-    [alertView show];
+    self.demos = @[];
 }
 
 #pragma mark - UITableViewDataSource

@@ -28,15 +28,12 @@
 #import <Availability.h>
 
 #import <GTFoundation/GTColor+ColorsAddition.h>
+#import <GTFoundation/GTUtilityFunctions.h>
 #import <GTFoundation/NSDate+Utilities.h>
 #import <GTFoundation/NSDecimalNumber+Opposite.h>
-#import <GTFoundation/NSString+HTML.h>
-#import <GTFoundation/GTUtilityFunctions.h>
+#import <GTFoundation/NSString+Web.h>
 
 #if TARGET_OS_IPHONE
-
-#import <GTFoundation/GTAlertView.h>
-#import <GTFoundation/GTActionSheet.h>
 
 #else
 

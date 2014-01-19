@@ -33,13 +33,13 @@
 
 #pragma mark - Helpers
 
-+ (GTColor *)GT_colorFromHex:(uint32_t)hexColor
++ (GTColor *)GT_colorWithHex:(uint32_t)hexColor
 {
     CGFloat blue = (hexColor & 0xff) / 255.0f;
     CGFloat green = (hexColor >> 8 & 0xff) / 255.0f;
     CGFloat red = (hexColor >> 16 & 0xff) / 255.0f;
     
-    return [GTColor GT_colorWithRed:red green:green blue:blue alpha:1.0];
+    return [[self class] GT_colorWithRed:red green:green blue:blue alpha:1.0];
 }
 
 + (GTColor *)GT_colorWithHexString:(NSString *)hexString
@@ -59,7 +59,7 @@
     assert(7 == hexString.length || 4 == hexString.length);
     
     // check for 3 character HexStrings
-    hexString = [[self class] hexStringTransformFromThreeCharacters:hexString];
+    hexString = [[self class] GT_hexStringTransformFromThreeCharacters:hexString];
     
     NSString *redHex    = [NSString stringWithFormat:@"0x%@", [hexString substringWithRange:NSMakeRange(1, 2)]];
     unsigned redInt = [[self class] hexValueToUnsigned:redHex];
@@ -70,7 +70,7 @@
     NSString *blueHex   = [NSString stringWithFormat:@"0x%@", [hexString substringWithRange:NSMakeRange(5, 2)]];
     unsigned blueInt = [[self class] hexValueToUnsigned:blueHex];
     
-    GTColor *color = [GTColor GT_colorWith8BitRed:redInt green:greenInt blue:blueInt alpha:alpha];
+    GTColor *color = [[self class] GT_colorWith8BitRed:redInt green:greenInt blue:blueInt alpha:alpha];
     
     return color;
 }
@@ -82,24 +82,24 @@
 
 + (GTColor *)GT_colorWith8BitRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue alpha:(CGFloat)alpha
 {
-    return [GTColor GT_colorWithRed:(red / 255.0) green:(green / 255.0) blue:(blue / 255.0) alpha:alpha];
+    return [[self class] GT_colorWithRed:(red / 255.0) green:(green / 255.0) blue:(blue / 255.0) alpha:alpha];
 }
 
 + (GTColor *)GT_colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha
 {
-    return [self GT_colorWithRed:white green:white blue:white alpha:alpha];
+    return [[self class] GT_colorWithRed:white green:white blue:white alpha:alpha];
 }
 
 + (GTColor *)GT_colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 #if TARGET_OS_IPHONE
-    return [GTColor colorWithRed:red green:green blue:blue alpha:alpha];
+    return [[self class] colorWithRed:red green:green blue:blue alpha:alpha];
 #else
-    return [GTColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
+    return [[self class] colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 #endif
 }
 
-+ (NSString *)hexStringTransformFromThreeCharacters:(NSString *)hexString
++ (NSString *)GT_hexStringTransformFromThreeCharacters:(NSString *)hexString
 {
     if (hexString.length == 4) {
         hexString = [NSString stringWithFormat:@"#%@%@%@%@%@%@",
@@ -144,637 +144,637 @@
 
 + (GTColor *)GT_aliceBlueColor
 {
-    return [GTColor GT_colorWithRed:0.941 green:0.973 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.941 green:0.973 blue:1.000 alpha:1.000];
 }
 
 + (GTColor *)GT_antiqueWhiteColor
 {
-    return [GTColor GT_colorWithRed:0.980 green:0.922 blue:0.843 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.980 green:0.922 blue:0.843 alpha:1.000];
 }
 
 + (GTColor *)GT_acquaColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:1.000 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:1.000 blue:1.000 alpha:1.000];
 }
 
 + (GTColor *)GT_acquamarineColor
 {
-    return [GTColor GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
 }
 
 + (GTColor *)GT_azureColor
 {
-    return [GTColor GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.498 green:1.000 blue:0.831 alpha:1.000];
 }
 
 + (GTColor *)GT_beigeColor
 {
-    return [GTColor GT_colorWithRed:0.961 green:0.961 blue:0.863 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.961 green:0.961 blue:0.863 alpha:1.000];
 }
 
 + (GTColor *)GT_bisqueColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.894 blue:0.769 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.894 blue:0.769 alpha:1.000];
 }
 
 + (GTColor *)GT_blanchetAlmondColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:1.000 blue:0.804 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:1.000 blue:0.804 alpha:1.000];
 }
 
 + (GTColor *)GT_blueVioletColor
 {
-    return [GTColor GT_colorWithRed:0.541 green:0.169 blue:0.886 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.541 green:0.169 blue:0.886 alpha:1.000];
 }
 
 + (GTColor *)GT_burlyWoodColor
 {
-    return [GTColor GT_colorWithRed:0.871 green:0.722 blue:0.529 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.871 green:0.722 blue:0.529 alpha:1.000];
 }
 
-+ (GTColor *)cadetBlueColor
++ (GTColor *)GT_cadetBlueColor
 {
-    return [GTColor GT_colorWithRed:0.373 green:0.620 blue:0.627 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.373 green:0.620 blue:0.627 alpha:1.000];
 }
 
-+ (GTColor *)chartreuseColor
++ (GTColor *)GT_chartreuseColor
 {
-    return [GTColor GT_colorWithRed:0.498 green:1.000 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.498 green:1.000 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)chocolateColor
++ (GTColor *)GT_chocolateColor
 {
-    return [GTColor GT_colorWithRed:0.824 green:0.412 blue:0.118 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.824 green:0.412 blue:0.118 alpha:1.000];
 }
 
-+ (GTColor *)coralColor
++ (GTColor *)GT_coralColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.498 blue:0.314 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.498 blue:0.314 alpha:1.000];
 }
 
-+ (GTColor *)cornflowerColor
++ (GTColor *)GT_cornflowerColor
 {
-    return [GTColor GT_colorWithRed:0.392 green:0.584 blue:0.929 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.392 green:0.584 blue:0.929 alpha:1.000];
 }
 
-+ (GTColor *)cornsilkColor
++ (GTColor *)GT_cornsilkColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.973 blue:0.863 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.973 blue:0.863 alpha:1.000];
 }
 
-+ (GTColor *)crimsonColor
++ (GTColor *)GT_crimsonColor
 {
-    return [GTColor GT_colorWithRed:0.863 green:0.078 blue:0.235 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.863 green:0.078 blue:0.235 alpha:1.000];
 }
 
-+ (GTColor *)darkBlueColor
++ (GTColor *)GT_darkBlueColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.000 blue:0.545 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.000 blue:0.545 alpha:1.000];
 }
 
-+ (GTColor *)darkCyanColor
++ (GTColor *)GT_darkCyanColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.545 blue:0.545 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.545 blue:0.545 alpha:1.000];
 }
 
-+ (GTColor *)darkGoldenrodColor
++ (GTColor *)GT_darkGoldenrodColor
 {
-    return [GTColor GT_colorWithRed:0.722 green:0.525 blue:0.043 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.722 green:0.525 blue:0.043 alpha:1.000];
 }
 
-+ (GTColor *)darkGreenColor
++ (GTColor *)GT_darkGreenColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.392 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.392 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)darkKhakiColor
++ (GTColor *)GT_darkKhakiColor
 {
-    return [GTColor GT_colorWithRed:0.741 green:0.718 blue:0.420 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.741 green:0.718 blue:0.420 alpha:1.000];
 }
 
-+ (GTColor *)darkMagentaColor
++ (GTColor *)GT_darkMagentaColor
 {
-    return [GTColor GT_colorWithRed:0.545 green:0.000 blue:0.545 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.545 green:0.000 blue:0.545 alpha:1.000];
 }
 
-+ (GTColor *)darkOliveGreenColor
++ (GTColor *)GT_darkOliveGreenColor
 {
-    return [GTColor GT_colorWithRed:0.333 green:0.420 blue:0.184 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.333 green:0.420 blue:0.184 alpha:1.000];
 }
 
-+ (GTColor *)darkOrangeColor
++ (GTColor *)GT_darkOrangeColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.549 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.549 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)darkOrchidColor
++ (GTColor *)GT_darkOrchidColor
 {
-    return [GTColor GT_colorWithRed:0.600 green:0.196 blue:0.800 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.600 green:0.196 blue:0.800 alpha:1.000];
 }
 
-+ (GTColor *)darkRedColor
++ (GTColor *)GT_darkRedColor
 {
-    return [GTColor GT_colorWithRed:0.545 green:0.000 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.545 green:0.000 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)darkSalmonColor
++ (GTColor *)GT_darkSalmonColor
 {
-    return [GTColor GT_colorWithRed:0.914 green:0.588 blue:0.478 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.914 green:0.588 blue:0.478 alpha:1.000];
 }
 
-+ (GTColor *)darkSeaGreenColor
++ (GTColor *)GT_darkSeaGreenColor
 {
-    return [GTColor GT_colorWithRed:0.561 green:0.737 blue:0.561 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.561 green:0.737 blue:0.561 alpha:1.000];
 }
 
-+ (GTColor *)darkSlateBlueColor
++ (GTColor *)GT_darkSlateBlueColor
 {
-    return [GTColor GT_colorWithRed:0.282 green:0.239 blue:0.545 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.282 green:0.239 blue:0.545 alpha:1.000];
 }
 
-+ (GTColor *)darkSlateGrayColor
++ (GTColor *)GT_darkSlateGrayColor
 {
-    return [GTColor GT_colorWithRed:0.157 green:0.310 blue:0.310 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.157 green:0.310 blue:0.310 alpha:1.000];
 }
 
-+ (GTColor *)darkTurquoiseColor
++ (GTColor *)GT_darkTurquoiseColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.808 blue:0.820 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.808 blue:0.820 alpha:1.000];
 }
 
-+ (GTColor *)darkVioletColor
++ (GTColor *)GT_darkVioletColor
 {
-    return [GTColor GT_colorWithRed:0.580 green:0.000 blue:0.827 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.580 green:0.000 blue:0.827 alpha:1.000];
 }
 
-+ (GTColor *)deepPinkColor
++ (GTColor *)GT_deepPinkColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.078 blue:0.576 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.078 blue:0.576 alpha:1.000];
 }
 
-+ (GTColor *)deepSkyBlueColor
++ (GTColor *)GT_deepSkyBlueColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.749 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.749 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)dimGrayColor
++ (GTColor *)GT_dimGrayColor
 {
-    return [GTColor GT_colorWithWhite:0.412 alpha:1.000];
+    return [[self class] GT_colorWithWhite:0.412 alpha:1.000];
 }
 
-+ (GTColor *)dodgerBlueColor
++ (GTColor *)GT_dodgerBlueColor
 {
-    return [GTColor GT_colorWithRed:0.118 green:0.565 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.118 green:0.565 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)firebrickColor
++ (GTColor *)GT_firebrickColor
 {
-    return [GTColor GT_colorWithRed:0.698 green:0.133 blue:0.133 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.698 green:0.133 blue:0.133 alpha:1.000];
 }
 
-+ (GTColor *)floralWhiteColor
++ (GTColor *)GT_floralWhiteColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.980 blue:0.941 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.980 blue:0.941 alpha:1.000];
 }
 
-+ (GTColor *)forestGreenColor
++ (GTColor *)GT_forestGreenColor
 {
-    return [GTColor GT_colorWithRed:0.133 green:0.545 blue:0.133 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.133 green:0.545 blue:0.133 alpha:1.000];
 }
 
-+ (GTColor *)fuschiaColor
++ (GTColor *)GT_fuschiaColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.000 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.000 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)gainsboroColor
++ (GTColor *)GT_gainsboroColor
 {
-    return [GTColor GT_colorWithWhite:0.863 alpha:1.000];
+    return [[self class] GT_colorWithWhite:0.863 alpha:1.000];
 }
 
-+ (GTColor *)ghostWhiteColor
++ (GTColor *)GT_ghostWhiteColor
 {
-    return [GTColor GT_colorWithRed:0.973 green:0.973 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.973 green:0.973 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)goldColor
++ (GTColor *)GT_goldColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.843 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.843 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)golderonColor
++ (GTColor *)GT_golderonColor
 {
-    return [GTColor GT_colorWithRed:0.855 green:0.647 blue:0.125 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.855 green:0.647 blue:0.125 alpha:1.000];
 }
 
-+ (GTColor *)greenYellowColor
++ (GTColor *)GT_greenYellowColor
 {
-    return [GTColor GT_colorWithRed:0.678 green:1.000 blue:0.184 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.678 green:1.000 blue:0.184 alpha:1.000];
 }
 
-+ (GTColor *)honeydewColor
++ (GTColor *)GT_honeydewColor
 {
-    return [GTColor GT_colorWithRed:0.941 green:1.000 blue:0.941 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.941 green:1.000 blue:0.941 alpha:1.000];
 }
 
-+ (GTColor *)hotPinkColor
++ (GTColor *)GT_hotPinkColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.412 blue:0.706 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.412 blue:0.706 alpha:1.000];
 }
 
-+ (GTColor *)indianRedColor
++ (GTColor *)GT_indianRedColor
 {
-    return [GTColor GT_colorWithRed:0.804 green:0.361 blue:0.361 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.804 green:0.361 blue:0.361 alpha:1.000];
 }
 
-+ (GTColor *)indigoColor
++ (GTColor *)GT_indigoColor
 {
-    return [GTColor GT_colorWithRed:0.294 green:0.000 blue:0.510 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.294 green:0.000 blue:0.510 alpha:1.000];
 }
 
-+ (GTColor *)ivoryColor
++ (GTColor *)GT_ivoryColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.941 blue:0.941 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.941 blue:0.941 alpha:1.000];
 }
 
-+ (GTColor *)khakiColor
++ (GTColor *)GT_khakiColor
 {
-    return [GTColor GT_colorWithRed:0.941 green:0.902 blue:0.549 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.941 green:0.902 blue:0.549 alpha:1.000];
 }
 
-+ (GTColor *)lavanderColor
++ (GTColor *)GT_lavanderColor
 {
-    return [GTColor GT_colorWithRed:0.902 green:0.902 blue:0.980 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.902 green:0.902 blue:0.980 alpha:1.000];
 }
 
-+ (GTColor *)lavanderBlushColor
++ (GTColor *)GT_lavanderBlushColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.941 blue:0.961 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.941 blue:0.961 alpha:1.000];
 }
 
-+ (GTColor *)lawnGreenColor
++ (GTColor *)GT_lawnGreenColor
 {
-    return [GTColor GT_colorWithRed:0.486 green:0.988 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.486 green:0.988 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)lemonChiffonColor
++ (GTColor *)GT_lemonChiffonColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.980 blue:0.804 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.980 blue:0.804 alpha:1.000];
 }
 
-+ (GTColor *)lightBlueColor
++ (GTColor *)GT_lightBlueColor
 {
-    return [GTColor GT_colorWithRed:0.678 green:0.847 blue:0.902 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.678 green:0.847 blue:0.902 alpha:1.000];
 }
 
-+ (GTColor *)lightCoralColor
++ (GTColor *)GT_lightCoralColor
 {
-    return [GTColor GT_colorWithRed:0.941 green:0.502 blue:0.502 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.941 green:0.502 blue:0.502 alpha:1.000];
 }
 
-+ (GTColor *)lightCyanColor
++ (GTColor *)GT_lightCyanColor
 {
-    return [GTColor GT_colorWithRed:0.878 green:1.000 blue:1.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.878 green:1.000 blue:1.000 alpha:1.000];
 }
 
-+ (GTColor *)lightGoldenrodYellowColor
++ (GTColor *)GT_lightGoldenrodYellowColor
 {
-    return [GTColor GT_colorWithRed:0.980 green:0.980 blue:0.824 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.980 green:0.980 blue:0.824 alpha:1.000];
 }
 
-+ (GTColor *)lightGreenColor
++ (GTColor *)GT_lightGreenColor
 {
-    return [GTColor GT_colorWithRed:0.565 green:0.933 blue:0.565 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.565 green:0.933 blue:0.565 alpha:1.000];
 }
 
-+ (GTColor *)lightPinkColor
++ (GTColor *)GT_lightPinkColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.753 blue:0.757 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.753 blue:0.757 alpha:1.000];
 }
 
-+ (GTColor *)lightSalmonColor
++ (GTColor *)GT_lightSalmonColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.627 blue:0.478 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.627 blue:0.478 alpha:1.000];
 }
 
-+ (GTColor *)lightSeaGreenColor
++ (GTColor *)GT_lightSeaGreenColor
 {
-    return [GTColor GT_colorWithRed:0.125 green:0.698 blue:0.667 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.125 green:0.698 blue:0.667 alpha:1.000];
 }
 
-+ (GTColor *)lightSkyBlueColor
++ (GTColor *)GT_lightSkyBlueColor
 {
-    return [GTColor GT_colorWithRed:0.529 green:0.808 blue:0.980 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.529 green:0.808 blue:0.980 alpha:1.000];
 }
 
-+ (GTColor *)lightSlateGrayColor
++ (GTColor *)GT_lightSlateGrayColor
 {
-    return [GTColor GT_colorWithRed:0.467 green:0.533 blue:0.600 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.467 green:0.533 blue:0.600 alpha:1.000];
 }
 
-+ (GTColor *)lightSteelBlueColor
++ (GTColor *)GT_lightSteelBlueColor
 {
-    return [GTColor GT_colorWithRed:0.690 green:0.769 blue:0.871 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.690 green:0.769 blue:0.871 alpha:1.000];
 }
 
-+ (GTColor *)lightYellowColor
++ (GTColor *)GT_lightYellowColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:1.000 blue:0.878 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:1.000 blue:0.878 alpha:1.000];
 }
 
-+ (GTColor *)limeColor
++ (GTColor *)GT_limeColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:1.000 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:1.000 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)limeGreenColor
++ (GTColor *)GT_limeGreenColor
 {
-    return [GTColor GT_colorWithRed:0.196 green:0.804 blue:0.196 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.196 green:0.804 blue:0.196 alpha:1.000];
 }
 
-+ (GTColor *)linenColor
++ (GTColor *)GT_linenColor
 {
-    return [GTColor GT_colorWithRed:0.980 green:0.941 blue:0.902 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.980 green:0.941 blue:0.902 alpha:1.000];
 }
 
-+ (GTColor *)maroonColor
++ (GTColor *)GT_maroonColor
 {
-    return [GTColor GT_colorWithRed:0.502 green:0.000 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.502 green:0.000 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)mediumAcquamarineColor
++ (GTColor *)GT_mediumAcquamarineColor
 {
-    return [GTColor GT_colorWithRed:0.420 green:0.804 blue:0.667 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.420 green:0.804 blue:0.667 alpha:1.000];
 }
 
-+ (GTColor *)mediumBlueColor
++ (GTColor *)GT_mediumBlueColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.000 blue:0.804 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.000 blue:0.804 alpha:1.000];
 }
 
-+ (GTColor *)mediumOrchidColor
++ (GTColor *)GT_mediumOrchidColor
 {
-    return [GTColor GT_colorWithRed:0.729 green:0.333 blue:0.827 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.729 green:0.333 blue:0.827 alpha:1.000];
 }
 
-+ (GTColor *)mediumPurpleColor
++ (GTColor *)GT_mediumPurpleColor
 {
-    return [GTColor GT_colorWithRed:0.576 green:0.439 blue:0.859 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.576 green:0.439 blue:0.859 alpha:1.000];
 }
 
-+ (GTColor *)mediumSeaGreenColor
++ (GTColor *)GT_mediumSeaGreenColor
 {
-    return [GTColor GT_colorWithRed:0.235 green:0.702 blue:0.443 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.235 green:0.702 blue:0.443 alpha:1.000];
 }
 
-+ (GTColor *)mediumSlateBlueColor
++ (GTColor *)GT_mediumSlateBlueColor
 {
-    return [GTColor GT_colorWithRed:0.482 green:0.408 blue:0.933 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.482 green:0.408 blue:0.933 alpha:1.000];
 }
 
-+ (GTColor *)mediumSpringGreenColor
++ (GTColor *)GT_mediumSpringGreenColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.980 blue:0.604 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.980 blue:0.604 alpha:1.000];
 }
 
-+ (GTColor *)mediumTurquoiseColor
++ (GTColor *)GT_mediumTurquoiseColor
 {
-    return [GTColor GT_colorWithRed:0.282 green:0.820 blue:0.800 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.282 green:0.820 blue:0.800 alpha:1.000];
 }
 
-+ (GTColor *)mediumVioletRedColor
++ (GTColor *)GT_mediumVioletRedColor
 {
-    return [GTColor GT_colorWithRed:0.780 green:0.082 blue:0.439 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.780 green:0.082 blue:0.439 alpha:1.000];
 }
 
-+ (GTColor *)midnightBlueColor
++ (GTColor *)GT_midnightBlueColor
 {
-    return [GTColor GT_colorWithRed:0.098 green:0.098 blue:0.439 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.098 green:0.098 blue:0.439 alpha:1.000];
 }
 
-+ (GTColor *)mintCreamColor
++ (GTColor *)GT_mintCreamColor
 {
-    return [GTColor GT_colorWithRed:0.961 green:1.000 blue:0.980 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.961 green:1.000 blue:0.980 alpha:1.000];
 }
 
-+ (GTColor *)mistyRoseColor
++ (GTColor *)GT_mistyRoseColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.894 blue:0.882 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.894 blue:0.882 alpha:1.000];
 }
 
-+ (GTColor *)moccasinColor
++ (GTColor *)GT_moccasinColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.894 blue:0.710 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.894 blue:0.710 alpha:1.000];
 }
 
-+ (GTColor *)navajoWhiteColor
++ (GTColor *)GT_navajoWhiteColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.871 blue:0.678 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.871 blue:0.678 alpha:1.000];
 }
 
-+ (GTColor *)navyColor
++ (GTColor *)GT_navyColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.000 blue:0.502 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.000 blue:0.502 alpha:1.000];
 }
 
-+ (GTColor *)oceanColor
++ (GTColor *)GT_oceanColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.251 blue:0.502 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.251 blue:0.502 alpha:1.000];
 }
 
-+ (GTColor *)oldLaceColor
++ (GTColor *)GT_oldLaceColor
 {
-    return [GTColor GT_colorWithRed:0.992 green:0.961 blue:0.902 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.992 green:0.961 blue:0.902 alpha:1.000];
 }
 
-+ (GTColor *)oliveColor
++ (GTColor *)GT_oliveColor
 {
-    return [GTColor GT_colorWithRed:0.502 green:0.502 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.502 green:0.502 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)oliveDrabColor
++ (GTColor *)GT_oliveDrabColor
 {
-    return [GTColor GT_colorWithRed:0.420 green:0.557 blue:0.176 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.420 green:0.557 blue:0.176 alpha:1.000];
 }
 
-+ (GTColor *)orangeRedColor
++ (GTColor *)GT_orangeRedColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.271 blue:0.000 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.271 blue:0.000 alpha:1.000];
 }
 
-+ (GTColor *)orchidColor
++ (GTColor *)GT_orchidColor
 {
-    return [GTColor GT_colorWithRed:0.855 green:0.439 blue:0.839 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.855 green:0.439 blue:0.839 alpha:1.000];
 }
 
-+ (GTColor *)paleGoldenrodColor
++ (GTColor *)GT_paleGoldenrodColor
 {
-    return [GTColor GT_colorWithRed:0.933 green:0.910 blue:0.667 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.933 green:0.910 blue:0.667 alpha:1.000];
 }
 
-+ (GTColor *)paleGreenColor
++ (GTColor *)GT_paleGreenColor
 {
-    return [GTColor GT_colorWithRed:0.596 green:0.984 blue:0.596 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.596 green:0.984 blue:0.596 alpha:1.000];
 }
 
-+ (GTColor *)paleTurquoiseColor
++ (GTColor *)GT_paleTurquoiseColor
 {
-    return [GTColor GT_colorWithRed:0.686 green:0.933 blue:0.933 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.686 green:0.933 blue:0.933 alpha:1.000];
 }
 
-+ (GTColor *)paleVioletRedColor
++ (GTColor *)GT_paleVioletRedColor
 {
-    return [GTColor GT_colorWithRed:0.859 green:0.439 blue:0.576 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.859 green:0.439 blue:0.576 alpha:1.000];
 }
 
-+ (GTColor *)papayaWhipColor
++ (GTColor *)GT_papayaWhipColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.937 blue:0.608 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.937 blue:0.608 alpha:1.000];
 }
 
-+ (GTColor *)peachPuffColor
++ (GTColor *)GT_peachPuffColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.855 blue:0.608 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.855 blue:0.608 alpha:1.000];
 }
 
-+ (GTColor *)peruColor
++ (GTColor *)GT_peruColor
 {
-    return [GTColor GT_colorWithRed:0.804 green:0.522 blue:0.247 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.804 green:0.522 blue:0.247 alpha:1.000];
 }
 
-+ (GTColor *)pinkColor
++ (GTColor *)GT_pinkColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.753 blue:0.796 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.753 blue:0.796 alpha:1.000];
 }
 
-+ (GTColor *)plumColor
++ (GTColor *)GT_plumColor
 {
-    return [GTColor GT_colorWithRed:0.867 green:0.627 blue:0.867 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.867 green:0.627 blue:0.867 alpha:1.000];
 }
 
-+ (GTColor *)powderBlueColor
++ (GTColor *)GT_powderBlueColor
 {
-    return [GTColor GT_colorWithRed:0.690 green:0.878 blue:0.902 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.690 green:0.878 blue:0.902 alpha:1.000];
 }
 
-+ (GTColor *)rosyBrownColor
++ (GTColor *)GT_rosyBrownColor
 {
-    return [GTColor GT_colorWithRed:0.737 green:0.561 blue:0.561 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.737 green:0.561 blue:0.561 alpha:1.000];
 }
 
-+ (GTColor *)royalBlueColor
++ (GTColor *)GT_royalBlueColor
 {
-    return [GTColor GT_colorWithRed:0.255 green:0.412 blue:0.882 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.255 green:0.412 blue:0.882 alpha:1.000];
 }
 
-+ (GTColor *)saddleBrownColor
++ (GTColor *)GT_saddleBrownColor
 {
-    return [GTColor GT_colorWithRed:0.545 green:0.271 blue:0.075 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.545 green:0.271 blue:0.075 alpha:1.000];
 }
 
-+ (GTColor *)salmonColor
++ (GTColor *)GT_salmonColor
 {
-    return [GTColor GT_colorWithRed:0.980 green:0.502 blue:0.447 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.980 green:0.502 blue:0.447 alpha:1.000];
 }
 
-+ (GTColor *)sandyBrownColor
++ (GTColor *)GT_sandyBrownColor
 {
-    return [GTColor GT_colorWithRed:0.957 green:0.643 blue:0.376 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.957 green:0.643 blue:0.376 alpha:1.000];
 }
 
-+ (GTColor *)seaGreenColor
++ (GTColor *)GT_seaGreenColor
 {
-    return [GTColor GT_colorWithRed:0.180 green:0.545 blue:0.341 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.180 green:0.545 blue:0.341 alpha:1.000];
 }
 
-+ (GTColor *)seaShellColor
++ (GTColor *)GT_seaShellColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.961 blue:0.933 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.961 blue:0.933 alpha:1.000];
 }
 
-+ (GTColor *)siennaColor
++ (GTColor *)GT_siennaColor
 {
-    return [GTColor GT_colorWithRed:0.627 green:0.322 blue:0.176 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.627 green:0.322 blue:0.176 alpha:1.000];
 }
 
-+ (GTColor *)silverColor
++ (GTColor *)GT_silverColor
 {
-    return [GTColor GT_colorWithWhite:0.753 alpha:1.000];
+    return [[self class] GT_colorWithWhite:0.753 alpha:1.000];
 }
 
-+ (GTColor *)skyBlueColor
++ (GTColor *)GT_skyBlueColor
 {
-    return [GTColor GT_colorWithRed:0.529 green:0.808 blue:0.922 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.529 green:0.808 blue:0.922 alpha:1.000];
 }
 
-+ (GTColor *)slateBlueColor
++ (GTColor *)GT_slateBlueColor
 {
-    return [GTColor GT_colorWithRed:0.416 green:0.353 blue:0.804 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.416 green:0.353 blue:0.804 alpha:1.000];
 }
 
-+ (GTColor *)slateGrayColor
++ (GTColor *)GT_slateGrayColor
 {
-    return [GTColor GT_colorWithRed:0.439 green:0.502 blue:0.565 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.439 green:0.502 blue:0.565 alpha:1.000];
 }
 
-+ (GTColor *)snowColor
++ (GTColor *)GT_snowColor
 {
-    return [GTColor GT_colorWithRed:1.000 green:0.980 blue:0.980 alpha:1.000];
+    return [[self class] GT_colorWithRed:1.000 green:0.980 blue:0.980 alpha:1.000];
 }
 
-+ (GTColor *)springGreenColor
++ (GTColor *)GT_springGreenColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:1.000 blue:0.498 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:1.000 blue:0.498 alpha:1.000];
 }
 
-+ (GTColor *)steelBlueColor
++ (GTColor *)GT_steelBlueColor
 {
-    return [GTColor GT_colorWithRed:0.275 green:0.510 blue:0.706 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.275 green:0.510 blue:0.706 alpha:1.000];
 }
 
-+ (GTColor *)tanColor
++ (GTColor *)GT_tanColor
 {
-    return [GTColor GT_colorWithRed:0.824 green:0.706 blue:0.549 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.824 green:0.706 blue:0.549 alpha:1.000];
 }
 
-+ (GTColor *)tealColor
++ (GTColor *)GT_tealColor
 {
-    return [GTColor GT_colorWithRed:0.000 green:0.502 blue:0.502 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.000 green:0.502 blue:0.502 alpha:1.000];
 }
 
-+ (GTColor *)thistleColor
++ (GTColor *)GT_thistleColor
 {
-    return [GTColor GT_colorWithRed:0.847 green:0.749 blue:0.847 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.847 green:0.749 blue:0.847 alpha:1.000];
 }
 
-+ (GTColor *)tomatoColor
++ (GTColor *)GT_tomatoColor
 {
-    return [GTColor GT_colorWithRed:0.992 green:0.388 blue:0.278 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.992 green:0.388 blue:0.278 alpha:1.000];
 }
 
-+ (GTColor *)turquoiseColor
++ (GTColor *)GT_turquoiseColor
 {
-    return [GTColor GT_colorWithRed:0.251 green:0.878 blue:0.816 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.251 green:0.878 blue:0.816 alpha:1.000];
 }
 
-+ (GTColor *)violetColor
++ (GTColor *)GT_violetColor
 {
-    return [GTColor GT_colorWithRed:0.933 green:0.510 blue:0.933 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.933 green:0.510 blue:0.933 alpha:1.000];
 }
 
-+ (GTColor *)wheatColor
++ (GTColor *)GT_wheatColor
 {
-    return [GTColor GT_colorWithRed:0.961 green:0.871 blue:0.702 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.961 green:0.871 blue:0.702 alpha:1.000];
 }
 
-+ (GTColor *)whiteSmokeColor
++ (GTColor *)GT_whiteSmokeColor
 {
-    return [GTColor GT_colorWithWhite:0.961 alpha:1.000];
+    return [[self class] GT_colorWithWhite:0.961 alpha:1.000];
 }
 
-+ (GTColor *)yellowGreenColor
++ (GTColor *)GT_yellowGreenColor
 {
-    return [GTColor GT_colorWithRed:0.604 green:0.804 blue:0.196 alpha:1.000];
+    return [[self class] GT_colorWithRed:0.604 green:0.804 blue:0.196 alpha:1.000];
 }
 
 @end

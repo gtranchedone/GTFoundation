@@ -1,5 +1,5 @@
 //
-//  NSString+HTML.m
+//  NSString+HTML.h
 //  GTFoundation
 //
 //  Created by Gianluca Tranchedone on 14/08/13.
@@ -25,27 +25,26 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "NSString+HTML.h"
+#import <Foundation/Foundation.h>
 
-@implementation NSString (HTML)
+@interface NSString (HTML)
 
-- (NSString *)GT_stringByStrippingHTML {
-    NSString *s = [self copy];
-    NSRange r = NSMakeRange(0, 0);
-    
-    while ((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound) {
-        s = [s stringByReplacingCharactersInRange:r withString:@""];
-    }
-    
-    return s;
-}
+/**
+ *  @abstract Removes HTML tags from the receiver.
+ *  @return Returns a new string that doesn't contain any HTML tag.
+ */
+- (NSString *)GT_stringByStrippingHTML;
 
-- (NSString *)GT_urlEncodedString
-{
-    NSString *reference = @"!*'();:@&=+$,/?%#[]";
-    NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self, NULL, (CFStringRef)reference, kCFStringEncodingUTF8));
-    
-    return encodedString;
-}
+/**
+ *  @abstract Encodes the receiver for use in a URL.
+ *  @return A new URL-encoded string created by encoding the contents of the receiver.
+ */
+- (NSString *)GT_urlEncodedString;
+
+/**
+ *  @abstract Verifies if the receiver is a valid email address or not.
+ *  @return YES if the receiver is a valid email address, NO otherwise.
+ */
+- (BOOL)GT_isValidEmailAddress;
 
 @end
