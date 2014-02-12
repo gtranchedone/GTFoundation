@@ -31,7 +31,7 @@
 
 @implementation NSDate (Utilities)
 
-+ (BOOL)timeIs24HourFormat 
++ (BOOL)GT_timeIs24HourFormat 
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[NSLocale currentLocale]];
@@ -98,7 +98,7 @@
 
 #pragma mark - Comparing Dates
 
-- (BOOL)isEqualToDateIgnoringTime:(NSDate *) aDate
+- (BOOL)GT_isEqualToDateIgnoringTime:(NSDate *) aDate
 {
 	NSDateComponents *components1 = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:self];
 	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:aDate];
@@ -107,23 +107,23 @@
 			([components1 day] == [components2 day]));
 }
 
-- (BOOL)isToday
+- (BOOL)GT_isToday
 {
-	return [self isEqualToDateIgnoringTime:[NSDate date]];
+	return [self GT_isEqualToDateIgnoringTime:[NSDate date]];
 }
 
-- (BOOL)isTomorrow
+- (BOOL)GT_isTomorrow
 {
-	return [self isEqualToDateIgnoringTime:[NSDate GT_dateTomorrow]];
+	return [self GT_isEqualToDateIgnoringTime:[NSDate GT_dateTomorrow]];
 }
 
-- (BOOL)isYesterday
+- (BOOL)GT_isYesterday
 {
-	return [self isEqualToDateIgnoringTime:[NSDate GT_dateYesterday]];
+	return [self GT_isEqualToDateIgnoringTime:[NSDate GT_dateYesterday]];
 }
 
 // This hard codes the assumption that a week is 7 days
-- (BOOL)isSameWeekAsDate:(NSDate *)aDate
+- (BOOL)GT_isSameWeekAsDate:(NSDate *)aDate
 {
 	NSDateComponents *components1 = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:self];
 	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:aDate];
@@ -135,43 +135,43 @@
 	return (abs([self timeIntervalSinceDate:aDate]) < (60 * 60 * 24 * 7));
 }
 
-- (BOOL)isThisWeek
-{
-	return [self isSameWeekAsDate:[NSDate date]];
-}
-
-- (BOOL)isNextWeek
-{
-	NSDate *newDate = [[NSDate date] GT_dateByAddingCalendarUnit:NSWeekCalendarUnit];
-	return [self isSameYearAsDate:newDate];
-}
-
-- (BOOL)isLastWeek
-{
-	NSDate *newDate = [[NSDate date] GT_dateBySubtractingCalendarUnit:NSWeekCalendarUnit];
-	return [self isSameYearAsDate:newDate];
-}
-
-- (BOOL)isSameMonthAsDate:(NSDate *)aDate
+- (BOOL)GT_isSameMonthAsDate:(NSDate *)aDate
 {
     NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
-	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:aDate];
-	return ([components1 month] == [components2 month]);
+    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:aDate];
+    return ([components1 month] == [components2 month]);
 }
 
-- (BOOL)isSameYearAsDate:(NSDate *)aDate
+- (BOOL)GT_isSameYearAsDate:(NSDate *)aDate
 {
-	NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
-	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:aDate];
-	return ([components1 year] == [components2 year]);
+    NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
+    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:aDate];
+    return ([components1 year] == [components2 year]);
 }
 
-- (BOOL)isThisYear
+- (BOOL)GT_isThisWeek
 {
-	return [self isSameYearAsDate:[NSDate date]];
+	return [self GT_isSameWeekAsDate:[NSDate date]];
 }
 
-- (BOOL)isNextYear
+- (BOOL)GT_isNextWeek
+{
+	NSDate *todayPlusOneWeek = [[NSDate date] GT_dateByAddingCalendarUnit:NSWeekCalendarUnit];
+	return [self GT_isSameWeekAsDate:todayPlusOneWeek];
+}
+
+- (BOOL)GT_isLastWeek
+{
+	NSDate *todayMinusOneWeek = [[NSDate date] GT_dateBySubtractingCalendarUnit:NSWeekCalendarUnit];
+	return [self GT_isSameWeekAsDate:todayMinusOneWeek];
+}
+
+- (BOOL)GT_isThisYear
+{
+	return [self GT_isSameYearAsDate:[NSDate date]];
+}
+
+- (BOOL)GT_isNextYear
 {
 	NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
 	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
@@ -179,7 +179,7 @@
 	return ([components1 year] == ([components2 year] + 1));
 }
 
-- (BOOL)isLastYear
+- (BOOL)GT_isLastYear
 {
 	NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
 	NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
@@ -187,12 +187,12 @@
 	return ([components1 year] == ([components2 year] - 1));
 }
 
-- (BOOL)isEarlierThanDate: (NSDate *) aDate
+- (BOOL)GT_isEarlierThanDate:(NSDate *)aDate
 {
 	return ([self earlierDate:aDate] == self);
 }
 
-- (BOOL)isLaterThanDate: (NSDate *) aDate
+- (BOOL)GT_isLaterThanDate:(NSDate *)aDate
 {
 	return ([self laterDate:aDate] == self);
 }
@@ -300,7 +300,7 @@
 	return [self GT_dateAtStartOfDayWithTimeZone:[NSTimeZone defaultTimeZone]];
 }
 
-- (NSDateComponents *)componentsWithOffsetFromDate: (NSDate *) aDate
+- (NSDateComponents *)componentsWithOffsetFromDate:(NSDate *)aDate
 {
 	NSDateComponents *dTime = [[NSCalendar currentCalendar] components:DATE_COMPONENTS fromDate:aDate toDate:self options:0];
 	return dTime;

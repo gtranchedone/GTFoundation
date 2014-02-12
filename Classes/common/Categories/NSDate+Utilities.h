@@ -29,7 +29,7 @@
 
 @interface NSDate (Utilities)
 
-+ (BOOL)timeIs24HourFormat;
++ (BOOL)GT_timeIs24HourFormat;
 
 ///--------------------------------------------------
 /// @name Relative Dates
@@ -49,21 +49,21 @@
 /// @name Comparing Dates
 ///--------------------------------------------------
 
-- (BOOL)isEqualToDateIgnoringTime:(NSDate *)aDate;
-- (BOOL)isToday;
-- (BOOL)isTomorrow;
-- (BOOL)isYesterday;
-- (BOOL)isSameWeekAsDate:(NSDate *)aDate;
-- (BOOL)isThisWeek;
-- (BOOL)isNextWeek;
-- (BOOL)isLastWeek;
-- (BOOL)isSameMonthAsDate:(NSDate *)aDate;
-- (BOOL)isSameYearAsDate:(NSDate *)aDate;
-- (BOOL)isThisYear;
-- (BOOL)isNextYear;
-- (BOOL)isLastYear;
-- (BOOL)isEarlierThanDate:(NSDate *)aDate;
-- (BOOL)isLaterThanDate:(NSDate *)aDate;
+- (BOOL)GT_isEqualToDateIgnoringTime:(NSDate *)aDate;
+- (BOOL)GT_isToday;
+- (BOOL)GT_isTomorrow;
+- (BOOL)GT_isYesterday;
+- (BOOL)GT_isSameWeekAsDate:(NSDate *)aDate;
+- (BOOL)GT_isThisWeek;
+- (BOOL)GT_isNextWeek;
+- (BOOL)GT_isLastWeek;
+- (BOOL)GT_isSameMonthAsDate:(NSDate *)aDate;
+- (BOOL)GT_isSameYearAsDate:(NSDate *)aDate;
+- (BOOL)GT_isThisYear;
+- (BOOL)GT_isNextYear;
+- (BOOL)GT_isLastYear;
+- (BOOL)GT_isEarlierThanDate:(NSDate *)aDate;
+- (BOOL)GT_isLaterThanDate:(NSDate *)aDate;
 
 ///--------------------------------------------------
 /// @name Adjusting Dates
