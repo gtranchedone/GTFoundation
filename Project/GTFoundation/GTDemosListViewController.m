@@ -27,10 +27,13 @@
 
 #import "GTDemosListViewController.h"
 
+typedef void (^GTDemosMenuItemActionBlock)(void);
+
 @interface GTDemosMenuItem : NSObject
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *destinationViewControllerName;
+@property (nonatomic, copy) GTDemosMenuItemActionBlock actionBlock;
 
 + (instancetype)itemWithTitle:(NSString *)title destinationViewControllerName:(NSString *)name;
 
@@ -47,6 +50,15 @@
     return item;
 }
 
++ (instancetype)itemWithTitle:(NSString *)title actionBlock:(GTDemosMenuItemActionBlock)actionBlock
+{
+    GTDemosMenuItem *item = [[self alloc] init];
+    item.actionBlock = actionBlock;
+    item.title = title;
+    
+    return item;
+}
+
 @end
 
 
@@ -58,6 +70,8 @@
 
 @implementation GTDemosListViewController
 
+#pragma mark - Superclass Methods Override -
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,7 +80,7 @@
     self.demos = @[];
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - UITableViewDataSource -
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -85,7 +99,7 @@
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate -
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

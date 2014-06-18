@@ -137,8 +137,8 @@
 
 - (BOOL)GT_isSameMonthAsDate:(NSDate *)aDate
 {
-    NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:self];
-    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:aDate];
+    NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self];
+    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:aDate];
     return ([components1 month] == [components2 month]);
 }
 
