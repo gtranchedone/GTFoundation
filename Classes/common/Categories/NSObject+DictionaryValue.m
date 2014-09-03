@@ -1,11 +1,10 @@
 //
-//  GTFoundation.h
+//  NSObject+DictionaryValue.m
 //  GTFoundation
 //
-//  Created by Gianluca Tranchedone on 14/08/13.
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2013 Gianluca Tranchedone
+//  Copyright (c) 2014 Gianluca Tranchedone
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -25,19 +24,37 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Availability.h>
+#import <objc/runtime.h>
+#import "NSObject+DictionaryValue.h"
 
-#import <GTFoundation/GTColor+ColorsAddition.h>
-#import <GTFoundation/GTUtilityFunctions.h>
-#import <GTFoundation/NSData+Hex.h>
-#import <GTFoundation/NSDate+Utilities.h>
-#import <GTFoundation/NSDecimalNumber+Opposite.h>
-#import <GTFoundation/NSString+Crypto.h>
-#import <GTFoundation/NSString+Web.h>
-#import <GTFoundation/NSObject+DictionaryValue.h>
+@implementation NSObject (DictionaryValue)
 
-#if TARGET_OS_IPHONE
+- (NSDictionary *)GT_dictionaryValue
+{
+    NSMutableArray *propertyKeys = [NSMutableArray array];
+    Class currentClass = self.class;
+    
+    while ([currentClass superclass]) { // avoid printing NSObject's attributes
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList(currentClass, &outCount);
+        for (i = 0; i < outCount; i++) {
+            objc_property_t property = properties[i];
+            const char *propName = property_getName(property);
+            if (propName) {
+                NSString *propertyName = [NSString stringWithUTF8String:propName];
+                [propertyKeys addObject:propertyName];
+            }
+        }
+        free(properties);
+        currentClass = [currentClass superclass];
+    }
+    
+    return [self dictionaryWithValuesForKeys:propertyKeys];
+}
 
-#else
+- (NSString *)GT_dictionaryValueDescription
+{
+    return [[self GT_dictionaryValue] description];
+}
 
-#endif
+@end

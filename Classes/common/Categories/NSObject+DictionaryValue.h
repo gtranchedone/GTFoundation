@@ -1,11 +1,10 @@
 //
-//  GTFoundation.h
+//  NSObject+DictionaryValue.h
 //  GTFoundation
 //
-//  Created by Gianluca Tranchedone on 14/08/13.
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2013 Gianluca Tranchedone
+//  Copyright (c) 2014 Gianluca Tranchedone
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -25,19 +24,11 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Availability.h>
+#import <Foundation/Foundation.h>
 
-#import <GTFoundation/GTColor+ColorsAddition.h>
-#import <GTFoundation/GTUtilityFunctions.h>
-#import <GTFoundation/NSData+Hex.h>
-#import <GTFoundation/NSDate+Utilities.h>
-#import <GTFoundation/NSDecimalNumber+Opposite.h>
-#import <GTFoundation/NSString+Crypto.h>
-#import <GTFoundation/NSString+Web.h>
-#import <GTFoundation/NSObject+DictionaryValue.h>
+@interface NSObject (DictionaryValue)
 
-#if TARGET_OS_IPHONE
+- (NSDictionary *)GT_dictionaryValue;
+- (NSString *)GT_dictionaryValueDescription;
 
-#else
-
-#endif
+@end

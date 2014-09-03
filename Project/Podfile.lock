@@ -1,5 +1,5 @@
 PODS:
-  - GTFoundation (0.1.1)
+  - GTFoundation (0.1.2)
 
 DEPENDENCIES:
   - GTFoundation (from `../GTFoundation.podspec`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../GTFoundation.podspec
 
 SPEC CHECKSUMS:
-  GTFoundation: 8c58ddfbfd16bb7bc541d0c9691928f00c15fed9
+  GTFoundation: 470e46ec1b2bd251de142434eb3ebd2f9bcca1e5
 
 COCOAPODS: 0.33.1
