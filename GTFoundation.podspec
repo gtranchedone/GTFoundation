@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.osx.exclude_files = 'Classes/ios'
   s.public_header_files = 'Classes/**/*.h'
 
-  s.subspec 'Colors' do |sp|
-    sp.source_files = 'Classes/common/Categories/Colors/*'
+  s.subspec 'Colors' do |colors|
+    colors.source_files = 'Classes/common/Categories/Colors/*'
   end
 end
